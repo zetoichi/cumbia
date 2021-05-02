@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 
 from .views import index
-# from .models import Photographer
+from .models import Photographer
 
 class IndexTest(TestCase):
 
@@ -22,21 +22,21 @@ class IndexTest(TestCase):
             expected_html
         )
 
-# class PhotographerModelTest(TestCase):
+class PhotographerModelTest(TestCase):
 
-#     def test_saving_and_retrieving_photographer(self):
-#         first_ph = Photographer()
-#         first_ph.name = 'First Fake Ph'
-#         first_ph.save()
+    def test_saving_and_retrieving_photographer(self):
+        first_ph = Photographer()
+        first_ph.name = 'First Fake Ph'
+        first_ph.save()
         
-#         second_ph = Photographer()
-#         second_ph.name = 'Second Fake Ph'
-#         second_ph.save()
+        second_ph = Photographer()
+        second_ph.name = 'Second Fake Ph'
+        second_ph.save()
 
-#         saved_phs = Photographer.objects.all()
-#         self.assertEqual(saved_phs.count(), 2)
+        saved_phs = Photographer.objects.all()
+        self.assertEqual(saved_phs.count(), 2)
 
-#         first_saved_ph = saved_phs[0]
-#         second_saved_ph = saved_phs[1]
-#         self.assertEqual(first_saved_ph, 'First Fake Ph')
-#         self.assertEqual(second_saved_ph, 'Second Fake Ph')
+        first_saved_ph = saved_phs[0]
+        second_saved_ph = saved_phs[1]
+        self.assertEqual(first_saved_ph.name, 'First Fake Ph')
+        self.assertEqual(second_saved_ph.name, 'Second Fake Ph')
