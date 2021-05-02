@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import unittest
 
 class NewVisitorTest(unittest.TestCase):
@@ -16,16 +17,33 @@ class NewVisitorTest(unittest.TestCase):
 
         # She sees that 'Cumbia' is the homepage title
         self.assertIn('Cumbia', self.browser.title)
-        self.fail('FINISH THE TEST!')
 
         # She can see the Cumbia logo at the center of the page
+        logo_img = self.browser.find_element(By.ID, 'brand-center-img')
+        self.assertIn('cumbia-logo-negro.png', logo_img.src)
 
         # She can see all the available photographer's listed
+        nav = self.browser.find_element(By.ID, 'main-nav')
+        links = nav.find_elements_by_css_selector('.ph-link')
+        self.assertTrue(
+            all('<a' in link for link in links)
+        )
+        self.assertTrue(
+            all('</a>' in link for link in links)
+        )
+        self.assertTrue(
+            all('<h4>' for link in links)
+        )
+        self.assertTrue(
+            all('</h4>' for link in links)
+        )
+        
 
         # She can see a list of informational links:
         # * 'nosotros'
         # * 'instagram'
         # * 'contacto'
+        self.fail('FINISH THE TEST!')
 
         # She can hover over each photographer's name and see 
         # * a photo by that photographer in the center of the page
