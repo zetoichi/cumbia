@@ -11,11 +11,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
     
-    def test_can_see_homepage(self):
+    def test_user_can_see_index(self):
         # User heads to site to check out Cumbia Photographers work
         self.browser.get('http://localhost:8000')
 
-        # She sees that 'Cumbia' is the homepage title
+        # She sees that 'Cumbia' is the index title
         self.assertIn('Cumbia', self.browser.title)
 
         # She can see the Cumbia logo at the center of the page
