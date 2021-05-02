@@ -1,15 +1,12 @@
 import json
-from django.views.generic import TemplateView
+from django.shortcuts import render
 
 fake_api = '/Users/Zeta/code/projects/work/cumbia/portfolio/fake_api.json'
 
 with open(fake_api, 'r') as f:
     photographers = json.load(f)
 
-class IndexView(TemplateView):
-    template_name = 'portfolio/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['photographers'] = photographers
-        return context
+def index(request):
+    # context = {}
+    # context['photographers'] = photographers
+    return render(request, 'portfolio/index.html')

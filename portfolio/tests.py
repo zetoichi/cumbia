@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 
 from .views import index
-from .models import Photographer
+# from .models import Photographer
 
 class IndexTest(TestCase):
 
