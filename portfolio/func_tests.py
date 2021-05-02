@@ -20,22 +20,28 @@ class NewVisitorTest(unittest.TestCase):
 
         # She can see the Cumbia logo at the center of the page
         logo_img = self.browser.find_element(By.ID, 'brand-center-img')
-        self.assertIn('cumbia-logo-negro.png', logo_img.src)
+        logo_img_src = logo_img.get_attribute('src')
+        self.assertIn('cumbia-logo-negro.png', logo_img_src)
 
-        # She can see all the available photographer's listed
+        # She can see links to all the available photographer's listed
         nav = self.browser.find_element(By.ID, 'main-nav')
-        links = nav.find_elements_by_css_selector('.ph-link')
+        links = nav.find_elements_by_class_name('ph-link')
+        self.assertTrue(len(list(links)) > 0)
         self.assertTrue(
-            all('<a' in link for link in links)
+            all('<a' in link.get_attribute('innerHTML') for link in links),
+            'link does not contain opening anchor tag'
         )
         self.assertTrue(
-            all('</a>' in link for link in links)
+            all('</a>' in link.get_attribute('innerHTML') for link in links),
+            'link does not contain closing anchor tag'
         )
         self.assertTrue(
-            all('<h4>' for link in links)
+            all('<h4>' in link.get_attribute('innerHTML') for link in links),
+            'link does not contain opening h4 tag'
         )
         self.assertTrue(
-            all('</h4>' for link in links)
+            all('</h4>' in link.get_attribute('innerHTML') for link in links),
+            'link does not contain closing h4 tag'
         )
         
 

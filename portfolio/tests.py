@@ -15,6 +15,7 @@ class IndexTest(TestCase):
         request = HttpRequest()
         response = index(request)
         expected_html = render_to_string('portfolio/index.html')
+        
         self.assertEqual(
             response.content.decode(),
             expected_html
