@@ -13,6 +13,6 @@ class IndexTest(TestCase):
     def test_home_returns_correct_html(self):
         request = HttpRequest()
         response = index(request)
-        self.assertTrue(response.content.startswith(b'<html>'))
+        self.assertTrue(response.content.startswith(b'<!DOCTYPE html>'))
         self.assertIn(b'<title>Cumbia</title>', response.content)
         self.assertTrue(response.content.endswith(b'</html>'))
