@@ -21,16 +21,6 @@ class IndexTest(TestCase):
             response.content.decode(),
             expected_html
         )
-    
-    def test_index_displays_photographers(self):
-        Photographer.objects.create(name='First Fake Ph')
-        Photographer.objects.create(name='Second Fake Ph')
-
-        request = HttpRequest()
-        response = index(request)
-        
-        self.assertIn('First Fake Ph', response.content.decode())
-        self.assertIn('Second Fake Ph', response.content.decode())
 
 class PhotographerModelTest(TestCase):
 
