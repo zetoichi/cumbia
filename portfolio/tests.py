@@ -12,15 +12,18 @@ class IndexTest(TestCase):
         found = resolve('/')
         self.assertEqual(found.func, index)
 
-    def test_index_returns_correct_html(self):
-        request = HttpRequest()
-        response = index(request)
-        expected_html = render_to_string('portfolio/index.html')
+    def test_uses_index_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'portfolio/index.html')
+
+    def test_index_displays_photographers(self):
+        Photographer.objects.create(name='First Fake Ph')
+        Photographer.objects.create(name='Second Fake Ph')
+
+        response = self.client.get('/')
         
-        self.assertEqual(
-            response.content.decode(),
-            expected_html
-        )
+        self.assertIn('First Fake Ph', response.content.decode())
+        self.assertIn('Second Fake Ph', response.content.decode())
 
 class PhotographerModelTest(TestCase):
 
