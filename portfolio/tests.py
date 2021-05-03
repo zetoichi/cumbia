@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 
 from .views import index
-from .models import Photographer
+from .models import Photographer, Photo
 
 class IndexTest(TestCase):
 
@@ -25,21 +25,32 @@ class IndexTest(TestCase):
         self.assertIn('First Fake Ph', response.content.decode())
         self.assertIn('Second Fake Ph', response.content.decode())
 
-class PhotographerModelTest(TestCase):
+class PhotographerAndPhotoModelsTest(TestCase):
 
     def test_saving_and_retrieving_photographer(self):
-        first_ph = Photographer()
-        first_ph.name = 'First Fake Ph'
-        first_ph.save()
+        ph = Photographer()
+        ph.name = 'First Fake Ph'
+        ph.save()
         
-        second_ph = Photographer()
-        second_ph.name = 'Second Fake Ph'
-        second_ph.save()
+        photo_1 = Photo()
+        photo_1.photographer = ph
+        photo_1.url = 'photo_1.jpg'
+        photo_1.save()
+        
+        photo_2 = Photo()
+        photo_2.photographer = ph
+        photo_2.url = 'photo_2.jpg'
+        photo_2.save()
 
         saved_phs = Photographer.objects.all()
-        self.assertEqual(saved_phs.count(), 2)
+        self.assertEqual(saved_phs.count(), 1)
 
-        first_saved_ph = saved_phs[0]
-        second_saved_ph = saved_phs[1]
-        self.assertEqual(first_saved_ph.name, 'First Fake Ph')
-        self.assertEqual(second_saved_ph.name, 'Second Fake Ph')
+        saved_photos = Photo.objects.all()
+        self.assertEqual(saved_photos.count(), 2)
+
+        saved_photo_1 = saved_photos[0]
+        saved_photo_2 = saved_photos[1]
+        self.assertEqual(saved_photo_1.url, 'photo_1.jpg')
+        self.assertEqual(saved_photo_1.photographer, ph)
+        self.assertEqual(saved_photo_2.url, 'photo_2.jpg')
+        self.assertEqual(saved_photo_2.photographer, ph)
