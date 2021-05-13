@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os
 
 from decouple import config
 from pathlib import Path
@@ -16,17 +17,15 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool, default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    cast=lambda v: [s.strip() for s in v.split(',')],
+    default='localhost, 127.0.0.0'
+)
 
 # Application definition
 
@@ -112,20 +111,28 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = config('STATIC_ROOT', default='/staticfiles')
+STATIC_URL = config('STATIC_URL', default='/static/')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'core/static'),
+)
+MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, 'media'))
+MEDIA_URL = config('MEDIA_URL', default='/media/')
+FILE_UPLOAD_PERMISSIONS = config(
+    'FILE_UPLOAD_PERMISSIONS',
+    default=0o644,
+    cast=lambda n: int(n, 8)
+)
+MAX_IMAGE_SIZE = (1920, 1920)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

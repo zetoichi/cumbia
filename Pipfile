@@ -12,10 +12,12 @@ django-extensions = "*"
 python-decouple = "*"
 shortuuid = "*"
 selenium = "*"
+pillow = "*"
 
 [dev-packages]
 ipython = "*"
 jupyter = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.8"

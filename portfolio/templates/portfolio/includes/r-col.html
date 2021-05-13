@@ -1,0 +1,14 @@
+<section class="r-info">
+    <div class="r-info-cx">
+    {% for ph in photographers %}
+        <div id="ph-info-{{ ph.pk }}" class="faded-out pic-info-each">
+            <div class="pic-info-ph-name">
+                <h3>{{ ph.display_name }}</h3>
+            </div>
+            <div class="pic-info-ph-caption">
+                <h5>{{ ph.photo.caption }}</h5>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</section>

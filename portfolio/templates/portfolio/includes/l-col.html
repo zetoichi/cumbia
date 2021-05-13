@@ -1,0 +1,11 @@
+<nav id="main-nav" class="gen-nav">
+    <ul class="ph-links">
+    {% for ph in photographers %}
+        <li class="ph-link" value="{{ ph.pk }}">
+            <a href="#">
+                <h4>{{ ph.display_name }}</h4>
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+</nav>
