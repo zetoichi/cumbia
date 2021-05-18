@@ -6,6 +6,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 
 from .public_views import PublicIndexView
+from .dash_views import DashIndexView
 from .models import Photographer, Pic
 
 class PublicIndexTest(TestCase):
@@ -37,6 +38,20 @@ class PublicIndexTest(TestCase):
         response = self.client.get('/')
         self.assertIn('First Fake Ph', response.content.decode())
         self.assertIn('Second Fake Ph', response.content.decode())
+
+class DashIndexTest(TestCase):
+
+    def test_dash_url_resolves_to_dashboard(self):
+        response = self.client.get('/dash/')
+        self.assertEqual(
+            response.resolver_match.func.__name__,
+            DashIndexView.as_view().__name__
+        )
+
+    def test_uses_dash_index_template(self):
+        response = self.client.get('/dash/')
+        self.assertTemplateUsed(response, 'portfolio/dash_index.html')
+
 
 # class PhotographerAndPhotoModelsTest(TestCase):
 
