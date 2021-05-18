@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'dist/app.css' %}" rel="stylesheet" >
+    <title>Cumbia</title>
+</head>
+<body>
+    <script defer src="{% static 'dist/bundle.js' %}" type="text/javascript"></script>
+    <main class="main-grid">
+        
+        {% include 'portfolio/includes/l-col.html' %}
+        {% include 'portfolio/includes/l-foot.html' %}
+
+        {% block content %}
+        {% endblock content %}
+
+        {% include 'portfolio/includes/r-col.html' %}
+        {% include 'portfolio/includes/r-foot.html' %}
+    
+    </main>
+</body>
+</html>
