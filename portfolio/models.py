@@ -63,23 +63,11 @@ class Pic(models.Model):
         on_delete=models.CASCADE,
         related_name='pics'
     )
-    title = models.CharField(
+    caption = models.CharField(
         max_length=250,
         blank=True,
         default='',
-        verbose_name=_('Title')
-    )
-    client = models.CharField(
-        max_length=250,
-        blank=True,
-        default='',
-        verbose_name=_('Client')
-    )
-    agency = models.CharField(
-        max_length=250,
-        blank=True,
-        default='',
-        verbose_name=_('Agency')
+        verbose_name=_('Caption')
     )
     display_order = models.IntegerField(
         verbose_name=_('Orden'),
