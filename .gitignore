@@ -26,7 +26,8 @@ node_modules/
 package-lock.json
 
 staticfiles/*
-!staticfiles/.gitkeep 
+!staticfiles/.gitkeep
+media/
 .vscode/symbols.json
 
 # localhost SSL

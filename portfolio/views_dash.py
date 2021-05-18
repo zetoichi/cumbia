@@ -1,14 +1,16 @@
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 
+from .mixins import GeneralContextMixin
 from .models import (
     Photographer,
     Pic,
 )
 
-class DashIndexView(TemplateView):
+class DashIndexView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/dash_index.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['photographers'] = Photographer.objects.all()
-        return context
+
+class DashAddPicsView(GeneralContextMixin, DetailView):
+    template_name = 'portfolio/dash_add_pics.html'
+    model = Photographer

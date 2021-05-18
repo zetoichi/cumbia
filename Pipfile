@@ -13,6 +13,7 @@ python-decouple = "*"
 shortuuid = "*"
 selenium = "*"
 pillow = "*"
+lorem-text = "*"
 
 [dev-packages]
 ipython = "*"
