@@ -5,8 +5,8 @@ from django.test import (
 from django.http import HttpRequest
 from django.template.loader import render_to_string
 
-from .public_views import PublicIndexView
-from .dash_views import DashIndexView
+from .views_public import PublicIndexView
+from .views_dash import DashIndexView
 from .models import Photographer, Pic
 
 class PublicIndexTest(TestCase):

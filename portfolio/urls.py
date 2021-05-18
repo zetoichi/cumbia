@@ -1,11 +1,12 @@
 from django.urls import path
 
 from . import (
-    public_views,
-    dash_views,
+    views_public,
+    views_dash,
 )
 
 urlpatterns = [
-    path('', public_views.PublicIndexView.as_view(), name='public_index'),
-    path('dash/', dash_views.DashIndexView.as_view(), name='dash_index'),
+    path('', views_public.PublicIndexView.as_view(), name='public_index'),
+    path('dash/', views_dash.DashIndexView.as_view(), name='dash_index'),
+    # path('dash/new-pics/', views_dash.DashIndexView.as_view(), name='dash_index'),
 ]
