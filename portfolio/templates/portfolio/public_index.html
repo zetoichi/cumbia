@@ -12,12 +12,12 @@
 
 </section>
 
-<section class="center-cx">
+<section class="center-wrapper">
     {% comment %} <header id="brand-center-header" class="center-header">
         <img id="brand-center-img" src="/media/logos/cumbia-logo-negro.png" alt="">
     </header> {% endcomment %}
 {% for ph in photographers %}
-    <div class="main-img-cx">
+    <div class="center-cx">
         <img id="ph-{{ ph.id }}" class="faded-out" src="{{ ph.photo.url }}" alt="">
     </div>
 {% endfor %}

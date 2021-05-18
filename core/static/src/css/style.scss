@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import './variables';
+@import './basic_dropzone.css';
 @import './dropzone.css';
 
 @mixin centerCenter {
@@ -166,7 +167,7 @@ section.top-ws {
     grid-row: 1 / 2;
     grid-column: 2 / 3;
 }
-section.center-cx {
+section.center-wrapper {
     grid-row: 2 / 12;
     grid-column: 2 / 3;
 }
@@ -192,7 +193,7 @@ li.ph-link:hover {
     color: pink;
 }
 
-section.center-cx {
+section.center-wrapper {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
@@ -205,14 +206,14 @@ header.center-header {
     grid-column: 1 / 4;
     @include centerCenter;
 }
-.main-img-cx {
+.center-cx {
     grid-row: 1 / 4;
     grid-column: 1 / 4;
     @include centerCenter;
     padding: 2vw;
 }
 #brand-center-header img,
-.main-img-cx img {
+.center-cx img {
     max-width: 60vw;
     max-height: auto;
     transition: opacity $x-fade linear;

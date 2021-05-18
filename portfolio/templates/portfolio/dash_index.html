@@ -1,4 +1,4 @@
-{% extends 'portfolio/layouts/public_base.html' %}
+{% extends 'portfolio/layouts/dash_base.html' %}
 {% load static %}
 
 {% block content %}
@@ -7,8 +7,13 @@
 
 </section>
 
-<section class="center-cx">
-    <div class="img-dropzone"></div>
+<section class="center-wrapper">
+    <div class="center-cx">
+        <form action="/file-upload"
+            class="dropzone"
+            id="img-dropzone">
+        </form>
+    </div>
 </section>
 
 {% endblock content %}
