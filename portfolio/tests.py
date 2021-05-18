@@ -1,33 +1,42 @@
-# from django.urls import resolve
-# from django.test import (
-#     TestCase,
-#     )
-# from django.http import HttpRequest
-# from django.template.loader import render_to_string
+from django.urls import resolve
+from django.test import (
+    TestCase,
+)
+from django.http import HttpRequest
+from django.template.loader import render_to_string
 
-# from .views import IndexView
-# from .models import Photographer, Photo
+from .public_views import PublicIndexView
+from .models import Photographer, Pic
 
-# class IndexTest(TestCase):
+class PublicIndexTest(TestCase):
 
-#     def test_root_url_resolves_to_index(self):
-#         response = self.client.get('/')
-#         self.assertEqual(response.resolver_match.func.__name__, 
-#             IndexView.as_view().__name__
-#             )
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        Photographer.objects.create(
+            first_name='First',
+            last_name='Fake Ph'
+        )
+        Photographer.objects.create(
+            first_name='Second',
+            last_name='Fake Ph'
+        )
 
-#     def test_uses_index_template(self):
-#         response = self.client.get('/')
-#         self.assertTemplateUsed(response, 'portfolio/index.html')
+    def test_root_url_resolves_to_index(self):
+        response = self.client.get('/')
+        self.assertEqual(
+            response.resolver_match.func.__name__,
+            PublicIndexView.as_view().__name__
+        )
 
-#     def test_index_displays_photographers(self):
-#         Photographer.objects.create(name='First Fake Ph')
-#         Photographer.objects.create(name='Second Fake Ph')
+    def test_uses_public_index_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'portfolio/public_index.html')
 
-#         response = self.client.get('/')
-        
-#         self.assertIn('First Fake Ph', response.content.decode())
-#         self.assertIn('Second Fake Ph', response.content.decode())
+    def test_index_displays_photographers(self):
+        response = self.client.get('/')
+        self.assertIn('First Fake Ph', response.content.decode())
+        self.assertIn('Second Fake Ph', response.content.decode())
 
 # class PhotographerAndPhotoModelsTest(TestCase):
 
@@ -35,13 +44,13 @@
 #         ph = Photographer()
 #         ph.name = 'First Fake Ph'
 #         ph.save()
-        
-#         photo_1 = Photo()
+
+#         photo_1 = Pic()
 #         photo_1.photographer = ph
 #         photo_1.url = 'photo_1.jpg'
 #         photo_1.save()
-        
-#         photo_2 = Photo()
+
+#         photo_2 = Pic()
 #         photo_2.photographer = ph
 #         photo_2.url = 'photo_2.jpg'
 #         photo_2.save()
@@ -49,7 +58,7 @@
 #         saved_phs = Photographer.objects.all()
 #         self.assertEqual(saved_phs.count(), 1)
 
-#         saved_photos = Photo.objects.all()
+#         saved_photos = Pic.objects.all()
 #         self.assertEqual(saved_photos.count(), 2)
 
 #         saved_photo_1 = saved_photos[0]
