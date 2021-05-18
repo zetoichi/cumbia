@@ -26,11 +26,11 @@ function ready() {
     //         toggleImages(e)
     //     })
     // })
-    phLinks.forEach(link => {
-        link.addEventListener('mouseleave', (e) => {
-            toggleImages(e)
-        })
-    })
+    // phLinks.forEach(link => {
+    //     link.addEventListener('mouseleave', (e) => {
+    //         toggleImages(e)
+    //     })
+    // })
 }
 
 function toggleImages(e) {
