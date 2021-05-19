@@ -10,4 +10,4 @@ from .models import Pic
 
 # path: 'dash/phs/<str:pk>/save/'
 def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
-    pass
+    return HttpResponse('success')

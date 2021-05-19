@@ -56,7 +56,7 @@ class PicTestCase(TestCase):
                 os.remove(path)
 
     def test_should_save_and_delete_image(self):
-        test_file = self.test_image_files['portrait']
+        test_file = self.test_image_files.get('portrait')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
@@ -80,7 +80,7 @@ class PicTestCase(TestCase):
         self.assertFalse(os.path.exists(deleted_path))
 
     def test_should_resize_at_save(self):
-        test_file = self.test_image_files['landscape']
+        test_file = self.test_image_files.get('landscape')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
@@ -93,20 +93,18 @@ class PicTestCase(TestCase):
             img_file = ImageFile(img_file)
             img_file.name = img_file.name.split('/')[-1]
             orig_height, orig_width = img_file.height, img_file.width
-            print(f'ORIGINAL SIZE: {orig_height}, {orig_width}')
-            print()
             instance.pic = ImageFile(img_file)
             instance.save()
 
         new_height, new_width = instance.pic.height, instance.pic.width
         new_ratio = round(instance.pic.height / instance.pic.width, 2)
+        print(f'ORIGINAL SIZE: {orig_height}, {orig_width}')
         print(f'NEW_SIZE: {new_height}, {new_width}')
-        print()
         self.assertTrue(new_width <= 1920)
         self.assertTrue(new_height <= 1920)
 
     def test_should_keep_ratio_at_resize(self):
-        test_file = self.test_image_files['big']
+        test_file = self.test_image_files.get('big')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
@@ -120,13 +118,11 @@ class PicTestCase(TestCase):
             img_file.name = img_file.name.split('/')[-1]
             orig_height, orig_width = img_file.height, img_file.width
             orig_ratio = round(orig_height / orig_width, 2)
-            print(f'ORIGINAL RATIO: {orig_ratio}')
-            print()
             instance.pic = ImageFile(img_file)
             instance.save()
 
         new_height, new_width = instance.pic.height, instance.pic.width
         new_ratio = round(new_height / new_width, 2)
+        print(f'ORIGINAL RATIO: {orig_ratio}')
         print(f'NEW RATIO: {new_ratio}')
-        print()
         self.assertEqual(orig_ratio, new_ratio)
