@@ -95,4 +95,4 @@ class Pic(models.Model):
     class Meta:
         verbose_name = _('Foto')
         verbose_name_plural = _('Fotos')
-        ordering = ['display_order']
+        ordering = ['display_order', 'photographer__display_name']
