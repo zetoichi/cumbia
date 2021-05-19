@@ -9,6 +9,7 @@ class GeneralCBVMixin:
         and expected_template to inherit from GeneralCBVTestCase"""
 
     def test_url_resolves(self):
+        print('executing test_url_resolves')
         if self.url is not None and self.view_class is not None:
             response = self.client.get(self.url)
             self.assertEqual(
@@ -19,6 +20,7 @@ class GeneralCBVMixin:
             raise ImproperlyConfigured(self.error_msg)
 
     def test_uses_expected_template(self):
+        print('executing test_uses_expected_template')
         if self.url is not None and self.expected_template is not None:
             response = self.client.get(self.url)
             self.assertTemplateUsed(response, self.expected_template)

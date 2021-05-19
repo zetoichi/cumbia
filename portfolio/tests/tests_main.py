@@ -16,14 +16,20 @@ class GeneralCBVTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        Photographer.objects.create(
+        cls.p1 = Photographer.objects.create(
             first_name='First',
             last_name='Fake Ph'
         )
-        Photographer.objects.create(
+        cls.p2 = Photographer.objects.create(
             first_name='Second',
             last_name='Fake Ph'
         )
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.p1.delete()
+        cls.p2.delete()
+        super().tearDownClass()
 
 class IndexTest(GeneralCBVMixin, GeneralCBVTestCase):
     url = '/'
@@ -36,6 +42,6 @@ class IndexTest(GeneralCBVMixin, GeneralCBVTestCase):
         self.assertIn('Second Fake Ph', response.content.decode())
 
 class PhDetailTest(GeneralCBVMixin, GeneralCBVTestCase):
-    url = '/phs/1/'
+    url = '/phs/3/'
     view_class = PhDetailView
     expected_template = 'portfolio/ph_detail.html'
