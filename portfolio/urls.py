@@ -1,35 +1,31 @@
 from django.urls import path
 
 from . import (
-    views_public,
-    views_dash,
-    views_util,
+    views_main,
+    views_json,
 )
 
-# PUBLIC
+# CBV
 
 urlpatterns = [
     path(
         '',
-        views_public.PublicIndexView.as_view(),
-        name='public_index'),
+        views_main.IndexView.as_view(),
+        name='public_index'
+    ),
+    path(
+        'phs/<str:pk>/',
+        views_main.PhDetailView.as_view(),
+        name='ph_detail'
+    ),
 ]
 
-#  DASHBOARD
+# JSON
 
 urlpatterns += [
     path(
-        'dash/',
-        views_dash.DashIndexView.as_view(),
-        name='dash_index'),
-    path(
-        'dash/phs/add/<str:pk>/',
-        views_dash.DashAddPicsView.as_view(),
-        name='dash_ph_add_pics'
-    ),
-    path(
         'dash/phs/save/<str:pk>/',
-        views_util.save_new_pics,
+        views_json.save_new_pics,
         name='dash_ph_save_pics'
     ),
 ]

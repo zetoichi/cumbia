@@ -7,10 +7,9 @@ from .models import (
     Pic,
 )
 
-class DashIndexView(GeneralContextMixin, TemplateView):
-    template_name = 'portfolio/dash_index.html'
+class IndexView(GeneralContextMixin, TemplateView):
+    template_name = 'portfolio/index.html'
 
-
-class DashAddPicsView(GeneralContextMixin, DetailView):
-    template_name = 'portfolio/dash_add_pics.html'
+class PhDetailView(GeneralContextMixin, DetailView):
+    template_name = 'portfolio/ph_detail.html'
     model = Photographer
