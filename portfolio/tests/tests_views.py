@@ -6,7 +6,6 @@ from django.urls import resolve
 from django.test import (
     TestCase,
 )
-from django.conf import settings
 
 from portfolio.views_main import (
     IndexView,
@@ -14,8 +13,10 @@ from portfolio.views_main import (
 )
 from portfolio.views_json import save_new_pics
 from portfolio.models import Photographer, Pic
-
-UPLOADED_PICS_PATH = os.path.join(settings.MEDIA_ROOT, 'pics')
+from .common import (
+    TEST_IMAGE_FILES,
+    files_cleanup
+)
 
 class CBVTestCase(TestCase):
 
@@ -97,10 +98,7 @@ class JSONViewsTestCase(TestCase):
     }
 
     def tearDown(self):
-        for filename in self.test_image_files.values():
-            path = os.path.join(UPLOADED_PICS_PATH, filename)
-            if os.path.exists(path):
-                os.remove(path)
+        files_cleanup()
 
     def test_save_pics_url_should_resolve(self):
         ph = Photographer.objects.create(
@@ -136,6 +134,6 @@ class JSONViewsTestCase(TestCase):
         pics_created = data['pics_created']
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(Pic.objects.filter(pk=pics_created[0]).exists())
-        self.assertTrue(Pic.objects.filter(pk=pics_created[1]).exists())
-        self.assertTrue(Pic.objects.filter(pk=pics_created[2]).exists())
+        self.assertTrue(ph.pics.filter(pk=pics_created[0]).exists())
+        self.assertTrue(ph.pics.filter(pk=pics_created[1]).exists())
+        self.assertTrue(ph.pics.filter(pk=pics_created[2]).exists())

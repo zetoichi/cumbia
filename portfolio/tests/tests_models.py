@@ -8,11 +8,13 @@ from django.core.files.images import ImageFile
 from django.test import (
     TestCase,
 )
-from django.conf import settings
 
 from portfolio.models import Photographer, Pic
-
-UPLOADED_PICS_PATH = os.path.join(settings.MEDIA_ROOT, 'pics')
+from .common import (
+    UPLOADED_PICS_PATH,
+    TEST_IMAGE_FILES,
+    files_cleanup
+)
 
 class PhotographerModelsTest(TestCase):
 
@@ -43,20 +45,11 @@ class PhotographerModelsTest(TestCase):
 
 class PicTestCase(TestCase):
 
-    test_image_files = {
-        'portrait': 'ozFsMoAW_testpic_portrait.jpg',
-        'landscape': 'BreHayL8_testpic_landscape.jpg',
-        'big': '4wmdrys5_testpic_big.jpg',
-    }
-
     def tearDown(self):
-        for filename in self.test_image_files.values():
-            path = os.path.join(UPLOADED_PICS_PATH, filename)
-            if os.path.exists(path):
-                os.remove(path)
+        files_cleanup()
 
     def test_should_save_and_delete_image(self):
-        test_file = self.test_image_files.get('portrait')
+        test_file = TEST_IMAGE_FILES.get('portrait')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
@@ -80,7 +73,7 @@ class PicTestCase(TestCase):
         self.assertFalse(os.path.exists(deleted_path))
 
     def test_should_resize_at_save(self):
-        test_file = self.test_image_files.get('landscape')
+        test_file = TEST_IMAGE_FILES.get('landscape')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
@@ -104,7 +97,7 @@ class PicTestCase(TestCase):
         self.assertTrue(new_height <= 1920)
 
     def test_should_keep_ratio_at_resize(self):
-        test_file = self.test_image_files.get('big')
+        test_file = TEST_IMAGE_FILES.get('big')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(

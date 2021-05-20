@@ -1,10 +1,13 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, IO
 from datetime import date
+
+from lorem_text import lorem
 
 from django.db import models
 from django.utils.translation import gettext as _
 from pydantic import BaseModel
 
+from . import managers
 from core.helpers import resize_img
 
 class Photographer(models.Model):
@@ -30,13 +33,32 @@ class Photographer(models.Model):
         verbose_name=_('Orden'),
         default=1
     )
+    pics = models.ManyToManyField(
+        'Pic',
+        blank=True,
+        verbose_name=_('Fotos')
+    )
     created_at = models.DateTimeField(
         auto_now_add=True
     )
 
+    objects = managers.PhotographerManager()
+
     def normalize_name(self):
         self.first_name = self.first_name.title()
         self.last_name = self.last_name.title()
+
+    def pics_from_files(self, files: List[IO]) -> List[int]:
+        pics_created = []
+        for f in files:
+            new_pic = Pic.objects.create(
+                pic=f,
+                caption=lorem.words(6)
+            )
+            self.pics.add(new_pic)
+            pics_created.append(new_pic.pk)
+
+        return pics_created
 
     def save(self, *args, **kwargs):
         self.normalize_name()
@@ -58,11 +80,6 @@ class Pic(models.Model):
         upload_to='pics',
         verbose_name=_('Image')
     )
-    photographer = models.ForeignKey(
-        Photographer,
-        on_delete=models.CASCADE,
-        related_name='pics'
-    )
     caption = models.CharField(
         max_length=250,
         blank=True,
@@ -76,6 +93,8 @@ class Pic(models.Model):
     uploaded_at = models.DateTimeField(
         auto_now_add=True
     )
+
+    objects = managers.PicManager()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -95,4 +114,4 @@ class Pic(models.Model):
     class Meta:
         verbose_name = _('Foto')
         verbose_name_plural = _('Fotos')
-        ordering = ['display_order', 'photographer__display_name']
+        ordering = ['display_order']
