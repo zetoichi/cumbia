@@ -1,20 +1,12 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
 
-{% block content %}
+{% block center %}
 
-<section class="top-ws">
+    <section class="center-wrapper">
+        <div class="center-cx">
+            {% comment %} HERE GOES CARROUSEL {% endcomment %}
+        </div>
+    </section>
 
-</section>
-
-<section class="center-wrapper">
-    <div class="center-cx">
-        <form action="/file-upload"
-            class="dropzone"
-            id="img-dropzone">
-            {% csrf_token %}
-        </form>
-    </div>
-</section>
-
-{% endblock content %}
+{% endblock center %}

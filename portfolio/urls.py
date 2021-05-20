@@ -26,6 +26,6 @@ urlpatterns += [
     path(
         'phs/savepics/<str:pk>/',
         views_json.save_new_pics,
-        name='dash_ph_save_pics'
+        name='ph_save_pics'
     ),
 ]
