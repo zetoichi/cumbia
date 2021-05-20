@@ -1,0 +1,16 @@
+button.action-btn {
+  border-radius: 0;
+  background: none;
+  border-width: 2px;
+  border-style: solid;
+  padding: 0.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 120px;
+}
+
+button.action-btn.main-action {
+  color: coral;
+  border-color: coral;
+}
+/*# sourceMappingURL=buttons.css.map */

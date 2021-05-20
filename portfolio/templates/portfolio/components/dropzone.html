@@ -1,3 +1,8 @@
-<form action="{% url 'ph_save_pics' ph.pk %}" id="img-dropzone" class="dropzone">
-    {% csrf_token %}
-</form>
+<div class="dropzone-cx">
+    <form action="{% url 'ph_save_pics' ph.pk %}" id="img-dropzone" class="dropzone">
+        {% csrf_token %}
+    </form>
+    <div class="actions-cx">
+        <button id="upload-imgs-btn" class="action-btn main-action">SUBIR</button>
+    </div>
+</div>
