@@ -52,11 +52,6 @@ class PicTestCase(TestCase):
         test_file = get_test_img_file('portrait')
         instance = Pic()
         pk = instance.pk
-        ph = Photographer.objects.create(
-            first_name='Ph',
-            last_name='With Pic',
-        )
-        instance.photographer = ph
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
@@ -69,7 +64,6 @@ class PicTestCase(TestCase):
 
         instance.delete()
         deleted_path = expected_path
-        self.assertFalse(Pic.objects.filter(pk=pk).exists())
         self.assertFalse(os.path.exists(deleted_path))
 
     def test_should_resize_at_save(self):
@@ -103,8 +97,19 @@ class PicTestCase(TestCase):
         new_ratio = round(instance.pic.height / instance.pic.width, 2)
         self.assertEqual(orig_ratio, new_ratio)
 
-    # def test_should_return_photographer_property(self):
-    #     ph = Photographer.objects.create(
-    #         first_name='Ph',
-    #         last_name='With Big',
-    #     )
+    def test_should_return_photographer_property(self):
+        test_file = get_test_img_file('portrait')
+        instance = Pic()
+        ph = Photographer.objects.create(
+            first_name='Ph',
+            last_name='For Portarit',
+        )
+
+        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            instance.pic = ImageFile(img_file)
+            instance.save()
+        ph.pics.add(instance)
+
+        self.assertTrue(instance.photographer == ph)

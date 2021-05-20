@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, IO
+from typing import Any, Dict, List, IO, Type
 from datetime import date
 
 from lorem_text import lorem
@@ -95,6 +95,10 @@ class Pic(models.Model):
     )
 
     objects = managers.PicManager()
+
+    @property
+    def photographer(self) -> Type[Photographer]:
+        return self.photographer_set.first()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
