@@ -14,8 +14,9 @@ from portfolio.views_main import (
 from portfolio.views_json import save_new_pics
 from portfolio.models import Photographer, Pic
 from .common import (
-    TEST_IMAGE_FILES,
-    files_cleanup
+    files_cleanup,
+    get_open_test_img_files,
+    close_files,
 )
 
 class CBVTestCase(TestCase):
@@ -91,12 +92,6 @@ class CBVTestCase(TestCase):
 
 class JSONViewsTestCase(TestCase):
 
-    test_image_files = {
-        'portrait': 'ozFsMoAW_testpic_portrait.jpg',
-        'landscape': 'BreHayL8_testpic_landscape.jpg',
-        'big': '4wmdrys5_testpic_big.jpg',
-    }
-
     def tearDown(self):
         files_cleanup()
 
@@ -113,26 +108,18 @@ class JSONViewsTestCase(TestCase):
         self.assertEqual(response.resolver_match.func, view_func)
 
     def test_save_pics_should_create_pic_objects(self):
-        uploaded_object = {}
-        open_files = []
         ph = Photographer.objects.create(
             first_name='Jason',
             last_name='Statham'
         )
         url = f'/phs/savepics/{ph.pk}/'
+        open_files = get_open_test_img_files()
 
-        for i, (_, filename) in enumerate(self.test_image_files.items()):
-            f = open(f'portfolio/tests/{filename}', 'rb')
-            open_files.append(f)
-            uploaded_object[f'pic[{i}]'] = f
-
-        response = self.client.post(url, uploaded_object)
-        for f in open_files:
-            f.close()
+        response = self.client.post(url, open_files)
+        close_files(open_files)
 
         data = json.loads(response.content.decode())
         pics_created = data['pics_created']
-
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ph.pics.filter(pk=pics_created[0]).exists())
         self.assertTrue(ph.pics.filter(pk=pics_created[1]).exists())

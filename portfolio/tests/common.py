@@ -1,4 +1,5 @@
 import os
+from typing import Tuple, List, Dict, IO
 
 from django.conf import settings
 
@@ -14,3 +15,21 @@ def files_cleanup():
         path = os.path.join(UPLOADED_PICS_PATH, filename)
         if os.path.exists(path):
             os.remove(path)
+
+def get_test_img_file(img_type: str) -> str:
+    return TEST_IMAGE_FILES[img_type]
+
+def get_open_test_img_files() -> Dict[str, IO]:
+    open_files = {}
+    for i, (_, filename) in enumerate(TEST_IMAGE_FILES.items()):
+        f = open(f'portfolio/tests/{filename}', 'rb')
+        open_files[f'pic[{i}]'] = f
+
+    return open_files
+
+def close_files(open_files):
+    for f in open_files.values():
+        f.close()
+
+def get_expected_path(filename):
+    return os.path.join(UPLOADED_PICS_PATH, f'{filename}')

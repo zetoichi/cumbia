@@ -11,9 +11,9 @@ from django.test import (
 
 from portfolio.models import Photographer, Pic
 from .common import (
-    UPLOADED_PICS_PATH,
-    TEST_IMAGE_FILES,
-    files_cleanup
+    files_cleanup,
+    get_test_img_file,
+    get_expected_path
 )
 
 class PhotographerModelsTest(TestCase):
@@ -49,7 +49,7 @@ class PicTestCase(TestCase):
         files_cleanup()
 
     def test_should_save_and_delete_image(self):
-        test_file = TEST_IMAGE_FILES.get('portrait')
+        test_file = get_test_img_file('portrait')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
@@ -64,7 +64,7 @@ class PicTestCase(TestCase):
             instance.pic = ImageFile(img_file)
             instance.save()
 
-        expected_path = os.path.join(UPLOADED_PICS_PATH, f'{test_file}')
+        expected_path = get_expected_path(test_file)
         self.assertEqual(instance.pic.path, expected_path)
 
         instance.delete()
@@ -73,7 +73,7 @@ class PicTestCase(TestCase):
         self.assertFalse(os.path.exists(deleted_path))
 
     def test_should_resize_at_save(self):
-        test_file = TEST_IMAGE_FILES.get('landscape')
+        test_file = get_test_img_file('landscape')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
@@ -97,7 +97,7 @@ class PicTestCase(TestCase):
         self.assertTrue(new_height <= 1920)
 
     def test_should_keep_ratio_at_resize(self):
-        test_file = TEST_IMAGE_FILES.get('big')
+        test_file = get_test_img_file('big')
         instance = Pic()
         pk = instance.pk
         ph = Photographer.objects.create(
