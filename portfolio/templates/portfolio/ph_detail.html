@@ -12,6 +12,7 @@
         <form action="/file-upload"
             class="dropzone"
             id="img-dropzone">
+            {% csrf_token %}
         </form>
     </div>
 </section>

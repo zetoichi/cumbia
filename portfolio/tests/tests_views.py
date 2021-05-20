@@ -1,9 +1,12 @@
+import os
+import json
 import inspect
 
 from django.urls import resolve
 from django.test import (
     TestCase,
 )
+from django.conf import settings
 
 from portfolio.views_main import (
     IndexView,
@@ -11,6 +14,8 @@ from portfolio.views_main import (
 )
 from portfolio.views_json import save_new_pics
 from portfolio.models import Photographer, Pic
+
+UPLOADED_PICS_PATH = os.path.join(settings.MEDIA_ROOT, 'pics')
 
 class CBVTestCase(TestCase):
 
@@ -91,21 +96,46 @@ class JSONViewsTestCase(TestCase):
         'big': '4wmdrys5_testpic_big.jpg',
     }
 
+    def tearDown(self):
+        for filename in self.test_image_files.values():
+            path = os.path.join(UPLOADED_PICS_PATH, filename)
+            if os.path.exists(path):
+                os.remove(path)
+
     def test_save_pics_url_should_resolve(self):
-        url = '/phs/savepics/1/'
+        ph = Photographer.objects.create(
+            first_name='Jason',
+            last_name='Statham'
+        )
+        url = f'/phs/savepics/{ph.pk}/'
         view_func = save_new_pics
 
         response = self.client.get(url)
 
         self.assertEqual(response.resolver_match.func, view_func)
 
-    # def test_save_pics_should_create_pic_objects(self):
-    #     test_file = self.test_image_files.get('landscape')
-    #     ph = Photographer.objects.create(
-    #         first_name='Jason',
-    #         last_name='Statham'
-    #     )
-    #     url = f'/phs/savepics/{ph.pk}/'
-    #     response = self.client.post(url)
+    def test_save_pics_should_create_pic_objects(self):
+        uploaded_object = {}
+        open_files = []
+        ph = Photographer.objects.create(
+            first_name='Jason',
+            last_name='Statham'
+        )
+        url = f'/phs/savepics/{ph.pk}/'
 
-    #     self.assertEqual(response, {'jason': 'statham'})
+        for i, (_, filename) in enumerate(self.test_image_files.items()):
+            f = open(f'portfolio/tests/{filename}', 'rb')
+            open_files.append(f)
+            uploaded_object[f'pic[{i}]'] = f
+
+        response = self.client.post(url, uploaded_object)
+        for f in open_files:
+            f.close()
+
+        data = json.loads(response.content.decode())
+        pics_created = data['pics_created']
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(Pic.objects.filter(pk=pics_created[0]).exists())
+        self.assertTrue(Pic.objects.filter(pk=pics_created[1]).exists())
+        self.assertTrue(Pic.objects.filter(pk=pics_created[2]).exists())

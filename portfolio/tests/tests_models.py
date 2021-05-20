@@ -98,8 +98,8 @@ class PicTestCase(TestCase):
 
         new_height, new_width = instance.pic.height, instance.pic.width
         new_ratio = round(instance.pic.height / instance.pic.width, 2)
-        print(f'ORIGINAL SIZE: {orig_height}, {orig_width}')
-        print(f'NEW_SIZE: {new_height}, {new_width}')
+        # print(f'ORIGINAL SIZE: {orig_height}, {orig_width}')
+        # print(f'NEW_SIZE: {new_height}, {new_width}')
         self.assertTrue(new_width <= 1920)
         self.assertTrue(new_height <= 1920)
 
@@ -123,6 +123,6 @@ class PicTestCase(TestCase):
 
         new_height, new_width = instance.pic.height, instance.pic.width
         new_ratio = round(new_height / new_width, 2)
-        print(f'ORIGINAL RATIO: {orig_ratio}')
-        print(f'NEW RATIO: {new_ratio}')
+        # print(f'ORIGINAL RATIO: {orig_ratio}')
+        # print(f'NEW RATIO: {new_ratio}')
         self.assertEqual(orig_ratio, new_ratio)
