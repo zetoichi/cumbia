@@ -10,6 +10,7 @@ from django.test import (
 from portfolio.views_main import (
     IndexView,
     PhDetailView,
+    PhAddPicsView,
 )
 from portfolio.views_json import save_new_pics
 from portfolio.models import Photographer, Pic
@@ -17,6 +18,7 @@ from .helpers import (
     files_cleanup,
     get_open_test_img_files,
     close_files,
+    get_expected_and_actual,
 )
 
 class CBVTestCase(TestCase):
@@ -28,11 +30,11 @@ class CBVTestCase(TestCase):
         view_class = IndexView
 
         response = self.client.get(url)
-
-        self.assertEqual(
-            response.resolver_match.func.__name__,
-            view_class.as_view().__name__
+        expected, actual = get_expected_and_actual(
+            view_class, response
         )
+
+        self.assertEqual(expected, actual)
 
     def test_ph_detail_url_should_resolve(self):
         ph = Photographer.objects.create(
@@ -43,9 +45,25 @@ class CBVTestCase(TestCase):
         view_class = PhDetailView
 
         response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
 
-        expected = response.resolver_match.func.__name__
-        actual = view_class.as_view().__name__
+        self.assertEqual(expected, actual)
+
+    def test_ph_add_pics_url_should_resolve(self):
+        ph = Photographer.objects.create(
+            first_name='Chuck',
+            last_name='Norris'
+        )
+        url = f'/phs/{ph.pk}/add/'
+        view_class = PhAddPicsView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
         self.assertEqual(expected, actual)
 
     # TEMPLATE

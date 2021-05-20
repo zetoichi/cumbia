@@ -1,7 +1,8 @@
 import os
-from typing import Tuple, List, Dict, IO
+from typing import Tuple, List, Dict, IO, Type
 
 from django.conf import settings
+from django.http import HttpResponse
 
 UPLOADED_PICS_PATH = os.path.join(settings.MEDIA_ROOT, 'pics')
 TEST_IMAGE_FILES = {
@@ -33,3 +34,9 @@ def close_files(open_files):
 
 def get_expected_path(filename):
     return os.path.join(UPLOADED_PICS_PATH, f'{filename}')
+
+def get_expected_and_actual(view_class: Type, response: HttpResponse) -> Tuple[str, str]:
+    return (
+        view_class.as_view().__name__,
+        response.resolver_match.func.__name__
+    )

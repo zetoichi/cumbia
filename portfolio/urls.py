@@ -18,6 +18,11 @@ urlpatterns = [
         views_main.PhDetailView.as_view(),
         name='ph_detail'
     ),
+    path(
+        'phs/<str:pk>/add/',
+        views_main.PhAddPicsView.as_view(),
+        name='ph_add_pics'
+    ),
 ]
 
 # JSON

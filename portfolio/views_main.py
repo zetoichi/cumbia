@@ -14,3 +14,8 @@ class PhDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'
     model = Photographer
     context_object_name = 'ph'
+
+class PhAddPicsView(GeneralContextMixin, DetailView):
+    template_name = 'portfolio/ph_detail.html'
+    model = Photographer
+    context_object_name = 'ph'
