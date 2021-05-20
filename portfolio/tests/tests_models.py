@@ -51,7 +51,6 @@ class PicTestCase(TestCase):
     def test_should_save_and_delete_image(self):
         test_file = get_test_img_file('portrait')
         instance = Pic()
-        pk = instance.pk
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
