@@ -104,12 +104,12 @@ class Pic(models.Model):
         self.pic.delete(save=False)
         super().delete(*args, **kwargs)
 
-    def __str__(self):
-        if self.title != '':
-            string = self.title
-        else:
-            string = self.pic.name
-        return string
+    # def __str__(self):
+    #     if self.title != '':
+    #         string = self.title
+    #     else:
+    #         string = self.pic.name
+    #     return string
 
     class Meta:
         verbose_name = _('Foto')
