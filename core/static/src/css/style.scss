@@ -162,13 +162,18 @@ nav.gen-nav {
     grid-column: 1 / 2;
     padding-top: 1vw;
 }
-section.center-top {
-    grid-row: 1 / 2;
+section.base-center {
     grid-column: 2 / 3;
 }
-section.center-wrapper {
+section.base-center.top {
+    grid-row: 1 / 2;
+}
+section.base-center.center {
     grid-row: 2 / 12;
-    grid-column: 2 / 3;
+}
+section.base-center.bottom {
+    grid-row: 12 / 13;
+
 }
 section.r-info {
     grid-row: 1 / -4;
@@ -192,7 +197,7 @@ li.ph-link:hover {
     color: pink;
 }
 
-section.center-wrapper {
+section.base-center.center {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);

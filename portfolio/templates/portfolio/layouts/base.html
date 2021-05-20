@@ -20,14 +20,18 @@
         {% include 'portfolio/components/l-col.html' %}
         {% include 'portfolio/components/l-foot.html' %}
 
-        <section class="center-top">
+        <section class="base-center top">
             {% block centertop %}{% endblock centertop %}
         </section>
 
-        <section class="center-wrapper">
+        <section class="base-center center">
             <div class="center-cx">
                 {% block center %}{% endblock center %}
             </div>
+        </section>
+
+        <section class="base-center bottom">
+            {% block centerbottom %}{% endblock centerbottom %}
         </section>
 
         {% include 'portfolio/components/r-col.html' %}
