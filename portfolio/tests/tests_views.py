@@ -13,7 +13,7 @@ from portfolio.views_main import (
 )
 from portfolio.views_json import save_new_pics
 from portfolio.models import Photographer, Pic
-from .common import (
+from .helpers import (
     files_cleanup,
     get_open_test_img_files,
     close_files,

@@ -10,7 +10,7 @@ from django.test import (
 )
 
 from portfolio.models import Photographer, Pic
-from .common import (
+from .helpers import (
     files_cleanup,
     get_test_img_file,
     get_expected_path
