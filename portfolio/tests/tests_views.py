@@ -87,6 +87,19 @@ class CBVTestCase(TestCase):
 
         self.assertTemplateUsed(response, expected_template)
 
+    def test_ph_add_pics_should_render_expected_template(self):
+        ph = Photographer.objects.create(
+            first_name='Gene',
+            last_name='Hackman'
+        )
+        url = f'/phs/{ph.pk}/add/'
+        view_class = PhDetailView
+        expected_template = 'portfolio/ph_add_pics.html'
+
+        response = self.client.get(url)
+
+        self.assertTemplateUsed(response, expected_template)
+
     # CONTENT
 
     def test_index_should_display_photographers(self):
