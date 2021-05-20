@@ -75,12 +75,6 @@ class PicTestCase(TestCase):
     def test_should_resize_at_save(self):
         test_file = get_test_img_file('landscape')
         instance = Pic()
-        pk = instance.pk
-        ph = Photographer.objects.create(
-            first_name='Ph',
-            last_name='With Landscape',
-        )
-        instance.photographer = ph
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
@@ -90,32 +84,27 @@ class PicTestCase(TestCase):
             instance.save()
 
         new_height, new_width = instance.pic.height, instance.pic.width
-        new_ratio = round(instance.pic.height / instance.pic.width, 2)
-        # print(f'ORIGINAL SIZE: {orig_height}, {orig_width}')
-        # print(f'NEW_SIZE: {new_height}, {new_width}')
-        self.assertTrue(new_width <= 1920)
+        self.assertTrue(new_height < orig_height)
+        self.assertTrue(new_width < orig_width)
         self.assertTrue(new_height <= 1920)
+        self.assertTrue(new_width <= 1920)
 
     def test_should_keep_ratio_at_resize(self):
         test_file = get_test_img_file('big')
         instance = Pic()
-        pk = instance.pk
-        ph = Photographer.objects.create(
-            first_name='Ph',
-            last_name='With Big',
-        )
-        instance.photographer = ph
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
             img_file.name = img_file.name.split('/')[-1]
-            orig_height, orig_width = img_file.height, img_file.width
-            orig_ratio = round(orig_height / orig_width, 2)
+            orig_ratio = round(img_file.height / img_file.width, 2)
             instance.pic = ImageFile(img_file)
             instance.save()
 
-        new_height, new_width = instance.pic.height, instance.pic.width
-        new_ratio = round(new_height / new_width, 2)
-        # print(f'ORIGINAL RATIO: {orig_ratio}')
-        # print(f'NEW RATIO: {new_ratio}')
+        new_ratio = round(instance.pic.height / instance.pic.width, 2)
         self.assertEqual(orig_ratio, new_ratio)
+
+    # def test_should_return_photographer_property(self):
+    #     ph = Photographer.objects.create(
+    #         first_name='Ph',
+    #         last_name='With Big',
+    #     )
