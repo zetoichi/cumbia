@@ -4,7 +4,7 @@ Dropzone.options.imgDropzone = {
     autoProcessQueue: false,
     uploadMultiple: true,
     dictDefaultMessage: 'Arrastre aquí las imágenes...',
-    acceptedFiles: '.jpg,.png',
+    acceptedFiles: '.jpg,.png,.gif',
     addRemoveLinks: true,
     maxFiles: 12,
     parallelUploads: 12,
