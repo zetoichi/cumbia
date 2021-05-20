@@ -98,7 +98,10 @@ class Pic(models.Model):
 
     @property
     def photographer(self) -> Type[Photographer]:
-        return self.photographer_set.first()
+        if self.photographer_set.count() == 1:
+            return self.photographer_set.first()
+        else:
+            return self.photographer_set.all()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
