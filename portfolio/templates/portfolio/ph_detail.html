@@ -3,6 +3,18 @@
 
 {% block center %}
 
-{% comment %} HERE GOES CARROUSEL {% endcomment %}
+<div class="carrousel-cx">
+    <div class="splide">
+        <div class="splide__track">
+            <ul class="splide__list">
+            {% for pic in ph.pics.all %}
+                <li class="splide__slide carrousel-slide">
+                    <img data-splide-lazy="{{ pic.pic.url }}" alt="">
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 
 {% endblock center %}

@@ -3,6 +3,7 @@
 @import './buttons';
 @import './basic_dropzone.css';
 @import './dropzone.css';
+@import 'splide-default.min.css';
 
 @mixin centerCenter {
     display: flex;
@@ -271,4 +272,15 @@ header.center-header {
     @include centerCenter;
     height: 15%;
     width: 100%;
+}
+
+.carrousel-cx {
+    @include fullSize;
+}
+.carrousel-slide {
+    @include centerCenter;
+}
+.splide__slide img {
+    width : auto;
+    height: 100%;
 }
