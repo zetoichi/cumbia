@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(zetoichi-b.xyz www.zetoichi-b.xyz)
+domains=(zetoichi-b.xyz)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="zetoichi.dev@protonmail.com"
