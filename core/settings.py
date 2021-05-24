@@ -10,15 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import json
 
 from decouple import config
 from pathlib import Path
+
+with open('logging.json') as f:
+    LOGGING_CONF = json.load(f)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', cast=bool, default=False)
+
+LOGGING = LOGGING_CONF
 
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',

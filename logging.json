@@ -1,0 +1,128 @@
+{
+    "version": 1,
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
+        },
+        "file_debug": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/rotating_debug.log",
+            "maxBytes": 5242880,
+            "formatter": "detailed"
+        },
+        "template_info": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/template_info.log",
+            "maxBytes": 5242880,
+            "formatter": "detailed"
+        },
+        "file_info": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/info.log",
+            "maxBytes": 5242880,
+            "formatter": "detailed"
+        },
+        "file_warning": {
+            "level": "WARNING",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/warning.log",
+            "maxBytes": 5242880,
+            "formatter": "detailed"
+        },
+        "file_errors": {
+            "level": "ERROR",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/error.log",
+            "maxBytes": 5242880,
+            "formatter": "detailed"
+        },
+        "file_webhook_info": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/webhook_info.log",
+            "maxBytes": 5242880,
+            "backupCount": 5,
+            "formatter": "detailed"
+        },
+        "json": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/json.log",
+            "maxBytes": 5242880,
+            "backupCount": 5,
+            "formatter": "detailed"
+        },
+        "email": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/email.log",
+            "maxBytes": 5242880,
+            "backupCount": 5,
+            "formatter": "detailed"
+        },
+        "temp_debug": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/temp_debug.log",
+            "maxBytes": 5242880,
+            "backupCount": 5,
+            "formatter": "detailed"
+        }
+    },
+    "loggers": {
+        "django": {
+            "handlers": [
+                "console",
+                "file_info",
+                "file_warning",
+                "file_errors"
+                ],
+            "level": "DEBUG"
+        },
+        "django.template": {
+            "handlers": [
+                "template_info"
+            ],
+            "level": "INFO"
+        },
+        "webhook": {
+            "handlers": [
+                "file_webhook_info"
+            ],
+            "level": "INFO"
+        },
+        "json": {
+            "handlers": [
+                "json"
+            ],
+            "level": "INFO"
+        },
+        "email": {
+            "handlers": [
+                "email"
+            ],
+            "level": "INFO"
+        },
+        "temp_debug": {
+            "handlers": [
+                "temp_debug"
+            ],
+            "level": "INFO"
+        }
+    },
+    "formatters": {
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{"
+        },
+        "detailed": {
+            "format": "{name} - {levelname} - {asctime} - {funcName} - {lineno} - {message}",
+            "style": "{"
+        }
+    }
+}
