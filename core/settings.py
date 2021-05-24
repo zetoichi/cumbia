@@ -73,7 +73,7 @@ DATABASES = {
         'NAME': 'cumbia',
         'USER': 'cumbia',
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'db',
+        'HOST': config('DB_HOST', default='localhost'),
         'PORT': 5432,
     }
 }
