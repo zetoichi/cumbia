@@ -159,3 +159,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Docker-compose dev settings
+docker-compose.override.yml
