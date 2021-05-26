@@ -112,3 +112,18 @@ class PicTestCase(TestCase):
         ph.pics.add(instance)
 
         self.assertTrue(instance.photographer == ph)
+
+    def test_should_get_marked_as_main(self):
+        test_file = get_test_img_file('portrait')
+        instance = Pic()
+
+        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            instance.pic = ImageFile(img_file)
+            instance.main = True
+            instance.save()
+
+        main = Pic.objects.filter(main=True).first()
+
+        self.assertEqual(instance, main)

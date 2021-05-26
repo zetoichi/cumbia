@@ -86,6 +86,10 @@ class Pic(models.Model):
         default='',
         verbose_name=_('Caption')
     )
+    main = models.BooleanField(
+        default=False,
+        verbose_name=_('Main'),
+    )
     display_order = models.IntegerField(
         verbose_name=_('Orden'),
         default=1
