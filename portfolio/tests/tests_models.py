@@ -124,6 +124,10 @@ class PicTestCase(TestCase):
             instance.main = True
             instance.save()
 
-        main = Pic.objects.filter(main=True).first()
+        main = Pic.objects.filter(
+            main=True,
+            pk=instance.pk
+        ).first()
 
         self.assertEqual(instance, main)
+        self.assertTrue(instance.is_main)

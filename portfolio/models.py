@@ -107,6 +107,10 @@ class Pic(models.Model):
         else:
             return self.photographer_set.all()
 
+    @property
+    def is_main(self):
+        return self.main == True
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         resize_img(self.pic.path)
