@@ -201,7 +201,7 @@ class PicTestCase(TestCase):
 
         self.assertTrue(pic.photographer is None)
 
-    def test_should_get_marked_as_main(self):
+    def test_should_not_get_marked_as_main(self):
         test_file = get_test_img_file('portrait')
         pic = Pic()
 
@@ -212,10 +212,4 @@ class PicTestCase(TestCase):
             pic.main = True
             pic.save()
 
-        main = Pic.objects.filter(
-            main=True,
-            pk=pic.pk
-        ).first()
-
-        self.assertEqual(pic, main)
-        self.assertTrue(pic.is_main)
+        self.assertFalse(pic.is_main)

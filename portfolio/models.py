@@ -143,9 +143,14 @@ class Pic(models.Model):
     def is_main(self):
         return self.main is True
 
+    def handle_no_ph(self):
+        if self.main is True and not self.photographer:
+            self.main = False
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         resize_img(self.pic.path)
+        self.handle_no_ph()
 
     def delete(self, *args, **kwargs):
         self.pic.delete(save=False)
