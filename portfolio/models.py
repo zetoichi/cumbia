@@ -137,7 +137,7 @@ class Pic(models.Model):
         if self.photographer_set.count() == 1:
             return self.photographer_set.first()
         else:
-            return self.photographer_set.all()
+            return None
 
     @property
     def is_main(self):
@@ -150,13 +150,6 @@ class Pic(models.Model):
     def delete(self, *args, **kwargs):
         self.pic.delete(save=False)
         super().delete(*args, **kwargs)
-
-    # def __str__(self):
-    #     if self.title != '':
-    #         string = self.title
-    #     else:
-    #         string = self.pic.name
-    #     return string
 
     class Meta:
         verbose_name = _('Foto')

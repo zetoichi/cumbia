@@ -126,33 +126,33 @@ class PicTestCase(TestCase):
 
     def test_should_save_and_delete_image(self):
         test_file = get_test_img_file('portrait')
-        instance = Pic()
+        pic = Pic()
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
             img_file.name = img_file.name.split('/')[-1]
-            instance.pic = ImageFile(img_file)
-            instance.save()
+            pic.pic = ImageFile(img_file)
+            pic.save()
 
         expected_path = get_expected_path(test_file)
-        self.assertEqual(instance.pic.path, expected_path)
+        self.assertEqual(pic.pic.path, expected_path)
 
-        instance.delete()
+        pic.delete()
         deleted_path = expected_path
         self.assertFalse(os.path.exists(deleted_path))
 
     def test_should_resize_at_save(self):
         test_file = get_test_img_file('landscape')
-        instance = Pic()
+        pic = Pic()
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
             img_file.name = img_file.name.split('/')[-1]
             orig_height, orig_width = img_file.height, img_file.width
-            instance.pic = ImageFile(img_file)
-            instance.save()
+            pic.pic = ImageFile(img_file)
+            pic.save()
 
-        new_height, new_width = instance.pic.height, instance.pic.width
+        new_height, new_width = pic.pic.height, pic.pic.width
         self.assertTrue(new_height < orig_height)
         self.assertTrue(new_width < orig_width)
         self.assertTrue(new_height <= 1920)
@@ -160,21 +160,21 @@ class PicTestCase(TestCase):
 
     def test_should_keep_ratio_at_resize(self):
         test_file = get_test_img_file('big')
-        instance = Pic()
+        pic = Pic()
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
             img_file.name = img_file.name.split('/')[-1]
             orig_ratio = round(img_file.height / img_file.width, 2)
-            instance.pic = ImageFile(img_file)
-            instance.save()
+            pic.pic = ImageFile(img_file)
+            pic.save()
 
-        new_ratio = round(instance.pic.height / instance.pic.width, 2)
+        new_ratio = round(pic.pic.height / pic.pic.width, 2)
         self.assertEqual(orig_ratio, new_ratio)
 
     def test_should_return_photographer_property(self):
         test_file = get_test_img_file('portrait')
-        instance = Pic()
+        pic = Pic()
         ph = Photographer.objects.create(
             first_name='Ph',
             last_name='For Portarit',
@@ -183,27 +183,27 @@ class PicTestCase(TestCase):
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
             img_file.name = img_file.name.split('/')[-1]
-            instance.pic = ImageFile(img_file)
-            instance.save()
-        ph.pics.add(instance)
+            pic.pic = ImageFile(img_file)
+            pic.save()
+        ph.pics.add(pic)
 
-        self.assertTrue(instance.photographer == ph)
+        self.assertTrue(pic.photographer == ph)
 
     def test_should_get_marked_as_main(self):
         test_file = get_test_img_file('portrait')
-        instance = Pic()
+        pic = Pic()
 
         with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
             img_file = ImageFile(img_file)
             img_file.name = img_file.name.split('/')[-1]
-            instance.pic = ImageFile(img_file)
-            instance.main = True
-            instance.save()
+            pic.pic = ImageFile(img_file)
+            pic.main = True
+            pic.save()
 
         main = Pic.objects.filter(
             main=True,
-            pk=instance.pk
+            pk=pic.pk
         ).first()
 
-        self.assertEqual(instance, main)
-        self.assertTrue(instance.is_main)
+        self.assertEqual(pic, main)
+        self.assertTrue(pic.is_main)
