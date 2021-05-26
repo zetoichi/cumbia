@@ -18,6 +18,9 @@ from .helpers import (
 
 class PhotographerModelsTest(TestCase):
 
+    def tearDown(self):
+        files_cleanup()
+
     def test_should_build_display_name(self):
         ph = Photographer.objects.create(
             first_name='First',
@@ -42,6 +45,42 @@ class PhotographerModelsTest(TestCase):
         )
         self.assertEqual(ph.first_name, 'First')
         self.assertEqual(ph.last_name, 'Fake Ph')
+
+    def test_should_raise_type_error(self):
+        ph = Photographer.objects.create(
+            first_name='Gloria',
+            last_name='Gaynor'
+        )
+        test_file = get_test_img_file('portrait')
+        pic = Pic()
+
+        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            pic.pic = ImageFile(img_file)
+            pic.save()
+
+        self.assertRaises(TypeError, lambda: ph.set_main_pic(pic))
+
+    def test_should_set_and_get_main_pic(self):
+        ph = Photographer.objects.create(
+            first_name='Ennio',
+            last_name='Morricone'
+        )
+        test_file = get_test_img_file('landscape')
+        pic = Pic()
+
+        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            pic.pic = ImageFile(img_file)
+            pic.save()
+        ph.pics.add(pic)
+
+        ph.set_main_pic(pic)
+
+        self.assertEqual(ph.get_main_pic(), pic)
+        self.assertEqual(ph.main_pic, pic)
 
 class PicTestCase(TestCase):
 

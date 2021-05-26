@@ -44,6 +44,10 @@ class Photographer(models.Model):
 
     objects = managers.PhotographerManager()
 
+    @property
+    def main_pic(self):
+        return self.get_main_pic()
+
     def normalize_name(self):
         self.first_name = self.first_name.title()
         self.last_name = self.last_name.title()
@@ -59,6 +63,24 @@ class Photographer(models.Model):
             pics_created.append(new_pic.pk)
 
         return pics_created
+
+    def set_main_pic(self, pic: Type['Pic']) -> None:
+        if self.pics.filter(pk=pic.pk).exists():
+            self.pics.update(main=False)
+            pic.main = True
+            pic.save()
+        else:
+            raise TypeError(
+                """The provided Pic instance does not
+                belong to this photographer"""
+            )
+
+    def get_main_pic(self):
+        main = self.pics.filter(main=True)
+        if main.count() == 1:
+            return main.first()
+        else:
+            return None
 
     def save(self, *args, **kwargs):
         self.normalize_name()
