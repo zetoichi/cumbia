@@ -3,6 +3,10 @@ from datetime import date
 
 from lorem_text import lorem
 
+from django.core.exceptions import (
+    MultipleObjectsReturned,
+    ImproperlyConfigured,
+)
 from django.db import models
 from django.utils.translation import gettext as _
 from pydantic import BaseModel
@@ -70,17 +74,23 @@ class Photographer(models.Model):
             pic.main = True
             pic.save()
         else:
-            raise TypeError(
+            raise ImproperlyConfigured(
                 """The provided Pic instance does not
                 belong to this photographer"""
             )
 
-    def get_main_pic(self):
+    def get_main_pic(self) -> Type['Pic']:
         main = self.pics.filter(main=True)
-        if main.count() == 1:
-            return main.first()
-        else:
+        main_count = main.count()
+        if main_count > 1:
+            raise ImproperlyConfigured((
+                """Photographer objects should have one and
+                only main pic assigned at a time"""
+            ))
+        elif main_count == 0:
             return None
+        else:
+            return main.first()
 
     def save(self, *args, **kwargs):
         self.normalize_name()

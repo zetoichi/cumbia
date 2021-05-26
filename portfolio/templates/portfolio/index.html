@@ -15,7 +15,9 @@
 </header>
     
 {% for ph in photographers %}
-    <img id="ph-{{ ph.id }}" class="faded-out" src="{{ ph.photo.url }}" alt="">
+    {% if ph.main_pic %}
+        <img id="ph-{{ ph.pk }}" class="faded-out" src="{{ ph.main_pic.pic.url }}" alt="">
+    {% endif %}
 {% endfor %}
 
 {% endblock center %}
