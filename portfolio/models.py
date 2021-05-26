@@ -109,7 +109,7 @@ class Pic(models.Model):
 
     @property
     def is_main(self):
-        return self.main == True
+        return self.main is True
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
