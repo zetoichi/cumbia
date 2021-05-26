@@ -172,7 +172,7 @@ class PicTestCase(TestCase):
         new_ratio = round(pic.pic.height / pic.pic.width, 2)
         self.assertEqual(orig_ratio, new_ratio)
 
-    def test_should_return_photographer_property(self):
+    def test_photographer_property_should_return_ph(self):
         test_file = get_test_img_file('portrait')
         pic = Pic()
         ph = Photographer.objects.create(
@@ -188,6 +188,18 @@ class PicTestCase(TestCase):
         ph.pics.add(pic)
 
         self.assertTrue(pic.photographer == ph)
+
+    def test_photographer_property_should_return_none(self):
+        test_file = get_test_img_file('portrait')
+        pic = Pic()
+
+        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            pic.pic = ImageFile(img_file)
+            pic.save()
+
+        self.assertTrue(pic.photographer is None)
 
     def test_should_get_marked_as_main(self):
         test_file = get_test_img_file('portrait')
