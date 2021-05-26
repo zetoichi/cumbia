@@ -4,37 +4,20 @@ services:
   db:
     image: postgres
     environment: 
-      - POSTGRES_DB
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
+      - POSTGRES_DB=cumbia
+      - POSTGRES_USER=cumbia
+      - POSTGRES_PASSWORD=xDDncS9a6Gb4zU
     volumes: 
       - pgdata:/var/lib/posgresql/data
   web:
     build: .
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes: 
-      - static_volume:/code/staticfiles
-    expose: 
-      - 8000
+      - /var/cache/cumbia/static:/code/staticfiles
+      - /var/opt/cumbia/media:/code/media
+    ports: 
+      - "8000:8000"
     depends_on: 
       - db
-  nginx:
-    build: ./nginx
-    volumes: 
-      - static_volume:/code/staticfiles
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    ports:
-      - 80:80
-      - 443:443
-    depends_on: 
-      - web
-  certbot:
-    image: certbot/certbot:v0.36.0
-    volumes: 
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
 
 volumes: 
   pgdata:
-  static_volume:
