@@ -214,3 +214,20 @@ class PicTestCase(TestCase):
             pic.save()
 
         self.assertFalse(pic.is_main)
+
+    def test_first_pic_should_get_marked_as_main(self):
+        test_file = get_test_img_file('portrait')
+        pic = Pic()
+        ph = Photographer.objects.create(
+            first_name='New',
+            last_name='Ph',
+        )
+
+        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            pic.pic = ImageFile(img_file)
+            pic.save()
+        ph.add_pic(pic)
+
+        self.assertTrue(pic.is_main)

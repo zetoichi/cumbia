@@ -70,6 +70,12 @@ class Photographer(models.Model):
 
         return pics_created
 
+    def add_pic(self, pic):
+        first = self.pics.count() == 0
+        self.pics.add(pic)
+        if first:
+            pic.set_as_main()
+
     def set_main_pic(self, pic: Type['Pic']) -> None:
         if self.pics.filter(pk=pic.pk).exists():
             self.pics.update(main=False)
