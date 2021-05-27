@@ -65,7 +65,7 @@ class Photographer(models.Model):
                 pic=f,
                 caption=lorem.words(6)
             )
-            self.pics.add(new_pic)
+            self.add_pic(new_pic)
             pics_created.append(new_pic.pk)
 
         return pics_created

@@ -85,7 +85,7 @@ class PhotographerModelsTest(TestCase):
             img_file.name = img_file.name.split('/')[-1]
             pic.pic = ImageFile(img_file)
             pic.save()
-        ph.pics.add(pic)
+        ph.add_pic(pic)
 
         ph.set_main_pic(pic)
 
@@ -111,14 +111,31 @@ class PhotographerModelsTest(TestCase):
             img_file_2.name = img_file_2.name.split('/')[-1]
             pic_2.pic = ImageFile(img_file_2)
             pic_2.save()
-        ph.pics.add(pic_1)
-        ph.pics.add(pic_2)
+        ph.add_pic(pic_1)
+        ph.add_pic(pic_2)
 
         ph.set_main_pic(pic_1)
         ph.set_main_pic(pic_2)
 
         self.assertFalse(ph.main_pic == pic_1)
         self.assertTrue(ph.main_pic == pic_2)
+
+    def test_first_pic_should_get_marked_as_main(self):
+        test_file = get_test_img_file('portrait')
+        pic = Pic()
+        ph = Photographer.objects.create(
+            first_name='New',
+            last_name='Ph',
+        )
+
+        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            pic.pic = ImageFile(img_file)
+            pic.save()
+        ph.add_pic(pic)
+
+        self.assertTrue(pic.is_main)
 
 class PicTestCase(TestCase):
 
@@ -186,7 +203,7 @@ class PicTestCase(TestCase):
             img_file.name = img_file.name.split('/')[-1]
             pic.pic = ImageFile(img_file)
             pic.save()
-        ph.pics.add(pic)
+        ph.add_pic(pic)
 
         self.assertTrue(pic.photographer == ph)
 
@@ -214,20 +231,3 @@ class PicTestCase(TestCase):
             pic.save()
 
         self.assertFalse(pic.is_main)
-
-    def test_first_pic_should_get_marked_as_main(self):
-        test_file = get_test_img_file('portrait')
-        pic = Pic()
-        ph = Photographer.objects.create(
-            first_name='New',
-            last_name='Ph',
-        )
-
-        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
-            img_file = ImageFile(img_file)
-            img_file.name = img_file.name.split('/')[-1]
-            pic.pic = ImageFile(img_file)
-            pic.save()
-        ph.add_pic(pic)
-
-        self.assertTrue(pic.is_main)
