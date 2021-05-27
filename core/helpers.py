@@ -20,3 +20,8 @@ def resize_img(image_path: str) -> None:
     if img.width > target_size[0] or img.height > target_size[1]:
         img.thumbnail(target_size)
         img.save(image_path)
+
+def get_first_from_pk_set(pk_set: set) -> int:
+    pk_str = str(pk_set).strip('{}')
+    pk_lst = [s.strip() for s in pk_str.split(',')]
+    return int(pk_lst[0])

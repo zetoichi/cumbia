@@ -1,3 +1,5 @@
+import time
+
 from typing import Any, Dict, List, IO, Type
 from datetime import date
 
@@ -143,9 +145,9 @@ class Pic(models.Model):
     def is_main(self):
         return self.main is True
 
-    def handle_no_ph(self):
-        if self.main is True and not self.photographer:
-            self.main = False
+    def set_as_main(self):
+        self.main = True
+        self.save()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -155,6 +157,11 @@ class Pic(models.Model):
     def delete(self, *args, **kwargs):
         self.pic.delete(save=False)
         super().delete(*args, **kwargs)
+
+    # Pics with no photographer can't be marked as main
+    def handle_no_ph(self):
+        if self.main is True and not self.photographer:
+            self.main = False
 
     class Meta:
         verbose_name = _('Foto')

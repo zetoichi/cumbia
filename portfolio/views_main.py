@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 
+from .signals import see_this
 from .mixins import GeneralContextMixin
 from .models import (
     Photographer,
