@@ -27,9 +27,9 @@ function ready() {
     //         togglePics(e)
     //     })
     // })
-    phLinks.forEach(link => {
-        link.addEventListener('mouseleave', (e) => {
-            togglePics(e)
-        })
-    })
+    // phLinks.forEach(link => {
+    //     link.addEventListener('mouseleave', (e) => {
+    //         togglePics(e)
+    //     })
+    // })
 }

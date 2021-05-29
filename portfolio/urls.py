@@ -20,6 +20,11 @@ urlpatterns = [
         name='about'
     ),
     path(
+        'contact/',
+        views_main.ContactView.as_view(),
+        name='contact'
+    ),
+    path(
         'phs/<str:pk>/',
         views_main.PhDetailView.as_view(),
         name='ph_detail'

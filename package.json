@@ -23,6 +23,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "@splidejs/splide": "^2.4.21"
+    "@splidejs/splide": "^2.4.21",
+    "fslightbox": "^3.2.3"
   }
 }

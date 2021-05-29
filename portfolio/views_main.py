@@ -14,6 +14,9 @@ class IndexView(GeneralContextMixin, TemplateView):
 class AboutView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/about.html'
 
+class ContactView(GeneralContextMixin, TemplateView):
+    template_name = 'portfolio/contact.html'
+
 class PhDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'
     model = Photographer

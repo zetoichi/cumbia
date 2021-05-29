@@ -1,4 +1,5 @@
 import '../css/style.css';
-import './dz_conf';
-import './carrousel';
+import './dzConf';
+// import './carrousel';
 import './base';
+import 'fslightbox';
