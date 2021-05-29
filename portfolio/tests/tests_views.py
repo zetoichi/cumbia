@@ -11,6 +11,7 @@ from portfolio.views_main import (
     IndexView,
     PhDetailView,
     PhAddPicsView,
+    AboutView,
 )
 from portfolio.views_json import save_new_pics
 from portfolio.models import Photographer, Pic
@@ -28,6 +29,17 @@ class CBVTestCase(TestCase):
     def test_index_url_should_resolve(self):
         url = '/'
         view_class = IndexView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
+    def test_about_url_should_resolve(self):
+        url = '/about/'
+        view_class = AboutView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -71,6 +83,12 @@ class CBVTestCase(TestCase):
     def test_index_should_render_expected_template(self):
         url = '/'
         expected_template = 'portfolio/index.html'
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, expected_template)
+
+    def test_about_should_render_expected_template(self):
+        url = '/about/'
+        expected_template = 'portfolio/about.html'
         response = self.client.get(url)
         self.assertTemplateUsed(response, expected_template)
 

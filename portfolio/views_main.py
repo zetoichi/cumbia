@@ -11,6 +11,9 @@ from .models import (
 class IndexView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/index.html'
 
+class AboutView(GeneralContextMixin, TemplateView):
+    template_name = 'portfolio/about.html'
+
 class PhDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'
     model = Photographer

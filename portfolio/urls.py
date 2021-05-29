@@ -14,6 +14,11 @@ urlpatterns = [
         name='public_index'
     ),
     path(
+        'about/',
+        views_main.AboutView.as_view(),
+        name='about'
+    ),
+    path(
         'phs/<str:pk>/',
         views_main.PhDetailView.as_view(),
         name='ph_detail'
