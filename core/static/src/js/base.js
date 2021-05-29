@@ -1,4 +1,4 @@
-import { toggleImages } from './handleImages';
+import { togglePics } from './handlePics';
 
 if (document.readyState == 'loading') {document.addEventListener(
     'DOMContentLoaded', ready)
@@ -7,7 +7,7 @@ if (document.readyState == 'loading') {document.addEventListener(
 }
 
 function ready() {
-    // const phLinks = document.querySelectorAll('.ph-link')
+    const phLinks = document.querySelectorAll('.ph-link')
     // const big = document.querySelector('.big')
     // const fullScreenLogo = document.querySelector('#full-screen-logo')
     // const fullScreenIso = document.querySelector('#full-screen-iso')
@@ -24,13 +24,12 @@ function ready() {
     // }, 5100);
     // phLinks.forEach(link => {
     //     link.addEventListener('mouseenter', (e) => {
-    //         toggleImages(e)
+    //         togglePics(e)
     //     })
     // })
-    // phLinks.forEach(link => {
-    //     link.addEventListener('mouseleave', (e) => {
-    //         toggleImages(e)
-    //     })
-    // })
-    // const dz = new Dropzone('#img-dropzone', {url: '/'})
+    phLinks.forEach(link => {
+        link.addEventListener('mouseleave', (e) => {
+            togglePics(e)
+        })
+    })
 }

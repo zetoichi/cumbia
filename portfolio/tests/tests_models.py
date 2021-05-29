@@ -48,7 +48,7 @@ class PhotographerModelsTest(TestCase):
         self.assertEqual(ph.first_name, 'First')
         self.assertEqual(ph.last_name, 'Fake Ph')
 
-    def test_set_main_pic_should_raise_improperly_configured(self):
+    def test_set_new_main_pic_should_raise_improperly_configured(self):
         ph = Photographer.objects.create(
             first_name='Gloria',
             last_name='Gaynor'
@@ -62,7 +62,7 @@ class PhotographerModelsTest(TestCase):
             pic.pic = ImageFile(img_file)
             pic.save()
 
-        self.assertRaises(ImproperlyConfigured, lambda: ph.set_main_pic(pic))
+        self.assertRaises(ImproperlyConfigured, lambda: ph.set_new_main_pic(pic))
 
     def test_get_main_pic_should_return_none(self):
         ph = Photographer.objects.create(
@@ -72,7 +72,7 @@ class PhotographerModelsTest(TestCase):
 
         self.assertEqual(ph.get_main_pic(), None)
 
-    def test_should_set_main_pic(self):
+    def test_should_set_new_main_pic(self):
         ph = Photographer.objects.create(
             first_name='Ennio',
             last_name='Morricone'
@@ -87,11 +87,11 @@ class PhotographerModelsTest(TestCase):
             pic.save()
         ph.add_pic(pic)
 
-        ph.set_main_pic(pic)
+        ph.set_new_main_pic(pic)
 
         self.assertTrue(pic.main)
 
-    def test_set_main_pic_should_be_unique(self):
+    def test_set_new_main_pic_should_be_unique(self):
         ph = Photographer.objects.create(
             first_name='Ennio',
             last_name='Morricone'
@@ -114,8 +114,9 @@ class PhotographerModelsTest(TestCase):
         ph.add_pic(pic_1)
         ph.add_pic(pic_2)
 
-        ph.set_main_pic(pic_1)
-        ph.set_main_pic(pic_2)
+        self.assertTrue(ph.main_pic == pic_1)
+
+        ph.set_new_main_pic(pic_2)
 
         self.assertFalse(ph.main_pic == pic_1)
         self.assertTrue(ph.main_pic == pic_2)

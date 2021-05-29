@@ -76,7 +76,7 @@ class Photographer(models.Model):
         if first:
             pic.set_as_main()
 
-    def set_main_pic(self, pic: Type['Pic']) -> None:
+    def set_new_main_pic(self, pic: Type['Pic']) -> None:
         if self.pics.filter(pk=pic.pk).exists():
             self.pics.update(main=False)
             pic.main = True

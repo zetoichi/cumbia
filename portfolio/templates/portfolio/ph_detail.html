@@ -9,7 +9,7 @@
             <ul class="splide__list">
             {% for pic in ph.pics.all %}
                 <li class="splide__slide carrousel-slide">
-                    <img data-splide-lazy="{{ pic.pic.url }}" alt="">
+                    <img data-id="{{ pic.pk }}" data-splide-lazy="{{ pic.pic.url }}" alt="">
                 </li>
             {% endfor %}
             </ul>
