@@ -2,7 +2,7 @@
     <ul class="ph-links">
     {% for ph in photographers %}
         <li class="ph-link" value="{{ ph.pk }}">
-            <a href="{% url 'ph_detail' ph.pk %}">
+            <a href="{% url 'portfolio:ph_detail' ph.pk %}">
                 <h4>{{ ph.display_name }}</h4>
             </a>
         </li>

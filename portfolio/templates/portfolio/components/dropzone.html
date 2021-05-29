@@ -1,5 +1,5 @@
 <div class="dropzone-cx">
-    <form action="{% url 'ph_save_pics' ph.pk %}" id="img-dropzone" class="dropzone">
+    <form action="{% url 'portfolio:ph_save_pics' ph.pk %}" id="img-dropzone" class="dropzone">
         {% csrf_token %}
     </form>
     <div class="actions-cx">

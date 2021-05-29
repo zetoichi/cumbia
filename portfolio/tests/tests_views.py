@@ -2,7 +2,7 @@ import os
 import json
 import inspect
 
-from django.urls import resolve
+from django.urls import resolve, reverse
 from django.test import (
     TestCase,
 )
@@ -120,7 +120,7 @@ class CBVTestCase(TestCase):
 
     # CONTENT
 
-    def test_index_should_display_photographers(self):
+    def test_l_col_should_display_photographers(self):
         ph_1 = Photographer.objects.create(
             first_name='Steven',
             last_name='Seagal'
@@ -138,6 +138,25 @@ class CBVTestCase(TestCase):
         expected_2 = 'Arnie'
         self.assertIn(expected_1, response)
         self.assertIn(expected_2, response)
+
+    def test_l_col_should_contain_photographer_urls(self):
+        ph_1 = Photographer.objects.create(
+            first_name='Adam',
+            last_name='Sandler'
+        )
+        ph_2 = Photographer.objects.create(
+            first_name='Seth',
+            last_name='Rogen',
+        )
+        url = '/'
+
+        response = self.client.get(url)
+
+        link_url_1 = reverse('portfolio:ph_detail', args=[ph_1.pk])
+        link_url_2 = reverse('portfolio:ph_detail', args=[ph_2.pk])
+
+        self.assertContains(response, f'<a href="{link_url_1}">')
+        self.assertContains(response, f'<a href="{link_url_2}">')
 
 class JSONViewsTestCase(TestCase):
 

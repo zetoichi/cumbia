@@ -5,8 +5,9 @@ from . import (
     views_json,
 )
 
-# CBV
+app_name = 'portfolio'
 
+# CBV
 urlpatterns = [
     path(
         '',
