@@ -15,6 +15,10 @@
     justify-content: space-around;
     align-items: center;
 }
+@mixin startEnd {
+    display: flex;
+    align-items: flex-end;
+}
 @mixin endEnd {
     display: flex;
     justify-content: flex-end;
@@ -119,7 +123,7 @@ h4 {
 	font-size: 1.1rem;
 	font-weight: 400;
 	letter-spacing: 0.1rem;
-	line-height: 1.1rem;
+	line-height: 0.7rem;
 }
 h5 {
     font-size: 1.5rem;
@@ -175,6 +179,7 @@ nav.gen-nav {
     grid-row: 1 / 13;
     grid-column: 1 / 2;
     padding-top: 1vw;
+    width: 20vw;
 }
 section.base-center {
     grid-column: 2 / 3;
@@ -242,7 +247,7 @@ header.center-header {
     @include centerCenter;
 }
 .center-cx {
-    grid-row: 1 / 13;
+    grid-row: 2 / 12;
     grid-column: 1 / 4;
     @include centerCenter;
 }
@@ -281,6 +286,9 @@ header.center-header {
 }
 .contact-link {
     transition: color .1s linear;
+}
+.contact-link h4 {
+    line-height: 1.1rem;
 }
 .contact-link:hover {
     color: coral;
@@ -329,7 +337,7 @@ header.center-header {
     height: 100%;
     width: 100%;
     overflow-y: scroll;
-    padding-left: 5vw;
+    // padding-left: 5vw;
 }
 .pic-grid {
     display: grid;
@@ -338,38 +346,32 @@ header.center-header {
     grid-auto-flow: dense;
 }
 
-img {
-    width: 100%;
-}
-// .pic-item {
-//     border-radius: 5px;
-// }
-// .pic-item-content {
-//     background-color: #eee;
-//     border-radius: 5px;
-//     overflow: hidden;
-// }
-
-// .pic-item,
-// .pic-item img {
-//     position: relative;
-// }
-
-// .pic-item::after {
-//     background-color: rgba(0, 0, 0, 0);
-//     content: '';
-//     position: absolute;
-//     top: 0;
-//     left: 0; 
-//     height: 100%;
+// img {
 //     width: 100%;
-//     color: white;
-//     display: flex;
-//     justify-content: center; 
-//     align-items: center;
-//     transition: all .1s ease-in;
 // }
+.row-wrapper {
+    @include startEnd;    
+    height: 100%;
+    padding-bottom: 5vh;
+}
+ul.pic-row {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 80vw;
+    overflow-y: scroll;
+}
+li.pic-cx {
+    height: 40vh;
+    flex-grow: 1;
+    transition: opacity .3s ease-out;
+}
+li.pic-cx img {
+    max-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
+}
 
-// .pic-item:hover:after {
-//     background-color: rgba(0, 0, 0, .25);
-// }
+li.pic-cx:hover {
+    opacity: .8;
+}

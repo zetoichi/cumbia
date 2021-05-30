@@ -17,16 +17,17 @@
     </div>
 </div> {% endcomment %}
 
-<div class="row-wrapper">
-    <ul class="pic-row">
+<div class="grid-wrapper">
+    <div class="pic-grid">
     {% for pic in ph.pics.all %}
-        <li class="pic-cx">
+        <div class="pic-item">
             <a data-fslightbox="gallery" href="{{ pic.pic.url }}">
-                <img id="pic-{{ pic.pk }}" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
+                <img id="pic-{{ pic.pk }}" class="pic-item-content" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
             </a> 
-        </li>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
 </div>
+
 
 {% endblock center %}
