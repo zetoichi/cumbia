@@ -14,6 +14,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "css-loader": "^5.2.4",
+    "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^1.6.0",
     "sass": "^1.32.13",
     "sass-loader": "^11.1.1",
@@ -23,6 +24,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@splidejs/splide": "^2.4.21",
     "fslightbox": "^3.2.3"
   }

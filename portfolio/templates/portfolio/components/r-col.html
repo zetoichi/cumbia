@@ -1,6 +1,13 @@
 <section class="r-info">
     <div class="r-info-cx">
-    {% for ph in photographers %}
+    {% if segment != 'index' %}
+        <div class="brand-top-cx">
+            <a href="{% url 'portfolio:public_index' %}">
+                <img class="brand-top-logo" src="/media/logos/cumbia-logo-negro-small.png" alt="">
+            </a>
+        </div>
+    {% endif %}
+    {% comment %} {% for ph in photographers %}
         <div id="ph-info-{{ ph.pk }}" class="faded-out pic-info-each">
             <div class="pic-info-ph-name">
                 <h3>{{ ph.display_name }}</h3>
@@ -9,6 +16,6 @@
                 <h5>{{ ph.photo.caption }}</h5>
             </div>
         </div>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
     </div>
 </section>

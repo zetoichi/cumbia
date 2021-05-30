@@ -7,9 +7,18 @@
         <li class="ph-link" value="{{ photographer.pk }}">
     {% endif %}
             <a href="{% url 'portfolio:ph_detail' photographer.pk %}">
-                <h4>{{ photographer.display_name }}</h4>
+                <h5>{{ photographer.display_name }}</h5>
             </a>
         </li>
     {% endfor %}
     </ul>
+{% if segment == 'index' %}
+    <div id="edit-ph-list-cx">
+        <div class="edit-btn no-top">
+            <a href="#">
+                <i class="fas fa-pen"></i>
+            </a>
+        </div>
+    </div>
+{% endif %}
 </nav>

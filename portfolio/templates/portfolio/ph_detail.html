@@ -1,23 +1,18 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
 
-{% block center %}
 
-{% comment %} <div class="carrousel-cx">
-    <div class="splide">
-        <div class="splide__track">
-            <ul class="splide__list">
-            {% for pic in ph.pics.all %}
-                <li class="splide__slide carrousel-slide">
-                    <img data-id="{{ pic.pk }}" data-splide-lazy="{{ pic.pic.url }}" alt="{{ pic.caption }}">
-                </li>
-            {% endfor %}
-            </ul>
+{% block main %}
+
+<div class="air-cx">
+    <div id="edit-pics-cx">
+        <div class="edit-btn">
+            <i class="fas fa-pen"></i>
         </div>
     </div>
-</div> {% endcomment %}
+</div>
 
-<div class="row-wrapper">
+<div class="hscroll-cx">
     <ul class="pic-row">
     {% for pic in ph.pics.all %}
         <li class="pic-cx">
@@ -29,4 +24,4 @@
     </ul>
 </div>
 
-{% endblock center %}
+{% endblock main %}

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{% static 'src/js/dropzone.js' %}"></script>
     <link href="{% static 'dist/app.css' %}" rel="stylesheet" >
+    <script src="https://kit.fontawesome.com/3e468f00c2.js" crossorigin="anonymous"></script>
     <title>Cumbia</title>
 </head>
 <body>
@@ -18,24 +19,21 @@
         {% comment %} </header> {% endcomment %}
         
         {% include 'portfolio/components/l-col.html' %}
-        {% include 'portfolio/components/l-foot.html' %}
-
-        <section class="base-center top">
-            {% block centertop %}{% endblock centertop %}
-        </section>
 
         <section class="base-center center">
             <div class="center-cx">
                 {% block center %}{% endblock center %}
             </div>
         </section>
+        
+        {% block main %}
+        {% comment %} <div class="hscroll-cx"></div> {% endcomment %}
+        {% endblock main %}
 
-        <section class="base-center bottom">
-            {% block centerbottom %}{% endblock centerbottom %}
-        </section>
 
         {% include 'portfolio/components/r-col.html' %}
-        {% include 'portfolio/components/r-foot.html' %}
+
+        {% include 'portfolio/components/footer.html' %}
     
     </main>
 </body>
