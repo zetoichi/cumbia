@@ -6,6 +6,8 @@ if (document.readyState == 'loading') {document.addEventListener(
     ready()
 }
 
+const editMode = document.querySelector('#edit-mode')
+
 function ready() {
     const phLinks = document.querySelectorAll('.ph-link')
     // const big = document.querySelector('.big')
@@ -32,4 +34,15 @@ function ready() {
     //         togglePics(e)
     //     })
     // })
+    if (editMode) {
+        enableEditMode()
+    }
+}
+
+function enableEditMode() {
+    document.querySelectorAll('.edit-element').forEach(
+        element => {
+            element.classList.add('enabled')
+        }
+    )
 }

@@ -120,6 +120,18 @@ li {
   opacity: 1;
 }
 
+#edit-mode {
+  display: none;
+}
+
+.edit-element {
+  visibility: hidden;
+}
+
+.edit-element.enabled {
+  visibility: visible;
+}
+
 main.main-grid {
   display: -ms-grid;
   display: grid;

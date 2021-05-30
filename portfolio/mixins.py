@@ -13,6 +13,7 @@ class GeneralContextMixin:
         context = super().get_context_data(**kwargs)
         context['photographers'] = Photographer.objects.all()
         context['segment'] = self.get_segment()
+        context['edit_mode'] = self.get_edit_mode()
         return context
 
     def get_segment(self):
@@ -22,3 +23,6 @@ class GeneralContextMixin:
             raise ImproperlyConfigured(
                 'GeneralContextMixin requires a value for the "segment" attribute'
             )
+
+    def get_edit_mode(self):
+        return self.request.user.is_authenticated

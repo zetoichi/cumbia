@@ -12,7 +12,7 @@ urlpatterns = [
     path(
         '',
         views_main.IndexView.as_view(),
-        name='public_index'
+        name='index'
     ),
     path(
         'about/',
