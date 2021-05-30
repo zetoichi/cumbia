@@ -89,10 +89,6 @@
     }
 }
 
-:root {
-    counter-reset: pic-grid;
-}
-
 * {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -172,7 +168,7 @@ header.main-header {
 }
 
 .ph-link {
-    padding-left: 1vw;
+    padding: .8vh 0 .8vh 1vw;
 }
 
 nav.gen-nav {
@@ -187,7 +183,7 @@ section.base-center.top {
     grid-row: 1 / 2;
 }
 section.base-center.center {
-    grid-row: 2 / 12;
+    grid-row: 1 / 13;
 }
 section.base-center.bottom {
     grid-row: 12 / 13;
@@ -208,11 +204,28 @@ nav.gen-nav .ph-links {
     height: 100%
 }
 li.ph-link {
-    margin: .8vh 0;
     transition: color .1s linear;
 }
-li.ph-link:hover {
+li.ph-link:hover:not(.highlight) {
     color: pink;
+}
+li.ph-link.dim {
+	color: pink;
+    transition: all .3s ease-out;
+}
+li.ph-link.dim:hover {
+    color: $brand-black;
+}
+li.ph-link.highlight {
+    margin: 1rem 0;
+}
+li.ph-link.highlight a {
+    cursor: default;
+}
+li.ph-link.highlight h4 {
+    font-weight: bold;
+    white-space: nowrap;
+    font-size: 3rem;
 }
 
 section.base-center.center {
@@ -316,11 +329,12 @@ header.center-header {
     height: 100%;
     width: 100%;
     overflow-y: scroll;
+    padding-left: 5vw;
 }
 .pic-grid {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px,1fr));
     grid-auto-flow: dense;
 }
 

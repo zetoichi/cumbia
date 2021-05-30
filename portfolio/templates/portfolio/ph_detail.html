@@ -22,11 +22,11 @@
     {% for pic in ph.pics.all  %}
         <div class="pic-item">
             <a data-fslightbox="gallery" href="{{ pic.pic.url }}">
-                <img class="pic-item-content" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
+                <img id="pic-{{ pic.pk }}" class="pic-item-content" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
             </a> 
         </div>
     {% endfor %}
-</div>
+    </div>
 </div>
 
 {% endblock center %}

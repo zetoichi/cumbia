@@ -1,9 +1,13 @@
 <nav id="main-nav" class="gen-nav">
     <ul class="ph-links">
-    {% for ph in photographers %}
-        <li class="ph-link" value="{{ ph.pk }}">
-            <a href="{% url 'portfolio:ph_detail' ph.pk %}">
-                <h4>{{ ph.display_name }}</h4>
+    {% for photographer in photographers %}
+    {% if segment == 'detail' %}
+        <li class="ph-link {% if ph.pk == photographer.pk %}highlight{% else %}dim{% endif %}" value="{{ photographer.pk }}">
+    {% else %}
+        <li class="ph-link" value="{{ photographer.pk }}">
+    {% endif %}
+            <a href="{% url 'portfolio:ph_detail' photographer.pk %}">
+                <h4>{{ photographer.display_name }}</h4>
             </a>
         </li>
     {% endfor %}
