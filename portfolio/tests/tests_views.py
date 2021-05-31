@@ -9,10 +9,11 @@ from django.test import (
 
 from portfolio.views_main import (
     IndexView,
-    PhDetailView,
-    PhAddPicsView,
     AboutView,
     ContactView,
+    PhDetailView,
+    PhEditPicsView,
+    PhAddPicsView,
 )
 from portfolio.views_json import save_new_pics
 from portfolio.models import Photographer, Pic
@@ -67,6 +68,21 @@ class CBVTestCase(TestCase):
         )
         url = f'/phs/{ph.pk}/'
         view_class = PhDetailView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
+    def test_ph_edit_pics_url_should_resolve(self):
+        ph = Photographer.objects.create(
+            first_name='Jordan',
+            last_name='Spieth'
+        )
+        url = f'/phs/{ph.pk}/edit/'
+        view_class = PhEditPicsView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(

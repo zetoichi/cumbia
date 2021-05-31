@@ -138,7 +138,7 @@ h5 {
     font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.1rem;
-    line-height: 1rem;
+    line-height: 1.6rem;
 }
 a {
     text-decoration: none;
@@ -190,10 +190,6 @@ header.main-header {
     // animation: 2.5s ease-in forwards shrink;
 }
 
-.ph-link {
-    padding: .8vh 0 .8vh 1vw;
-}
-
 nav.gen-nav {
     grid-row: 1 / 6;
     grid-column: 1 / 4;
@@ -201,7 +197,7 @@ nav.gen-nav {
     padding-top: 1vh;
 }
 section.base-center {
-    grid-column: 5 / -4;
+    grid-column: 4 / -4;
 }
 section.base-center.center {
     grid-row: 1 / 13;
@@ -224,6 +220,7 @@ nav.gen-nav .ph-links {
 }
 li.ph-link {
     transition: color .1s linear;
+    padding: 0 0 0 1vw;
 }
 li.ph-link:hover:not(.highlight) {
     color: $brand-pink;
@@ -231,10 +228,10 @@ li.ph-link:hover:not(.highlight) {
 li.ph-link.dim {
 	color: $brand-pink;
     transition: all .3s ease-out;
-    padding: 0 0 0 1vw;
 }
 li.ph-link.dim h5 {
     line-height: .5rem;
+    letter-spacing: 1px;
 }
 li.ph-link.dim:hover {
     color: $brand-black;
@@ -247,8 +244,8 @@ li.ph-link.highlight a {
 }
 li.ph-link.highlight h5 {
 	font-weight: bold;
-	white-space: nowrap;
-	font-size: 2.5rem;
+	// white-space: nowrap;
+	font-size: 2rem;
 }
 
 section.base-center.center {
@@ -328,6 +325,8 @@ header.center-header {
     color: coral;
 }
 
+
+.picgrid-cx,
 .dropzone-cx {
     @include colCenterStart;
     @include fullSize;
@@ -337,6 +336,9 @@ header.center-header {
     @include centerCenter;
     height: 15%;
     width: 100%;
+}
+.pic-grid {
+    @include fullSize;
 }
 
 .carrousel-cx {

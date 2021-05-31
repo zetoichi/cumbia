@@ -26,14 +26,11 @@ class PhDetailView(GeneralContextMixin, DetailView):
     context_object_name = 'ph'
     segment = 'detail'
 
-class PhDetailAltView(GeneralContextMixin, DetailView):
+class PhDetailAltView(PhDetailView):
     template_name = 'portfolio/ph_detail_alt.html'
-    model = Photographer
-    context_object_name = 'ph'
-    segment = 'detail'
 
-class PhAddPicsView(GeneralContextMixin, DetailView):
+class PhEditPicsView(PhDetailView):
+    template_name = 'portfolio/ph_edit_pics.html'
+
+class PhAddPicsView(PhDetailView):
     template_name = 'portfolio/ph_add_pics.html'
-    model = Photographer
-    context_object_name = 'ph'
-    segment = 'detail'

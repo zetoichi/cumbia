@@ -35,6 +35,11 @@ urlpatterns = [
         name='ph_detail_alt'
     ),
     path(
+        'phs/<str:pk>/edit/',
+        views_main.PhEditPicsView.as_view(),
+        name='ph_edit_pics'
+    ),
+    path(
         'phs/<str:pk>/add/',
         views_main.PhAddPicsView.as_view(),
         name='ph_add_pics'
