@@ -12,11 +12,17 @@ button.action-btn {
   font-weight: bold;
   cursor: pointer;
   width: 120px;
+  margin: 10px;
 }
 
 button.action-btn.main-action {
-  color: coral;
-  border-color: coral;
+  color: black;
+  border-color: black;
+}
+
+button.action-btn.secondary-action {
+  color: #999;
+  border-color: #999;
 }
 
 @-webkit-keyframes shrink {
@@ -236,11 +242,11 @@ li.ph-link {
 }
 
 li.ph-link:hover:not(.highlight) {
-  color: #ff859a;
+  color: #999;
 }
 
 li.ph-link.dim {
-  color: #ff859a;
+  color: #999;
   -webkit-transition: all .3s ease-out;
   transition: all .3s ease-out;
 }
@@ -400,7 +406,7 @@ header.center-header {
 }
 
 .brand-top-logo {
-  width: 60%;
+  width: 80%;
 }
 
 .r-info-cx,
@@ -439,6 +445,40 @@ header.center-header {
   padding: 0 1.4rem;
 }
 
+.picgrid {
+  height: 100%;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  overflow-x: scroll;
+}
+
+.grid-pic-cx {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 200px;
+  justify-self: center;
+}
+
+.grid-pic-cx .grid-pic {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  max-height: 180px;
+  -o-object-position: top;
+     object-position: top;
+}
+
 .actions-cx {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -453,31 +493,9 @@ header.center-header {
   width: 100%;
 }
 
-.pic-grid {
-  height: 100%;
-  width: 100%;
-}
-
-.carrousel-cx {
-  height: 100%;
-  width: 100%;
-}
-
-.carrousel-slide {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.splide__slide img {
-  height: auto;
-  width: 100%;
+.sqr {
+  background-color: green;
+  margin: .5rem;
 }
 
 .info-section-wrapper {
@@ -564,8 +582,8 @@ li.pic-cx:hover {
 }
 
 .edit-btn {
-  color: #ff859a;
-  border: 1px solid #ff859a;
+  color: #999;
+  border: 1px solid #999;
   padding: 2px 8px;
 }
 /*# sourceMappingURL=style.css.map */

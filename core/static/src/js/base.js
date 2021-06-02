@@ -6,7 +6,7 @@ if (document.readyState == 'loading') {document.addEventListener(
     ready()
 }
 
-const editMode = document.querySelector('#edit-mode')
+
 
 function ready() {
     const phLinks = document.querySelectorAll('.ph-link')
@@ -34,15 +34,16 @@ function ready() {
     //         togglePics(e)
     //     })
     // })
-    if (editMode) {
-        enableEditMode()
-    }
+    handleEditMode()
 }
 
-function enableEditMode() {
-    document.querySelectorAll('.edit-element').forEach(
-        element => {
-            element.classList.add('enabled')
-        }
-    )
+function handleEditMode() {
+    const editMode = document.querySelector('#edit-mode')
+    if (editMode) {
+        document.querySelectorAll('.edit-element').forEach(
+            element => {
+                element.classList.add('enabled')
+            }
+        )
+    }
 }

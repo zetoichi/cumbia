@@ -223,10 +223,10 @@ li.ph-link {
     padding: 0 0 0 1vw;
 }
 li.ph-link:hover:not(.highlight) {
-    color: $brand-pink;
+    color: $brand-gray;
 }
 li.ph-link.dim {
-	color: $brand-pink;
+	color: $brand-gray;
     transition: all .3s ease-out;
 }
 li.ph-link.dim h5 {
@@ -307,7 +307,7 @@ header.center-header {
     transition: opacity $x-fade linear;
 }
 .brand-top-logo {
-    width: 60%;
+    width: 80%;
 }
 
 .r-info-cx,
@@ -325,32 +325,53 @@ header.center-header {
     color: coral;
 }
 
-
 .picgrid-cx,
 .dropzone-cx {
     @include colCenterStart;
     @include fullSize;
     padding: 0 1.4rem;
 }
+.picgrid {
+    @include fullSize;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    // grid-template-rows: repeat(auto-fit, 160px);
+    gap: 1rem;
+    overflow-x: scroll;
+}
+.grid-pic-cx {
+    @include centerCenter;
+    width: 200px;
+    justify-self: center;
+}
+.grid-pic-cx .grid-pic {
+    object-fit: cover;
+    width: 100%;
+    max-height: 180px;
+    object-position: top;
+}
 .actions-cx {
     @include centerCenter;
     height: 15%;
     width: 100%;
 }
-.pic-grid {
-    @include fullSize;
-}
 
-.carrousel-cx {
-    @include fullSize;
+.sqr {
+    background-color: green;
+    margin: .5rem;
 }
-.carrousel-slide {
-    @include centerCenter;
-}
-.splide__slide img {
-    height: auto;
-    width: 100%;
-}
+// .pic-grid {
+//     @include fullSize;
+// }
+// .carrousel-cx {
+//     @include fullSize;
+// }
+// .carrousel-slide {
+//     @include centerCenter;
+// }
+// .splide__slide img {
+//     height: auto;
+//     width: 100%;
 
 .info-section-wrapper {
     padding: 2vh 2vw;
@@ -382,9 +403,6 @@ header.center-header {
     grid-auto-flow: dense;
 }
 
-// img {
-//     width: 100%;
-// }
 ul.pic-row {
     display: flex;
     flex-wrap: nowrap;
@@ -417,11 +435,7 @@ li.pic-cx:hover {
 }
 
 .edit-btn {
-    color: $brand-pink;
-    border: 1px solid $brand-pink;
+    color: $brand-gray;
+    border: 1px solid $brand-gray;
     padding: 2px 8px;
 }
-
-// .no-top {
-//     border-top: none;
-// }

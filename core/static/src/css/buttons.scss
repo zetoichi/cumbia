@@ -7,9 +7,14 @@ button.action-btn {
     font-weight: bold;
     cursor: pointer;
     width: 120px;
+    margin: 10px;
 }
 
 button.action-btn.main-action {
-    color: coral;
-    border-color: coral;
+    color: black;
+    border-color: black;
+}
+button.action-btn.secondary-action {
+    color: #999;
+    border-color: #999;
 }
