@@ -1,8 +1,8 @@
 <div class="picgrid-cx">
-    <div class="picgrid">
+    <div class="picgrid drag-container">
     {% for pic in ph.pics.all %}
         <div class="grid-pic-cx">
-            <img id="pic-{{ pic.pk }}" class="grid-pic" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
+            <img id="pic-{{ pic.pk }}" data-sort="{{ pic.display_order }}" class="grid-pic" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
         </div>
     {% endfor %}
     </div>

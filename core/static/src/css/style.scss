@@ -5,6 +5,7 @@
 @import './basic_dropzone.css';
 @import './dropzone.css';
 @import 'splide-default.min.css';
+@import 'dragula.css';
 
 @mixin startStart {
     display: flex;
@@ -339,6 +340,7 @@ header.center-header {
     gap: 1rem;
     overflow-x: scroll;
 }
+
 .grid-pic-cx {
     @include centerCenter;
     width: 200px;
