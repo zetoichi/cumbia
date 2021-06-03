@@ -79,33 +79,7 @@ class Photographer(models.Model):
     def _has_no_pics(self):
         return self.pics.count() == 0
 
-    def _sort_pics(self, pics: Sequence[Type['Pic']], start: int = 0) -> None:
-        [pic.assign_idx(start + i) for i, pic in enumerate(pics, 1)]
-
-    def _insort_right(self, pic: Type['Pic'], new_idx: int) -> None:
-        """
-        Move pic up, shift rest of set right.
-        """
-        start = new_idx
-        self._sort_pics(self.pics.filter(display_idx__gte=new_idx), start)
-        pic.assign_idx(new_idx)
-
-    def _insort_left(self, pic: Type['Pic'], new_idx: int) -> None:
-        """
-        Move pic down, shift rest of set left.
-        """
-        self._sort_pics(self.pics.filter(display_idx__lte=new_idx)[1:])
-        pic.assign_idx(new_idx)
-
-    def _sort_incoming(self, pics: Sequence[Type['Pic']]) -> None:
-        """
-        Assign display order to new pics,
-        starting from last element in self.pics
-        """
-        start = self.pics.count()
-        self._sort_pics(pics, start)
-
-    def add_pics(self, pics: Sequence[Type['Pic']]) -> None:
+    def add_pics(self, new_pics: Sequence[Type['Pic']]) -> None:
         """
         Wraps m2m add() method to:
             - Sort incoming pics
@@ -113,10 +87,10 @@ class Photographer(models.Model):
             - Mark it as main if it is.
         """
         first = self._has_no_pics()
-        self._sort_incoming(pics)
-        self.pics.add(*pics)  # perform actual adding
+        self.pics.sort_incoming(new_pics)
+        self.pics.add(*new_pics)  # perform actual adding
         if first:
-            pics[0].set_as_main()
+            new_pics[0].set_as_main()
 
     def set_new_main_pic(self, pic: Type['Pic']) -> None:
         if self._main_pic_belongs_here(pic):
@@ -130,9 +104,9 @@ class Photographer(models.Model):
     def insort_pic(self, pic: Type['Pic'], new_idx: int) -> None:
         old_idx = pic.display_idx
         if new_idx < old_idx:
-            self._insort_right(pic, new_idx)
+            self.pics.insort_right(pic, new_idx)
         elif new_idx > old_idx:
-            self._insort_left(pic, new_idx)
+            self.pics.insort_left(pic, new_idx)
 
     def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
         """
