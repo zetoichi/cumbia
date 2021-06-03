@@ -54,55 +54,67 @@ class Photographer(models.Model):
     def main_pic(self):
         return self.get_main_pic()
 
-    def normalize_name(self):
+    def _normalize_name(self):
+        """Force title format on new objects"""
         self.first_name = self.first_name.title()
         self.last_name = self.last_name.title()
 
-    def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
-        pics_created = []
+    def _main_pic_belongs_here(self, pic: Type['Pic']) -> bool:
+        if self.pics.filter(pk=pic.pk).exists():
+            return True
+        raise ImproperlyConfigured(
+            """The provided Pic instance does not
+            belong to this photographer"""
+        )
 
-        for f in files:
-            new_pic = Pic.objects.create(
-                pic=f,
-                caption=lorem.words(6)
-            )
-            pics_created.append(new_pic)
-        self.add_pics(pics_created)
-
-        return [pic.pk for pic in pics_created]
+    def _unique_main_pic(self):
+        main = self.pics.filter(main=True)
+        if main.count() != 1:
+            raise ImproperlyConfigured((
+                """Photographer objects should have one and
+                only main pic assigned at a time"""
+            ))
+        return main.first()
 
     def add_pics(self, pics: Sequence[Type['Pic']]) -> None:
+        """
+        Wraps add() method:
+            - Check if the added object is the first in the set,
+            - Marks it as main if it is.
+        """
         first = self.pics.count() == 0
         self.pics.add(*pics)
         if first:
             pics[0].set_as_main()
 
     def set_new_main_pic(self, pic: Type['Pic']) -> None:
-        if self.pics.filter(pk=pic.pk).exists():
+        if self._main_pic_belongs_here(pic):
             self.pics.update(main=False)
             pic.main = True
             pic.save()
-        else:
-            raise ImproperlyConfigured(
-                """The provided Pic instance does not
-                belong to this photographer"""
-            )
 
     def get_main_pic(self) -> Type['Pic']:
-        main = self.pics.filter(main=True)
-        main_count = main.count()
-        if main_count > 1:
-            raise ImproperlyConfigured((
-                """Photographer objects should have one and
-                only main pic assigned at a time"""
-            ))
-        elif main_count == 0:
-            return None
-        else:
-            return main.first()
+        return self._unique_main_pic()
+
+    def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
+        """
+        Create Pic objects for the related Field pics.
+        Return created objects pk for JSON response.
+        """
+        pics_created = []
+
+        for f in files:
+            new_pic = Pic.objects.create(
+                pic=f,
+                caption=lorem.words(6)  # TEMPORARY LOREM FOR CAPTION, DELETE
+            )
+            pics_created.append(new_pic)
+        self.add_pics(pics_created)
+
+        return [pic.pk for pic in pics_created]
 
     def save(self, *args, **kwargs):
-        self.normalize_name()
+        self._normalize_name()
         if self.display_name == '':
             self.display_name = f'{self.first_name} {self.last_name}'
         super().save(*args, **kwargs)
@@ -114,6 +126,7 @@ class Photographer(models.Model):
         verbose_name = _('Photographer')
         verbose_name_plural = _('Photographers')
         ordering = ['display_order']
+
 
 class Pic(models.Model):
     pic = models.ImageField(
@@ -157,15 +170,17 @@ class Pic(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        """For resize image"""
         resize_img(self.pic.path)
         self.handle_no_ph()
 
     def delete(self, *args, **kwargs):
+        """Delete file upon object deletion"""
         self.pic.delete(save=False)
         super().delete(*args, **kwargs)
 
-    # Pics with no photographer can't be marked as main
     def handle_no_ph(self):
+        """Pics with no photographer can't be marked as main"""
         if self.main is True and not self.photographer:
             self.main = False
 

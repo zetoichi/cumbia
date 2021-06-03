@@ -62,13 +62,13 @@ class PhotographerModelsTest(TestCase):
 
         self.assertRaises(ImproperlyConfigured, lambda: ph.set_new_main_pic(pic))
 
-    def test_should_not_get_main_pic(self):
+    def test_get_new_main_pic_should_raise_improperly_configured(self):
         ph = Photographer.objects.create(
             first_name='Gloria',
             last_name='Gaynor'
         )
 
-        self.assertEqual(ph.get_main_pic(), None)
+        self.assertRaises(ImproperlyConfigured, lambda: ph.get_main_pic())
 
     def test_should_set_new_main_pic(self):
         ph = Photographer.objects.create(
@@ -119,6 +119,9 @@ class PhotographerModelsTest(TestCase):
         ph.add_pics((pic_1, pic_2, pic_3))
 
         self.assertTrue(ph.pics.count() == 3)
+        self.assertTrue(pic_1.display_order == 1)  # EXPECTED FAIL: FIX!!
+        self.assertTrue(pic_2.display_order == 2)  # EXPECTED FAIL: FIX!!
+        self.assertTrue(pic_3.display_order == 3)  # EXPECTED FAIL: FIX!!
 
 class PicTestCase(TestCase):
 
