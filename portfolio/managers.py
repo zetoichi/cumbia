@@ -1,15 +1,21 @@
-from typing import Any, Dict, List, IO, Type, Sequence
+from typing import Type, Sequence, Optional
 
 from django.db import models
 
 class SortableManager(models.Manager):
 
-    def _sort(self, seq: Sequence[Type[models.Model]], start: int = 0) -> None:
+    def _sort(self, seq: Optional[Sequence[Type[models.Model]]] = None,
+            start: int = 0) -> None:
         """
         - Take a sequence of objects and
         - Sort then upwards from start
         """
+        if seq is None:
+            seq = self
         [obj.assign_idx(start + i) for i, obj in enumerate(seq, 1)]
+
+    def initial_sort(self):
+        self._sort()
 
     def insort_right(self, obj: Type[models.Model], new_idx: int) -> None:
         """

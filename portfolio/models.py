@@ -16,7 +16,20 @@ from pydantic import BaseModel
 from . import managers
 from core.helpers import resize_img
 
-class Photographer(models.Model):
+class SortableModel(models.Model):
+    display_idx = models.IntegerField(
+        verbose_name=_('Orden'),
+        default=1
+    )
+
+    def assign_idx(self, idx: int) -> None:
+        self.display_idx = idx
+        self.save()
+
+    class Meta:
+        abstract = True
+
+class Photographer(SortableModel):
     first_name = models.CharField(
         max_length=100,
         verbose_name=_('Nombre')
@@ -34,10 +47,6 @@ class Photographer(models.Model):
     bio = models.TextField(
         blank=True,
         default=''
-    )
-    display_idx = models.IntegerField(
-        verbose_name=_('Orden'),
-        default=1
     )
     pics = models.ManyToManyField(
         'Pic',
@@ -140,7 +149,7 @@ class Photographer(models.Model):
         ordering = ['display_idx']
 
 
-class Pic(models.Model):
+class Pic(SortableModel):
     pic = models.ImageField(
         upload_to='pics',
         verbose_name=_('Image')
@@ -154,10 +163,6 @@ class Pic(models.Model):
     main = models.BooleanField(
         default=False,
         verbose_name=_('Main'),
-    )
-    display_idx = models.IntegerField(
-        verbose_name=_('Orden'),
-        default=1
     )
     uploaded_at = models.DateTimeField(
         auto_now_add=True
@@ -175,10 +180,6 @@ class Pic(models.Model):
     @property
     def is_main(self):
         return self.main is True
-
-    def assign_idx(self, idx: int) -> None:
-        self.display_idx = idx
-        self.save()
 
     def set_as_main(self):
         self.main = True
