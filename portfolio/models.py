@@ -88,6 +88,10 @@ class Photographer(SortableModel):
     def _has_no_pics(self):
         return self.pics.count() == 0
 
+    def _moving_up(self, new_idx, old_idx):
+        """Check if new index is lower to determine sorting strategy"""
+        return new_idx < old_idx
+
     def add_pics(self, new_pics: Sequence[Type['Pic']]) -> None:
         """
         Wraps m2m add() method to:
@@ -112,10 +116,13 @@ class Photographer(SortableModel):
 
     def insort_pic(self, pic: Type['Pic'], new_idx: int) -> None:
         old_idx = pic.display_idx
-        if new_idx < old_idx:
-            self.pics.insort_right(pic, new_idx)
-        elif new_idx > old_idx:
-            self.pics.insort_left(pic, new_idx)
+
+        # if old == new, this method should do nothing
+        if new_idx != old_idx:
+            if self._moving_up(new_idx, old_idx):
+                self.pics.insort_right(pic, new_idx)
+            else:
+                self.pics.insort_left(pic, new_idx)
 
     def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
         """

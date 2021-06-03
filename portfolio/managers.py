@@ -40,6 +40,10 @@ class SortableManager(models.Manager):
         start = self.count()
         self._sort(seq, start)
 
+    def create(self, *args, **kwargs):
+        # kwargs['display_idx'] = self.count() + 1
+        return super().create(*args, **kwargs)
+
 class PhotographerManager(SortableManager):
     pass
 
