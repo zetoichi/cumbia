@@ -100,8 +100,8 @@ class PhotographerModelsTest(TestCase):
 
     def test_first_pic_should_add_pics_and_mark_as_main(self):
         ph = Photographer.objects.create(
-            first_name='New',
-            last_name='Ph',
+            first_name='Danny',
+            last_name='Elfman',
         )
         pic = get_test_pic_from_file('portrait')
         ph.add_pics((pic,))
@@ -110,8 +110,8 @@ class PhotographerModelsTest(TestCase):
 
     def test_should_add_pics_and_sort(self):
         ph = Photographer.objects.create(
-            first_name='New',
-            last_name='Ph',
+            first_name='John',
+            last_name='Williams',
         )
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
@@ -119,9 +119,41 @@ class PhotographerModelsTest(TestCase):
         ph.add_pics((pic_1, pic_2, pic_3))
 
         self.assertTrue(ph.pics.count() == 3)
-        self.assertTrue(pic_1.display_order == 1)
-        self.assertTrue(pic_2.display_order == 2)
-        self.assertTrue(pic_3.display_order == 3)
+        self.assertTrue(pic_1.display_idx == 1)
+        self.assertTrue(pic_2.display_idx == 2)
+        self.assertTrue(pic_3.display_idx == 3)
+
+    def test_should_insort_pic_right(self):
+        ph = Photographer.objects.create(
+            first_name='Anne',
+            last_name='Dudley',
+        )
+        pic_1 = get_test_pic_from_file('portrait')
+        pic_2 = get_test_pic_from_file('big')
+        pic_3 = get_test_pic_from_file('landscape')
+        ph.add_pics((pic_1, pic_2, pic_3))
+
+        ph.insort_pic(pic_3, 1)
+
+        self.assertTrue(ph.pics.get(display_idx=1) == pic_3)
+        self.assertTrue(ph.pics.get(display_idx=2) == pic_1)
+        self.assertTrue(ph.pics.get(display_idx=3) == pic_2)
+
+    def test_should_insort_pic_left(self):
+        ph = Photographer.objects.create(
+            first_name='Anne',
+            last_name='Dudley',
+        )
+        pic_1 = get_test_pic_from_file('portrait')
+        pic_2 = get_test_pic_from_file('big')
+        pic_3 = get_test_pic_from_file('landscape')
+        ph.add_pics((pic_1, pic_2, pic_3))
+
+        ph.insort_pic(pic_1, 3)
+
+        self.assertTrue(ph.pics.get(display_idx=1) == pic_2)
+        self.assertTrue(ph.pics.get(display_idx=2) == pic_3)
+        self.assertTrue(ph.pics.get(display_idx=3) == pic_1)
 
 class PicTestCase(TestCase):
 

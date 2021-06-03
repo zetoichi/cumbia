@@ -35,7 +35,7 @@ class Photographer(models.Model):
         blank=True,
         default=''
     )
-    display_order = models.IntegerField(
+    display_idx = models.IntegerField(
         verbose_name=_('Orden'),
         default=1
     )
@@ -79,13 +79,31 @@ class Photographer(models.Model):
     def _has_no_pics(self):
         return self.pics.count() == 0
 
-    def _sort_new_pics(self, pics: Sequence[Type['Pic']]) -> None:
+    def _sort_pics(self, pics: Sequence[Type['Pic']], start: int = 0) -> None:
+        [pic.assign_idx(start + i) for i, pic in enumerate(pics, 1)]
+
+    def _insort_right(self, pic: Type['Pic'], new_idx: int) -> None:
+        """
+        Move pic up, shift rest of set right.
+        """
+        start = new_idx
+        self._sort_pics(self.pics.filter(display_idx__gte=new_idx), start)
+        pic.assign_idx(new_idx)
+
+    def _insort_left(self, pic: Type['Pic'], new_idx: int) -> None:
+        """
+        Move pic down, shift rest of set left.
+        """
+        self._sort_pics(self.pics.filter(display_idx__lte=new_idx)[1:])
+        pic.assign_idx(new_idx)
+
+    def _sort_incoming(self, pics: Sequence[Type['Pic']]) -> None:
         """
         Assign display order to new pics,
-        starting from las element in self.pics
+        starting from last element in self.pics
         """
-        low = self.pics.count()
-        [pic.assign_order(low + i) for i, pic in enumerate(pics, 1)]
+        start = self.pics.count()
+        self._sort_pics(pics, start)
 
     def add_pics(self, pics: Sequence[Type['Pic']]) -> None:
         """
@@ -95,7 +113,7 @@ class Photographer(models.Model):
             - Mark it as main if it is.
         """
         first = self._has_no_pics()
-        self._sort_new_pics(pics)
+        self._sort_incoming(pics)
         self.pics.add(*pics)  # perform actual adding
         if first:
             pics[0].set_as_main()
@@ -108,6 +126,13 @@ class Photographer(models.Model):
 
     def get_main_pic(self) -> Type['Pic']:
         return self._unique_main_pic()
+
+    def insort_pic(self, pic: Type['Pic'], new_idx: int) -> None:
+        old_idx = pic.display_idx
+        if new_idx < old_idx:
+            self._insort_right(pic, new_idx)
+        elif new_idx > old_idx:
+            self._insort_left(pic, new_idx)
 
     def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
         """
@@ -138,7 +163,7 @@ class Photographer(models.Model):
     class Meta:
         verbose_name = _('Photographer')
         verbose_name_plural = _('Photographers')
-        ordering = ['display_order']
+        ordering = ['display_idx']
 
 
 class Pic(models.Model):
@@ -156,7 +181,7 @@ class Pic(models.Model):
         default=False,
         verbose_name=_('Main'),
     )
-    display_order = models.IntegerField(
+    display_idx = models.IntegerField(
         verbose_name=_('Orden'),
         default=1
     )
@@ -177,8 +202,8 @@ class Pic(models.Model):
     def is_main(self):
         return self.main is True
 
-    def assign_order(self, order: int) -> None:
-        self.display_order = order
+    def assign_idx(self, idx: int) -> None:
+        self.display_idx = idx
         self.save()
 
     def set_as_main(self):
@@ -204,4 +229,4 @@ class Pic(models.Model):
     class Meta:
         verbose_name = _('Foto')
         verbose_name_plural = _('Fotos')
-        ordering = ['display_order']
+        ordering = ['display_idx']
