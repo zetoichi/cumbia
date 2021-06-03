@@ -199,8 +199,8 @@ class JSONViewsTestCase(TestCase):
 
     def test_save_pics_url_should_resolve(self):
         ph = Photographer.objects.create(
-            first_name='Jason',
-            last_name='Statham'
+            first_name='Valeria',
+            last_name='Massa'
         )
         url = f'/phs/savepics/{ph.pk}/'
         view_func = save_new_pics

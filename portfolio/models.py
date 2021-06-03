@@ -1,6 +1,6 @@
 import time
 
-from typing import Any, Dict, List, IO, Type
+from typing import Any, Dict, List, IO, Type, Sequence
 from datetime import date
 
 from lorem_text import lorem
@@ -58,23 +58,24 @@ class Photographer(models.Model):
         self.first_name = self.first_name.title()
         self.last_name = self.last_name.title()
 
-    def pics_from_files(self, files: List[IO]) -> List[int]:
+    def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
         pics_created = []
+
         for f in files:
             new_pic = Pic.objects.create(
                 pic=f,
                 caption=lorem.words(6)
             )
-            self.add_pic(new_pic)
-            pics_created.append(new_pic.pk)
+            pics_created.append(new_pic)
+        self.add_pics(pics_created)
 
-        return pics_created
+        return [pic.pk for pic in pics_created]
 
-    def add_pic(self, pic):
+    def add_pics(self, pics: Sequence[Type['Pic']]) -> None:
         first = self.pics.count() == 0
-        self.pics.add(pic)
+        self.pics.add(*pics)
         if first:
-            pic.set_as_main()
+            pics[0].set_as_main()
 
     def set_new_main_pic(self, pic: Type['Pic']) -> None:
         if self.pics.filter(pk=pic.pk).exists():
@@ -113,7 +114,6 @@ class Photographer(models.Model):
         verbose_name = _('Photographer')
         verbose_name_plural = _('Photographers')
         ordering = ['display_order']
-
 
 class Pic(models.Model):
     pic = models.ImageField(

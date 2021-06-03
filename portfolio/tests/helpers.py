@@ -3,6 +3,9 @@ from typing import Tuple, List, Dict, IO, Type
 
 from django.conf import settings
 from django.http import HttpResponse
+from django.core.files.images import ImageFile
+
+from portfolio.models import Pic
 
 UPLOADED_PICS_PATH = os.path.join(settings.MEDIA_ROOT, 'pics')
 TEST_IMAGE_FILES = {
@@ -28,9 +31,19 @@ def get_open_test_img_files() -> Dict[str, IO]:
 
     return open_files
 
-def close_files(open_files):
+def close_files(open_files: Dict[str, IO]) -> None:
     for f in open_files.values():
         f.close()
+
+def get_test_pic_from_file(img_type: str) -> Pic:
+    test_file = get_test_img_file(img_type)
+    pic = Pic()
+    with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
+        img_file = ImageFile(img_file)
+        img_file.name = img_file.name.split('/')[-1]
+        pic.pic = ImageFile(img_file)
+        pic.save()
+    return pic
 
 def get_expected_path(filename):
     return os.path.join(UPLOADED_PICS_PATH, f'{filename}')
