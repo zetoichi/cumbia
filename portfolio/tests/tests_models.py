@@ -51,6 +51,19 @@ class PhotographerModelsTest(TestCase):
         self.assertEqual(ph.first_name, 'First')
         self.assertEqual(ph.last_name, 'Fake Ph')
 
+    def test_should_sort_new_phs(self):
+        phs_count = Photographer.objects.count()
+        ph_1 = Photographer.objects.create(
+            first_name='Thrid',
+            last_name='Fake Ph'
+        )
+        ph_2 = Photographer.objects.create(
+            first_name='Fourth',
+            last_name='Fake Ph'
+        )
+        self.assertEqual(phs_count + 1, ph_1.display_idx)
+        self.assertEqual(phs_count + 2, ph_2.display_idx)
+
     # INSTANCE METHODS THAT HANDLE PICS SET
 
     def test_set_new_main_pic_should_raise_improperly_configured(self):
@@ -210,42 +223,44 @@ class PicTestCase(TestCase):
 
     def test_photographer_property_should_return_ph(self):
         test_file = get_test_img_file('portrait')
-        pic = Pic()
         ph = Photographer.objects.create(
             first_name='Ph',
             last_name='For Portarit',
         )
-
-        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
-            img_file = ImageFile(img_file)
-            img_file.name = img_file.name.split('/')[-1]
-            pic.pic = ImageFile(img_file)
-            pic.save()
+        pic = get_test_pic_from_file('portrait')
         ph.add_pics((pic,))
 
         self.assertTrue(pic.photographer == ph)
 
     def test_photographer_property_should_return_none(self):
-        test_file = get_test_img_file('portrait')
-        pic = Pic()
-
-        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
-            img_file = ImageFile(img_file)
-            img_file.name = img_file.name.split('/')[-1]
-            pic.pic = ImageFile(img_file)
-            pic.save()
+        pic = get_test_pic_from_file('portrait')
 
         self.assertTrue(pic.photographer is None)
 
     def test_should_not_get_marked_as_main(self):
-        test_file = get_test_img_file('portrait')
-        pic = Pic()
-
-        with open(f'portfolio/tests/{test_file}', 'rb') as img_file:
-            img_file = ImageFile(img_file)
-            img_file.name = img_file.name.split('/')[-1]
-            pic.pic = ImageFile(img_file)
-            pic.main = True
-            pic.save()
+        pic = get_test_pic_from_file('portrait')
+        pic.main = True
+        pic.save()
 
         self.assertFalse(pic.is_main)
+
+    def test_should_sort_new_pics(self):
+        pic_count = Pic.objects.count()
+        test_file_1 = get_test_img_file('landscape')
+        test_file_2 = get_test_img_file('portrait')
+
+        with open(f'portfolio/tests/{test_file_1}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            pic_1 = Pic.objects.create(
+                pic=ImageFile(img_file)
+            )
+        with open(f'portfolio/tests/{test_file_2}', 'rb') as img_file:
+            img_file = ImageFile(img_file)
+            img_file.name = img_file.name.split('/')[-1]
+            pic_2 = Pic.objects.create(
+                pic=ImageFile(img_file)
+            )
+
+        self.assertEqual(pic_count + 1, pic_1.display_idx)
+        self.assertEqual(pic_count + 2, pic_2.display_idx)
