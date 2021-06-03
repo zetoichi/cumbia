@@ -76,13 +76,16 @@ class Photographer(models.Model):
             ))
         return main.first()
 
+    def _has_no_pics(self):
+        return self.pics.count() == 0
+
     def add_pics(self, pics: Sequence[Type['Pic']]) -> None:
         """
         Wraps add() method:
             - Check if the added object is the first in the set,
             - Marks it as main if it is.
         """
-        first = self.pics.count() == 0
+        first = self._has_no_pics()
         self.pics.add(*pics)
         if first:
             pics[0].set_as_main()
