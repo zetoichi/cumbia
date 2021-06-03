@@ -119,9 +119,9 @@ class PhotographerModelsTest(TestCase):
         ph.add_pics((pic_1, pic_2, pic_3))
 
         self.assertTrue(ph.pics.count() == 3)
-        self.assertTrue(pic_1.display_order == 1)  # EXPECTED FAIL: FIX!!
-        self.assertTrue(pic_2.display_order == 2)  # EXPECTED FAIL: FIX!!
-        self.assertTrue(pic_3.display_order == 3)  # EXPECTED FAIL: FIX!!
+        self.assertTrue(pic_1.display_order == 1)
+        self.assertTrue(pic_2.display_order == 2)
+        self.assertTrue(pic_3.display_order == 3)
 
 class PicTestCase(TestCase):
 

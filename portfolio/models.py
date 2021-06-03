@@ -79,14 +79,24 @@ class Photographer(models.Model):
     def _has_no_pics(self):
         return self.pics.count() == 0
 
+    def _sort_new_pics(self, pics: Sequence[Type['Pic']]) -> None:
+        """
+        Assign display order to new pics,
+        starting from las element in self.pics
+        """
+        low = self.pics.count()
+        [pic.assign_order(low + i) for i, pic in enumerate(pics, 1)]
+
     def add_pics(self, pics: Sequence[Type['Pic']]) -> None:
         """
-        Wraps add() method:
+        Wraps m2m add() method to:
+            - Sort incoming pics
             - Check if the added object is the first in the set,
-            - Marks it as main if it is.
+            - Mark it as main if it is.
         """
         first = self._has_no_pics()
-        self.pics.add(*pics)
+        self._sort_new_pics(pics)
+        self.pics.add(*pics)  # perform actual adding
         if first:
             pics[0].set_as_main()
 
@@ -166,6 +176,10 @@ class Pic(models.Model):
     @property
     def is_main(self):
         return self.main is True
+
+    def assign_order(self, order: int) -> None:
+        self.display_order = order
+        self.save()
 
     def set_as_main(self):
         self.main = True
