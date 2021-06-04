@@ -15,6 +15,11 @@ urlpatterns = [
         name='index'
     ),
     path(
+        'login/',
+        views_main.CumbiaLoginView.as_view(),
+        name='login'
+    ),
+    path(
         'about/',
         views_main.AboutView.as_view(),
         name='about'

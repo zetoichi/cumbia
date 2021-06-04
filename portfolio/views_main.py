@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 
@@ -7,6 +8,11 @@ from .models import (
     Photographer,
     Pic,
 )
+
+class CumbiaLoginView(LoginView):
+    template_name = 'portfolio/login.html'
+    redirect_authenticated_user = True
+    extra_context = {'segment': 'auth'}
 
 class IndexView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/index.html'

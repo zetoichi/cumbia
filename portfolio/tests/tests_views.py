@@ -8,6 +8,7 @@ from django.test import (
 )
 
 from portfolio.views_main import (
+    CumbiaLoginView,
     IndexView,
     AboutView,
     ContactView,
@@ -27,6 +28,17 @@ from .helpers import (
 class CBVTestCase(TestCase):
 
     # RESOLVE
+
+    def test_login_url_should_resolve(self):
+        url = '/login/'
+        view_class = CumbiaLoginView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
 
     def test_index_url_should_resolve(self):
         url = '/'
@@ -108,6 +120,12 @@ class CBVTestCase(TestCase):
 
     # TEMPLATE
 
+    def test_login_should_render_expected_template(self):
+        url = '/login/'
+        expected_template = 'portfolio/login.html'
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, expected_template)
+
     def test_index_should_render_expected_template(self):
         url = '/'
         expected_template = 'portfolio/index.html'
@@ -154,6 +172,24 @@ class CBVTestCase(TestCase):
 
     # CONTENT
 
+    def test_login_should_not_display_photographers(self):
+        ph_1 = Photographer.objects.create(
+            first_name='Dolph',
+            last_name='Lundgren'
+        )
+        ph_2 = Photographer.objects.create(
+            first_name='Jet',
+            last_name='Li',
+        )
+        url = '/login/'
+
+        response = self.client.get(url)
+
+        expected_1 = 'Dolph Lundgren'
+        expected_2 = 'Jet Li'
+        self.assertNotContains(response, expected_1)
+        self.assertNotContains(response, expected_2)
+
     def test_l_col_should_display_photographers(self):
         ph_1 = Photographer.objects.create(
             first_name='Steven',
@@ -166,12 +202,12 @@ class CBVTestCase(TestCase):
         )
         url = '/'
 
-        response = self.client.get(url).content.decode()
+        response = self.client.get(url)
 
         expected_1 = 'Steven Seagal'
         expected_2 = 'Arnie'
-        self.assertIn(expected_1, response)
-        self.assertIn(expected_2, response)
+        self.assertContains(response, expected_1)
+        self.assertContains(response, expected_2)
 
     def test_l_col_should_contain_photographer_urls(self):
         ph_1 = Photographer.objects.create(
