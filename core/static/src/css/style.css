@@ -587,4 +587,68 @@ li.pic-cx:hover {
   border: 1px solid #999;
   padding: 2px 8px;
 }
+
+.form-fields-cx {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.form-field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 100%;
+  height: 3rem;
+}
+
+.form-fields-cx input,
+.form-field-label {
+  padding: 5px;
+}
+
+.form-field-label {
+  line-height: 2rem;
+}
+
+.form-fields-cx input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #999;
+  margin-left: 1rem;
+}
+
+.form-fields-cx input:focus {
+  outline: none;
+}
+
+.form-fields-cx input:focus-visible {
+  border-bottom: 3px solid #282828;
+}
+
+.form-fields-cx input:valid {
+  background: none;
+  border-bottom: 3px solid pink;
+}
+
+.form-fields-cx input:focus:invalid {
+  background: none;
+  border-bottom: 3px solid red;
+}
 /*# sourceMappingURL=style.css.map */

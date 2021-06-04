@@ -2,5 +2,20 @@
 {% load static %}
 
 {% block center %}
-    {{ form.as_p }}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-fields-cx">
+            <div class="form-field">
+                <label class="form-field-label" for="username">Usuario</label>
+                {{ form.username }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="password">Contraseña</label>
+                {{ form.password }}
+            </div>
+        </div>
+        <div class="actions-cx">
+            <button id="login-btn" class="action-btn main-action">LOGIN</button>
+        </div>
+    </form>
 {% endblock center %}
