@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block center %}
-    <form action="" method="POST">
+    <form id="create-ph-form" class="form-center" action="" method="POST">
         {% csrf_token %}
         <div class="form-fields-cx">
             <div class="form-field">
@@ -22,9 +22,8 @@
                 {{ form.bio }}
             </div>
         </div>
-
-        <div class="actions-cx">
-            <button id="create-ph-btn" class="action-btn main-action">CREAR</button>
-        </div>
     </form>
 {% endblock center %}
+{% block extra_actions %}
+    <button id="create-ph-btn" class="action-btn extra-action" type="submit" form="create-ph-form">CREAR</button>
+{% endblock extra_actions %}

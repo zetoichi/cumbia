@@ -39,6 +39,11 @@
     justify-content: space-between;
     align-items: flex-start;
 }
+@mixin betweenCenter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 @mixin colCenterCenter {
     display: flex;
     flex-direction: column;
@@ -171,7 +176,7 @@ li {
 
 main.main-grid {
     display: grid;
-    grid-template-rows: repeat(12, 1fr);
+    grid-template-rows: repeat(9, 1fr);
     grid-template-columns: repeat(16, 1fr);
     width: 100%;
     height: 100vh;
@@ -197,7 +202,7 @@ header.main-header {
 }
 
 nav.gen-nav {
-    grid-row: 1 / 6;
+    grid-row: 1 / -1;
     grid-column: 1 / 4;
     max-width: 20vw;
     padding-top: 1vh;
@@ -213,15 +218,23 @@ section.r-info {
 	grid-row: 1 / -1;
 	grid-column: -4 / -1;
 }
-
+nav.action-bar,
 footer.main-footer {
     grid-row: -2 / -1;
     grid-column: 1 / -1;
     @include endStart;
 }
+nav.action-bar,
+nav.action-bar.extra-actions {
+    @include betweenCenter;
+}
+nav.action-bar.extra-actions {
+    width: 33%;
+}
+
 
 nav.gen-nav .ph-links {
-    @include colAroundStart;
+    @include colStartStart;
     height: 100%
 }
 li.ph-link {
@@ -236,14 +249,14 @@ li.ph-link.dim {
     transition: all .3s ease-out;
 }
 li.ph-link.dim h5 {
-    line-height: .5rem;
+    line-height: 1.6rem;
     letter-spacing: 1px;
 }
 li.ph-link.dim:hover {
     color: $brand-black;
 }
 li.ph-link.highlight {
-    margin: 0;
+    margin: 8px 0;
 }
 li.ph-link.highlight a {
     cursor: default;
@@ -256,7 +269,7 @@ li.ph-link.highlight h5 {
 
 section.base-center.center {
     display: grid;
-    grid-template-rows: repeat(12, 1fr);
+    grid-template-rows: repeat(9, 1fr);
     grid-template-columns: repeat(3, 1fr);
 }
 header.center-header {
@@ -268,7 +281,7 @@ header.center-header {
     @include centerCenter;
 }
 .center-cx {
-    grid-row: 2 / 12;
+    grid-row: 2 / -2;
     grid-column: 1 / 4;
     @include centerCenter;
 }
@@ -288,12 +301,12 @@ header.center-header {
     grid-column: 4 / -1;
 }
 .air-cx {
-    grid-row: 1 / 6;
+    grid-row: 1 / 4;
     @include endEnd;
 }
 .hscroll-cx {
-	grid-row: 6 / 12;
-    @include endStart;
+	grid-row: 4 / -2;
+    @include endEnd;
 }
 
 .r-info-cx {
@@ -447,6 +460,9 @@ li.pic-cx:hover {
     padding: 2px 8px;
 }
 
+.form-center {
+    height: 100%
+}
 .form-fields-cx {
     @include colCenterCenter;
 }
@@ -455,30 +471,40 @@ li.pic-cx:hover {
     width: 100%;
     height: 3rem;
 }
-.form-fields-cx input,
+.form-field textarea,
+.form-field input,
 .form-field-label {
     padding: 5px;
 }
 .form-field-label {
     line-height: 2rem;
 }
-.form-fields-cx input {
-	width: 100%;
+.form-field textarea,
+.form-field input {
+    width: 100%;
 	border: none;
 	border-bottom: 2px solid $brand-gray;
 	margin-left: 1rem;
 }
-.form-fields-cx input:focus {
+.form-field textarea {
+    height: 5rem;
+}
+.form-field textarea:focus,
+.form-field input:focus {
     outline: none;
 }
-.form-fields-cx input:focus-visible {
+.form-field textarea:focus-visible,
+.form-field input:focus-visible {
     border-bottom: 3px solid $brand-black;
 }
-.form-fields-cx input:valid {
+.form-field textarea:valid,
+.form-field input:valid {
     background: none;
     border-bottom: 3px solid pink;
 }
-.form-fields-cx input:focus:invalid {
+.form-field textarea:focus:invalid,
+.form-field input:focus:invalid {
     background: none;
     border-bottom: 3px solid red;
 }
+

@@ -16,28 +16,40 @@
     <title>Cumbia</title>
 </head>
 <body>
-    {% if edit_mode %}
-        <div id="edit-mode"></div>
-    {% endif %}
+{% if edit_mode %}
+    <div id="edit-mode"></div>
+{% endif %}
     <script defer src="{% static 'dist/bundle.js' %}" type="text/javascript"></script>
     <main class="main-grid">
-
-    {% if segment != 'auth' %}    
-        {% block bigheader %}{% endblock bigheader %}
-        {% include 'portfolio/components/l-col.html' %}
-    {% endif %}
-
-        <section class="base-center center">
-            <div class="center-cx">
-                {% block center %}{% endblock center %}
-            </div>
-        </section>
     
-    {% if segment != 'auth' %}
-        {% block main %}{% endblock main %}
-        {% include 'portfolio/components/r-col.html' %}
-        {% include 'portfolio/components/footer.html' %}
-    {% endif %}
+
+{% if segment != 'auth' %}
+    {% block bigheader %}{% endblock bigheader %}
+    {% include 'portfolio/components/l-col.html' %}
+{% endif %}
+    
+    <section class="base-center center">
+        <div class="center-cx">
+            {% block center %}{% endblock center %}
+        </div>
+    </section>
+    
+{% if segment != 'auth' %}
+    {% block main %}{% endblock main %}
+    {% include 'portfolio/components/r-col.html' %}
+    <nav class="action-bar">
+        
+        {% include 'portfolio/components/buttons/create-ph-btn.html' %}
+
+        <div class="extra-actions">
+            {% block extra_actions %}{% endblock extra_actions %}
+        </div>
+        
+        {% include 'portfolio/components/buttons/logout-btn.html' %}
+        
+    </nav>
+    {% comment %} {% include 'portfolio/components/footer.html' %} {% endcomment %}
+{% endif %}
     
     </main>
 </body>

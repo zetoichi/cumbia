@@ -13,7 +13,7 @@
 </div>
 
 <div class="hscroll-cx">
-    <ul class="pic-row">
+    <ul class="pic-row drag-container">
     {% for pic in ph.pics.all %}
         <li class="pic-cx">
             <a data-fslightbox="gallery" href="{{ pic.pic.url }}">
@@ -25,3 +25,7 @@
 </div>
 
 {% endblock main %}
+{% block extra_actions %}
+<button class="action-btn extra-action">+ FOTOS</button>
+<button class="action-btn secondary-action">EDITAR</button>
+{% endblock extra_actions %}

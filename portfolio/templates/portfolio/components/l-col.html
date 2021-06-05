@@ -1,5 +1,5 @@
 <nav id="main-nav" class="gen-nav">
-    <ul class="ph-links">
+    <ul class="ph-links drag-container">
     {% for photographer in photographers %}
     {% if segment == 'detail' %}
         <li class="ph-link {% if ph.pk == photographer.pk %}highlight{% else %}dim{% endif %}" value="{{ photographer.pk }}">
@@ -12,7 +12,7 @@
         </li>
     {% endfor %}
     </ul>
-{% if segment == 'index' %}
+{% comment %} {% if segment == 'index' %}
     <div id="edit-ph-list-cx" class="edit-element">
         <div class="edit-btn">
             <a href="#">
@@ -20,5 +20,5 @@
             </a>
         </div>
     </div>
-{% endif %}
+{% endif %} {% endcomment %}
 </nav>

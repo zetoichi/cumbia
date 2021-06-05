@@ -26,6 +26,11 @@ button.action-btn.secondary-action {
   border-color: #999;
 }
 
+button.action-btn.extra-action {
+  color: #799f6e;
+  border-color: #799f6e;
+}
+
 @-webkit-keyframes shrink {
   0% {
     -webkit-transform: scale(1);
@@ -142,8 +147,8 @@ li {
 main.main-grid {
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: (1fr)[12];
-      grid-template-rows: repeat(12, 1fr);
+  -ms-grid-rows: (1fr)[9];
+      grid-template-rows: repeat(9, 1fr);
   -ms-grid-columns: (1fr)[16];
       grid-template-columns: repeat(16, 1fr);
   width: 100%;
@@ -184,9 +189,7 @@ header.main-header {
 }
 
 nav.gen-nav {
-  -ms-grid-row: 1;
-  -ms-grid-row-span: 5;
-  grid-row: 1 / 6;
+  grid-row: 1 / -1;
   -ms-grid-column: 1;
   -ms-grid-column-span: 3;
   grid-column: 1 / 4;
@@ -209,6 +212,7 @@ section.r-info {
   grid-column: -4 / -1;
 }
 
+nav.action-bar,
 footer.main-footer {
   grid-row: -2 / -1;
   grid-column: 1 / -1;
@@ -223,6 +227,23 @@ footer.main-footer {
           align-items: flex-start;
 }
 
+nav.action-bar,
+nav.action-bar.extra-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+nav.action-bar.extra-actions {
+  width: 33%;
+}
+
 nav.gen-nav .ph-links {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -231,8 +252,6 @@ nav.gen-nav .ph-links {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
   height: 100%;
 }
 
@@ -253,7 +272,7 @@ li.ph-link.dim {
 }
 
 li.ph-link.dim h5 {
-  line-height: .5rem;
+  line-height: 1.6rem;
   letter-spacing: 1px;
 }
 
@@ -262,7 +281,7 @@ li.ph-link.dim:hover {
 }
 
 li.ph-link.highlight {
-  margin: 0;
+  margin: 8px 0;
 }
 
 li.ph-link.highlight a {
@@ -277,8 +296,8 @@ li.ph-link.highlight h5 {
 section.base-center.center {
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: (1fr)[12];
-      grid-template-rows: repeat(12, 1fr);
+  -ms-grid-rows: (1fr)[9];
+      grid-template-rows: repeat(9, 1fr);
   -ms-grid-columns: (1fr)[3];
       grid-template-columns: repeat(3, 1fr);
 }
@@ -306,9 +325,7 @@ header.center-header {
 }
 
 .center-cx {
-  -ms-grid-row: 2;
-  -ms-grid-row-span: 10;
-  grid-row: 2 / 12;
+  grid-row: 2 / -2;
   -ms-grid-column: 1;
   -ms-grid-column-span: 3;
   grid-column: 1 / 4;
@@ -343,8 +360,8 @@ header.center-header {
 
 .air-cx {
   -ms-grid-row: 1;
-  -ms-grid-row-span: 5;
-  grid-row: 1 / 6;
+  -ms-grid-row-span: 3;
+  grid-row: 1 / 4;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -357,18 +374,16 @@ header.center-header {
 }
 
 .hscroll-cx {
-  -ms-grid-row: 6;
-  -ms-grid-row-span: 6;
-  grid-row: 6 / 12;
+  grid-row: 4 / -2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 .r-info-cx {
@@ -588,6 +603,10 @@ li.pic-cx:hover {
   padding: 2px 8px;
 }
 
+.form-center {
+  height: 100%;
+}
+
 .form-fields-cx {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -618,7 +637,8 @@ li.pic-cx:hover {
   height: 3rem;
 }
 
-.form-fields-cx input,
+.form-field textarea,
+.form-field input,
 .form-field-label {
   padding: 5px;
 }
@@ -627,27 +647,36 @@ li.pic-cx:hover {
   line-height: 2rem;
 }
 
-.form-fields-cx input {
+.form-field textarea,
+.form-field input {
   width: 100%;
   border: none;
   border-bottom: 2px solid #999;
   margin-left: 1rem;
 }
 
-.form-fields-cx input:focus {
+.form-field textarea {
+  height: 5rem;
+}
+
+.form-field textarea:focus,
+.form-field input:focus {
   outline: none;
 }
 
-.form-fields-cx input:focus-visible {
+.form-field textarea:focus-visible,
+.form-field input:focus-visible {
   border-bottom: 3px solid #282828;
 }
 
-.form-fields-cx input:valid {
+.form-field textarea:valid,
+.form-field input:valid {
   background: none;
   border-bottom: 3px solid pink;
 }
 
-.form-fields-cx input:focus:invalid {
+.form-field textarea:focus:invalid,
+.form-field input:focus:invalid {
   background: none;
   border-bottom: 3px solid red;
 }
