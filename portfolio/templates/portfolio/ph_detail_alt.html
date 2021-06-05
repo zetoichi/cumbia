@@ -1,21 +1,11 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
 
-{% block center %}
+{% block main %}
 
-{% comment %} <div class="carrousel-cx">
-    <div class="splide">
-        <div class="splide__track">
-            <ul class="splide__list">
-            {% for pic in ph.pics.all %}
-                <li class="splide__slide carrousel-slide">
-                    <img data-id="{{ pic.pk }}" data-splide-lazy="{{ pic.pic.url }}" alt="{{ pic.caption }}">
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div> {% endcomment %}
+<div class="air-cx">
+    
+</div>
 
 <div class="grid-wrapper">
     <div class="pic-grid">
@@ -29,5 +19,11 @@
     </div>
 </div>
 
+{% endblock main %}
 
-{% endblock center %}
+{% block extra_actions %}
+
+<button class="action-btn extra-action">+ FOTOS</button>
+<button class="action-btn secondary-action">EDITAR</button>
+
+{% endblock extra_actions %}

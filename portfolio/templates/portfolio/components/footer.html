@@ -1,22 +1,22 @@
 <footer class="main-footer">
-    <ul class="contact-links-cx">
-        <li class="contact-link">
+    <ul class="generic-links-cx">
+        <li class="generic-link">
             <a href="{% url 'portfolio:about' %}">
                 <h5>nosotros</h5>
             </a>
         </li>
-        <li class="contact-link">
+        <li class="generic-link">
             <a href="https://www.instagram.com/cumbia.vs/" target="_blank">
                 <h5>instagram</h5>
             </a>
         </li>
-        <li class="contact-link">
+        <li class="generic-link">
             <a href="{% url 'portfolio:contact' %}">
                 <h5>contacto</h5>
             </a>
         </li>
     {% if edit_mode %}
-        <li class="contact-link">
+        <li class="generic-link">
             <a href="{% url 'portfolio:logout' %}">
                 <h5>logout</h5>
             </a>

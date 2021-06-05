@@ -7,6 +7,20 @@
             </a>
         </div>
     {% endif %}
+    {% if segment == 'detail' %}
+        <ul class="top-links-cx">
+            <li class="generic-link">
+                <a href="#">
+                    <h5>foto</h5>
+                </a>
+            </li>
+            <li class="generic-link dim">
+                <a href="#">
+                    <h5>video</h5>
+                </a>
+            </li>
+        </ul>
+    {% endif %}
     {% comment %} {% for ph in photographers %}
         <div id="ph-info-{{ ph.pk }}" class="faded-out pic-info-each">
             <div class="pic-info-ph-name">
