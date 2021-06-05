@@ -63,6 +63,15 @@ class Photographer(SortableModel):
     def main_pic(self):
         return self.get_main_pic()
 
+    def save(self, *args, **kwargs):
+        self._normalize_name()
+        if self.display_name == '':
+            self.display_name = f'{self.first_name} {self.last_name}'
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return f'/phs/detail/{self.pk}/'
+
     def _normalize_name(self):
         """Force title format on new objects"""
         self.first_name = self.first_name.title()
@@ -132,12 +141,6 @@ class Photographer(SortableModel):
         self.add_pics(pics_created)
 
         return [pic.pk for pic in pics_created]
-
-    def save(self, *args, **kwargs):
-        self._normalize_name()
-        if self.display_name == '':
-            self.display_name = f'{self.first_name} {self.last_name}'
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.display_name

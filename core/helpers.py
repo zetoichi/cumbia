@@ -1,6 +1,3 @@
-# from typing import Type
-
-from django.db.models import Model
 from django.conf import settings
 
 import shortuuid

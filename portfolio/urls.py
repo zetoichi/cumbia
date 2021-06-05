@@ -1,28 +1,33 @@
 from django.urls import path
 
 from . import (
+    views_auth,
     views_main,
     views_json,
 )
 
 app_name = 'portfolio'
 
-# CBV
+# AUTH
 urlpatterns = [
     path(
-        '',
-        views_main.IndexView.as_view(),
-        name='index'
-    ),
-    path(
         'login/',
-        views_main.CumbiaLoginView.as_view(),
+        views_auth.CumbiaLoginView.as_view(),
         name='login'
     ),
     path(
         'logout/',
-        views_main.cumbia_logout,
+        views_auth.cumbia_logout,
         name='logout'
+    ),
+]
+
+# PUBLIC
+urlpatterns += [
+    path(
+        '',
+        views_main.IndexView.as_view(),
+        name='index'
     ),
     path(
         'about/',
@@ -35,29 +40,37 @@ urlpatterns = [
         name='contact'
     ),
     path(
-        'phs/<str:pk>/',
+        'phs/detail/<str:pk>/',
         views_main.PhDetailView.as_view(),
         name='ph_detail'
     ),
     path(
-        'phs_alt/<str:pk>/',
+        'phs_alt/detail/<str:pk>/',
         views_main.PhDetailAltView.as_view(),
         name='ph_detail_alt'
     ),
+]
+
+# PRIVATE
+urlpatterns += [
     path(
-        'phs/<str:pk>/edit/',
+        'phs/new/',
+        views_main.PhCreateView.as_view(),
+        name='ph_create'
+    ),
+    path(
+        'phs/edit_pics/<str:pk>/',
         views_main.PhEditPicsView.as_view(),
         name='ph_edit_pics'
     ),
     path(
-        'phs/<str:pk>/add/',
+        'phs/add_pics/<str:pk>/',
         views_main.PhAddPicsView.as_view(),
         name='ph_add_pics'
     ),
 ]
 
 # JSON
-
 urlpatterns += [
     path(
         'phs/savepics/<str:pk>/',

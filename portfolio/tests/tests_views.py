@@ -7,12 +7,15 @@ from django.test import (
     TestCase,
 )
 
-from portfolio.views_main import (
+from portfolio.views_auth import (
     CumbiaLoginView,
-    CumbiaLogoutView,
+    cumbia_logout,
+)
+from portfolio.views_main import (
     IndexView,
     AboutView,
     ContactView,
+    PhCreateView,
     PhDetailView,
     PhEditPicsView,
     PhAddPicsView,
@@ -43,14 +46,12 @@ class CBVTestCase(TestCase):
 
     def test_logout_url_should_resolve(self):
         url = '/logout/'
-        view_class = CumbiaLogoutView
+        view = cumbia_logout
 
         response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
+        actual = response.resolver_match.func
 
-        self.assertEqual(expected, actual)
+        self.assertEqual(view, actual)
 
     def test_index_url_should_resolve(self):
         url = '/'
@@ -85,12 +86,23 @@ class CBVTestCase(TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_ph_create_url_should_resolve(self):
+        url = '/phs/new/'
+        view_class = PhCreateView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
     def test_ph_detail_url_should_resolve(self):
         ph = Photographer.objects.create(
             first_name='Silvester',
             last_name='Stallone'
         )
-        url = f'/phs/{ph.pk}/'
+        url = f'/phs/detail/{ph.pk}/'
         view_class = PhDetailView
 
         response = self.client.get(url)
@@ -105,7 +117,7 @@ class CBVTestCase(TestCase):
             first_name='Jordan',
             last_name='Spieth'
         )
-        url = f'/phs/{ph.pk}/edit/'
+        url = f'/phs/edit_pics/{ph.pk}/'
         view_class = PhEditPicsView
 
         response = self.client.get(url)
@@ -120,7 +132,7 @@ class CBVTestCase(TestCase):
             first_name='Chuck',
             last_name='Norris'
         )
-        url = f'/phs/{ph.pk}/add/'
+        url = f'/phs/add_pics/{ph.pk}/'
         view_class = PhAddPicsView
 
         response = self.client.get(url)
@@ -156,13 +168,19 @@ class CBVTestCase(TestCase):
         response = self.client.get(url)
         self.assertTemplateUsed(response, expected_template)
 
+    def test_ph_create_should_render_expected_template(self):
+        url = '/phs/new/'
+        expected_template = 'portfolio/ph_create.html'
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, expected_template)
+
     def test_ph_detail_should_render_expected_template(self):
         ph = Photographer.objects.create(
             first_name='Jean Claude',
             last_name='Van Damme'
         )
-        url = f'/phs/{ph.pk}/'
-        view_class = PhDetailView
+        url = f'/phs/detail/{ph.pk}/'
+
         expected_template = 'portfolio/ph_detail.html'
 
         response = self.client.get(url)
@@ -174,8 +192,8 @@ class CBVTestCase(TestCase):
             first_name='Gene',
             last_name='Hackman'
         )
-        url = f'/phs/{ph.pk}/add/'
-        view_class = PhDetailView
+        url = f'/phs/add_pics/{ph.pk}/'
+
         expected_template = 'portfolio/ph_add_pics.html'
 
         response = self.client.get(url)
