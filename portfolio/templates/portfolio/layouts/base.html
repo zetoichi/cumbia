@@ -37,8 +37,9 @@
 {% if segment != 'auth' %}
     {% block main %}{% endblock main %}
     {% include 'portfolio/components/r-col.html' %}
-    <nav class="action-bar">
-        
+
+    {% if edit_mode %}
+    <nav class="action-bar">    
         {% include 'portfolio/components/buttons/create-ph-btn.html' %}
 
         <div class="extra-actions">
@@ -46,9 +47,10 @@
         </div>
         
         {% include 'portfolio/components/buttons/logout-btn.html' %}
-        
     </nav>
-    {% comment %} {% include 'portfolio/components/footer.html' %} {% endcomment %}
+    {% else %}
+    {% include 'portfolio/components/footer.html' %}
+    {% endif %}
 {% endif %}
     
     </main>

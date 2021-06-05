@@ -222,9 +222,9 @@ footer.main-footer {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 nav.action-bar,
@@ -411,7 +411,7 @@ header.center-header {
       -ms-flex-align: start;
           align-items: flex-start;
   height: 10vh;
-  padding-top: 1vh;
+  padding: 0.9vw 0.6vw 1.6vh 0;
 }
 
 .brand-top-cx,
@@ -427,7 +427,7 @@ header.center-header {
 }
 
 .brand-top-logo {
-  width: 80%;
+  width: 73%;
 }
 
 .top-links-cx {
@@ -442,8 +442,12 @@ header.center-header {
 .r-info-cx,
 .top-links-cx,
 .generic-links-cx {
-  padding-right: 1vw;
   text-align: right;
+}
+
+.top-links-cx,
+.generic-links-cx {
+  padding: 0 1vw 1.6vh 0;
 }
 
 .generic-link {
@@ -524,11 +528,35 @@ header.center-header {
   width: 100%;
 }
 
-.sqr {
-  background-color: green;
-  margin: .5rem;
+/* ------- ALT DETAIL ------- */
+.pic-grid {
+  height: 100%;
+  width: 100%;
 }
 
+.carrousel-cx {
+  height: 100%;
+  width: 100%;
+}
+
+.carrousel-slide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.splide__slide img {
+  height: auto;
+  width: 100%;
+}
+
+/* ------- ALT DETAIL ------- */
 .info-section-wrapper {
   padding: 2vh 2vw;
   height: 100%;

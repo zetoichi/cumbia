@@ -222,7 +222,7 @@ nav.action-bar,
 footer.main-footer {
     grid-row: -2 / -1;
     grid-column: 1 / -1;
-    @include endStart;
+    @include endEnd;
 }
 nav.action-bar,
 nav.action-bar.extra-actions {
@@ -321,7 +321,7 @@ header.center-header {
 .brand-top-cx {
     @include endStart;
     height: 10vh;
-    padding-top: 1vh;
+    padding: 0.9vw 0.6vw 1.6vh 0;
 }
 .brand-top-cx,
 .pic-info-each {
@@ -330,7 +330,7 @@ header.center-header {
     transition: opacity $x-fade linear;
 }
 .brand-top-logo {
-    width: 80%;
+    width: 73%;
 }
 .top-links-cx {
     grid-row: 2 / 3;
@@ -340,8 +340,11 @@ header.center-header {
 .r-info-cx,
 .top-links-cx,
 .generic-links-cx {
-    padding-right: 1vw;
     text-align: right;
+}
+.top-links-cx,
+.generic-links-cx {
+    padding: 0 1vw 1.6vh 0;
 }
 .generic-link {
     transition: color .1s linear;
