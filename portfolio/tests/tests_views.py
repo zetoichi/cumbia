@@ -9,6 +9,7 @@ from django.test import (
 
 from portfolio.views_main import (
     CumbiaLoginView,
+    CumbiaLogoutView,
     IndexView,
     AboutView,
     ContactView,
@@ -32,6 +33,17 @@ class CBVTestCase(TestCase):
     def test_login_url_should_resolve(self):
         url = '/login/'
         view_class = CumbiaLoginView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
+    def test_logout_url_should_resolve(self):
+        url = '/logout/'
+        view_class = CumbiaLogoutView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(

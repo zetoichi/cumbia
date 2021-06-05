@@ -89,17 +89,13 @@ class Photographer(SortableModel):
         return self.pics.count() == 0
 
     def _moving_up(self, new_idx, old_idx):
-        """Check if new index is lower to determine sorting strategy"""
+        """Determine sorting strategy"""
         return new_idx < old_idx
 
     def add_pics(self, new_pics: Sequence[Type['Pic']]) -> None:
-        """
-        Wraps m2m add() method to:
-            - Sort incoming pics
-            - Check if the added object is the first in the set,
-            - Mark it as main if it is.
-        """
+        """Wraps m2m add() method"""
         first = self._has_no_pics()
+
         self.pics.sort_incoming(new_pics)
         self.pics.add(*new_pics)  # perform actual adding
         if first:
@@ -117,7 +113,6 @@ class Photographer(SortableModel):
     def insort_pic(self, pic: Type['Pic'], new_idx: int) -> None:
         old_idx = pic.display_idx
 
-        # if old == new, this method should do nothing
         if new_idx != old_idx:
             if self._moving_up(new_idx, old_idx):
                 self.pics.insort_right(pic, new_idx)
@@ -125,10 +120,7 @@ class Photographer(SortableModel):
                 self.pics.insort_left(pic, new_idx)
 
     def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
-        """
-        Create Pic objects for the related Field pics.
-        Return created objects pk for JSON response.
-        """
+        """Return created objects pk for JSON response."""
         pics_created = []
 
         for f in files:
@@ -194,17 +186,15 @@ class Pic(SortableModel):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        """For resize image"""
         resize_img(self.pic.path)
         self.handle_no_ph()
 
     def delete(self, *args, **kwargs):
-        """Delete file upon object deletion"""
         self.pic.delete(save=False)
         super().delete(*args, **kwargs)
 
     def handle_no_ph(self):
-        """Pics with no photographer can't be marked as main"""
+        """Pics with no photographer shouldn't be marked as main"""
         if self.main is True and not self.photographer:
             self.main = False
 

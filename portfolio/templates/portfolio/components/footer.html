@@ -15,5 +15,12 @@
                 <h5>contacto</h5>
             </a>
         </li>
+    {% if edit_mode %}
+        <li class="contact-link">
+            <a href="{% url 'portfolio:logout' %}">
+                <h5>logout</h5>
+            </a>
+        </li>
+    {% endif %}
     </ul>
 </footer>

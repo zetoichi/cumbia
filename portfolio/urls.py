@@ -20,6 +20,11 @@ urlpatterns = [
         name='login'
     ),
     path(
+        'logout/',
+        views_main.cumbia_logout,
+        name='logout'
+    ),
+    path(
         'about/',
         views_main.AboutView.as_view(),
         name='about'

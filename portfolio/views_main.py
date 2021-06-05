@@ -1,4 +1,6 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 
@@ -13,6 +15,10 @@ class CumbiaLoginView(LoginView):
     template_name = 'portfolio/login.html'
     redirect_authenticated_user = True
     extra_context = {'segment': 'auth'}
+
+def cumbia_logout(request):
+    logout(request)
+    return redirect('portfolio:index')
 
 class IndexView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/index.html'
