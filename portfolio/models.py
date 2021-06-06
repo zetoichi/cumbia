@@ -123,13 +123,10 @@ class Photographer(SortableModel):
         old_idx = pic.display_idx
 
         if new_idx != old_idx:
-            success = False
             if self._moving_up(new_idx, old_idx):
-                success = self.pics.insort_right(pic, new_idx)
+                self.pics.insort_right(pic, new_idx)
             else:
-                success = self.pics.insort_left(pic, new_idx)
-            
-            return success
+                self.pics.insort_left(pic, new_idx)
 
     def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
         """Return created objects pk for JSON response."""

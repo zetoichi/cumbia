@@ -21,24 +21,16 @@ class SortableManager(models.Manager):
         """
         Move object up, shift rest of sequence right.
         """
-        try:
-            start = new_idx
-            self._sort(self.filter(display_idx__gte=new_idx), start)
-            obj.assign_idx(new_idx)
-            return True
-        except Exception:
-            return False
+        start = new_idx
+        self._sort(self.filter(display_idx__gte=new_idx), start)
+        obj.assign_idx(new_idx)
 
     def insort_left(self, obj: Type[models.Model], new_idx: int) -> None:
         """
         Move object down, shift rest of sequence left.
         """
-        try:
-            self._sort(self.filter(display_idx__lte=new_idx)[1:])
-            obj.assign_idx(new_idx)
-            return True
-        except Exception:
-            return False
+        self._sort(self.filter(display_idx__lte=new_idx)[1:])
+        obj.assign_idx(new_idx)
 
     def sort_incoming(self, seq: Sequence[models.Model]) -> None:
         """
