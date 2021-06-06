@@ -366,7 +366,6 @@ header.center-header {
     @include fullSize;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    // grid-template-rows: repeat(auto-fit, 160px);
     gap: 1rem;
     overflow-x: scroll;
 }
@@ -445,6 +444,7 @@ li.pic-cx {
     flex-grow: 1;
     transition: opacity .3s ease-out;
     margin: 0.1vw;
+    position: relative;
 }
 li.pic-cx img {
     max-height: 100%;
@@ -452,9 +452,20 @@ li.pic-cx img {
     object-fit: cover;
     vertical-align: bottom;
 }
-
 li.pic-cx:hover {
     opacity: .8;
+}
+li.pic-cx .delete-pic-btn {
+	color: white;
+	font-weight: bolder;
+	z-index: 1001;
+	position: absolute;
+	top: 4px;
+	right: 10px;
+	font-size: 2rem;
+	opacity: 0.7;
+	cursor: pointer;
+	display: none;
 }
 
 #edit-ph-list-cx {

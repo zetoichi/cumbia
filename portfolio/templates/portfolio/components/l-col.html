@@ -2,9 +2,9 @@
     <ul class="ph-links drag-container">
     {% for photographer in photographers %}
     {% if segment == 'detail' %}
-        <li class="ph-link {% if ph.pk == photographer.pk %}highlight{% else %}dim{% endif %}" value="{{ photographer.pk }}">
+        <li class="ph-link {% if ph.pk == photographer.pk %}highlight{% else %}dim{% endif %}" value="{{ photographer.pk }}" data-elpk="{{ photographer.pk }}">
     {% else %}
-        <li class="ph-link" value="{{ photographer.pk }}">
+        <li class="ph-link" value="{{ photographer.pk }}" data-elpk="{{ photographer.pk }}">
     {% endif %}
             <a href="{% url 'portfolio:ph_detail' photographer.pk %}">
                 <h5>{{ photographer.display_name }}</h5>

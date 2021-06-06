@@ -73,6 +73,11 @@ urlpatterns += [
 # JSON
 urlpatterns += [
     path(
+        'phs/sort/',
+        views_json.sort_ph,
+        name='ph_sort'
+    ),
+    path(
         'phs/savepics/<str:pk>/',
         views_json.save_new_pics,
         name='ph_save_pics'

@@ -97,10 +97,6 @@ class Photographer(SortableModel):
     def _has_no_pics(self):
         return self.pics.count() == 0
 
-    def _moving_up(self, new_idx: int, old_idx: int) -> bool:
-        """Determine sorting strategy"""
-        return new_idx < old_idx
-
     def add_pics(self, new_pics: Sequence[Type['Pic']]) -> None:
         """Wraps m2m add() method"""
         first = self._has_no_pics()
@@ -118,15 +114,6 @@ class Photographer(SortableModel):
 
     def get_main_pic(self) -> Type['Pic']:
         return self._unique_main_pic()
-
-    def insort_pic(self, pic: Type['Pic'], new_idx: int) -> None:
-        old_idx = pic.display_idx
-
-        if new_idx != old_idx:
-            if self._moving_up(new_idx, old_idx):
-                self.pics.insort_right(pic, new_idx)
-            else:
-                self.pics.insort_left(pic, new_idx)
 
     def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
         """Return created objects pk for JSON response."""

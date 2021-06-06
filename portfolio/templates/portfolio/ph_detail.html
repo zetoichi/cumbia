@@ -9,19 +9,26 @@
 </div>
 
 <div class="hscroll-cx">
-    <ul class="pic-row {% if edit_mode %}drag-container{% endif %}" data-targetpk="{{ ph.pk }}">
+    <ul class="pic-row drag-container" data-targetpk="{{ ph.pk }}">
+    {% comment %} <ul class="pic-row {% if edit_mode %}drag-container{% endif %}" data-targetpk="{{ ph.pk }}"> {% endcomment %}
     {% for pic in ph.pics.all %}
         <li id="pic-cx-{{ pic.pk }}" class="pic-cx" data-elpk="{{ pic.pk }}">
             <a data-fslightbox="gallery" href="{{ pic.pic.url }}">
                 <img class="pic" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
-            </a> 
+            </a>
+            <span class="delete-pic-btn">X</span>
         </li>
     {% endfor %}
     </ul>
 </div>
 
 {% endblock main %}
+
 {% block extra_actions %}
-<button class="action-btn extra-action">+ FOTOS</button>
-<button class="action-btn secondary-action">EDITAR</button>
+<a href="#">
+    <button class="action-btn secondary-action">EDITAR</button>
+</a>
+<a href="{% url 'portfolio:ph_add_pics' ph.pk %}">
+    <button class="action-btn extra-action">+ FOTOS</button>
+</a>
 {% endblock extra_actions %}

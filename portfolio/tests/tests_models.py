@@ -146,7 +146,7 @@ class PhotographerModelsTest(TestCase):
         pic_3 = get_test_pic_from_file('landscape')
         ph.add_pics((pic_1, pic_2, pic_3))
 
-        ph.insort_pic(pic_3, 1)
+        ph.pics.insort(pic_3, 1)
 
         self.assertTrue(ph.pics.get(display_idx=1) == pic_3)
         self.assertTrue(ph.pics.get(display_idx=2) == pic_1)
@@ -162,7 +162,7 @@ class PhotographerModelsTest(TestCase):
         pic_3 = get_test_pic_from_file('landscape')
         ph.add_pics((pic_1, pic_2, pic_3))
 
-        ph.insort_pic(pic_1, 3)
+        ph.pics.insort(pic_1, 3)
 
         self.assertTrue(ph.pics.get(display_idx=1) == pic_2)
         self.assertTrue(ph.pics.get(display_idx=2) == pic_3)

@@ -6,3 +6,10 @@
     {% include 'portfolio/components/dropzone.html' %}
 
 {% endblock center %}
+
+{% block extra_actions %}
+    <a href="{% url 'portfolio:ph_detail' ph.pk %}">
+        <button class="action-btn secondary-action">VOLVER</button>
+    </a>
+    <button id="upload-imgs-btn" class="action-btn extra-action">SUBIR</button>
+{% endblock extra_actions %}

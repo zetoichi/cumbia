@@ -22,7 +22,8 @@ from portfolio.views_main import (
 )
 from portfolio.views_json import (
     save_new_pics,
-    sort_pic
+    sort_ph,
+    sort_pic,
 )
 from portfolio.models import Photographer, Pic
 from .helpers import (
@@ -267,10 +268,12 @@ class JSONViewsTestCase(TestCase):
     def tearDown(self):
         files_cleanup()
 
+    # RESOLVE
+
     def test_save_pics_url_should_resolve(self):
         ph = Photographer.objects.create(
-            first_name='Valeria',
-            last_name='Massa'
+            first_name='Don',
+            last_name='Johnson'
         )
         url = f'/phs/savepics/{ph.pk}/'
         view_func = save_new_pics
@@ -279,7 +282,15 @@ class JSONViewsTestCase(TestCase):
 
         self.assertEqual(response.resolver_match.func, view_func)
 
-    def test_sort_pics_url_should_resolve(self):
+    def test_sort_ph_url_should_resolve(self):
+        url = '/phs/sort/'
+        view_func = sort_ph
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.resolver_match.func, view_func)
+
+    def test_sort_pic_url_should_resolve(self):
         ph = Photographer.objects.create(
             first_name='Deborah',
             last_name='De Corral'
@@ -290,6 +301,8 @@ class JSONViewsTestCase(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.resolver_match.func, view_func)
+
+    # BEHAVIOUR
 
     def test_should_create_pic_objects(self):
         ph = Photographer.objects.create(
@@ -309,6 +322,34 @@ class JSONViewsTestCase(TestCase):
         self.assertTrue(ph.pics.filter(pk=pics_created[1]).exists())
         self.assertTrue(ph.pics.filter(pk=pics_created[2]).exists())
 
+    def test_should_sort_ph(self):
+        ph_1 = Photographer.objects.create(
+            first_name='Don',
+            last_name='Johnson'
+        )
+        ph_2 = Photographer.objects.create(
+            first_name='Dwayne',
+            last_name='Johnson',
+            display_name='The Rock'
+        )
+        ph_3 = Photographer.objects.create(
+            first_name='Mark',
+            last_name='Whalberg'
+        )
+        url = '/phs/sort/'
+
+        response = self.client.post(
+            url,
+            {
+                'obj_pk': ph_1.pk,
+                'new_idx': 3,
+            }
+        )
+
+        self.assertTrue(Photographer.objects.get(display_idx=1) == ph_2)
+        self.assertTrue(Photographer.objects.get(display_idx=2) == ph_3)
+        self.assertTrue(Photographer.objects.get(display_idx=3) == ph_1)
+
     def test_should_sort_pic(self):
         ph = Photographer.objects.create(
             first_name='Wesley',
@@ -318,13 +359,12 @@ class JSONViewsTestCase(TestCase):
         pic_2 = get_test_pic_from_file('big')
         pic_3 = get_test_pic_from_file('landscape')
         ph.add_pics((pic_1, pic_2, pic_3))
-
         url = f'/phs/sortpics/{ph.pk}/'
 
         response = self.client.post(
             url,
             {
-                'pic_pk': pic_1.pk,
+                'obj_pk': pic_1.pk,
                 'new_idx': 3,
             }
         )

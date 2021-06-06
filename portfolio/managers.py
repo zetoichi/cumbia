@@ -14,8 +14,21 @@ class SortableManager(models.Manager):
             seq = self
         [obj.assign_idx(start + i) for i, obj in enumerate(seq, 1)]
 
+    def _moving_up(self, new_idx: int, old_idx: int) -> bool:
+        """Determine sorting strategy"""
+        return new_idx < old_idx
+
     def initial_sort(self):
         self._sort()
+
+    def insort(self, obj: Type[models.Model], new_idx: int) -> None:
+        old_idx = obj.display_idx
+
+        if new_idx != old_idx:
+            if self._moving_up(new_idx, old_idx):
+                self.insort_right(obj, new_idx)
+            else:
+                self.insort_left(obj, new_idx)
 
     def insort_right(self, obj: Type[models.Model], new_idx: int) -> None:
         """
