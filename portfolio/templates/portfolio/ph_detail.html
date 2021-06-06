@@ -9,11 +9,11 @@
 </div>
 
 <div class="hscroll-cx">
-    <ul class="pic-row drag-container">
+    <ul class="pic-row {% if edit_mode %}drag-container{% endif %}" data-targetpk="{{ ph.pk }}">
     {% for pic in ph.pics.all %}
-        <li class="pic-cx">
+        <li id="pic-cx-{{ pic.pk }}" class="pic-cx" data-elpk="{{ pic.pk }}">
             <a data-fslightbox="gallery" href="{{ pic.pic.url }}">
-                <img id="pic-{{ pic.pk }}" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
+                <img class="pic" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
             </a> 
         </li>
     {% endfor %}

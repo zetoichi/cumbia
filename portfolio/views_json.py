@@ -6,7 +6,7 @@ from django.http import (
 
 from .models import Photographer, Pic
 
-# path: 'dash/phs/<str:pk>/save/'
+# path: 'phs/savepics/<str:pk>/'
 def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
     if request.method == 'POST':
         ph = Photographer.objects.get(pk=pk)
@@ -22,4 +22,27 @@ def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
 
         return JsonResponse(data={'pics_created': pics_created}, status=200)
 
-    return HttpResponse('This view does not handle get requests, sorry')
+    return JsonResponse({'r': 'This view does not handle get requests, sorry'})
+
+# path: 'phs/sortpics/<str:pk>/'
+def sort_pic(request: HttpRequest, pk: str) -> JsonResponse:
+    response = JsonResponse(
+        {'result': 'This view does not handle get requests, sorry'},
+        status=400
+    )
+
+    if request.method == 'POST':
+        try:
+            ph = Photographer.objects.get(pk=pk)
+            ph.insort_pic(
+                pic=Pic.objects.get(pk=request.POST.get('pic_pk')),
+                new_idx=int(request.POST.get('new_idx'))
+            )
+            response = JsonResponse({'result': 'Pic sorted'}, status=200)
+        except Exception as e:
+            response = JsonResponse({
+                'result': 'Something went horribly wrong'},
+                status=500
+            )
+
+    return response

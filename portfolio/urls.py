@@ -77,4 +77,9 @@ urlpatterns += [
         views_json.save_new_pics,
         name='ph_save_pics'
     ),
+    path(
+        'phs/sortpics/<str:pk>/',
+        views_json.sort_pic,
+        name='ph_sort_pics'
+    ),
 ]

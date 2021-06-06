@@ -97,7 +97,7 @@ class Photographer(SortableModel):
     def _has_no_pics(self):
         return self.pics.count() == 0
 
-    def _moving_up(self, new_idx, old_idx):
+    def _moving_up(self, new_idx: int, old_idx: int) -> bool:
         """Determine sorting strategy"""
         return new_idx < old_idx
 
@@ -123,10 +123,13 @@ class Photographer(SortableModel):
         old_idx = pic.display_idx
 
         if new_idx != old_idx:
+            success = False
             if self._moving_up(new_idx, old_idx):
-                self.pics.insort_right(pic, new_idx)
+                success = self.pics.insort_right(pic, new_idx)
             else:
-                self.pics.insort_left(pic, new_idx)
+                success = self.pics.insort_left(pic, new_idx)
+            
+            return success
 
     def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
         """Return created objects pk for JSON response."""

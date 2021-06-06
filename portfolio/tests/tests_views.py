@@ -20,13 +20,17 @@ from portfolio.views_main import (
     PhEditPicsView,
     PhAddPicsView,
 )
-from portfolio.views_json import save_new_pics
+from portfolio.views_json import (
+    save_new_pics,
+    sort_pic
+)
 from portfolio.models import Photographer, Pic
 from .helpers import (
     files_cleanup,
     get_open_test_img_files,
     close_files,
     get_expected_and_actual,
+    get_test_pic_from_file,
 )
 
 class CBVTestCase(TestCase):
@@ -275,7 +279,19 @@ class JSONViewsTestCase(TestCase):
 
         self.assertEqual(response.resolver_match.func, view_func)
 
-    def test_save_pics_should_create_pic_objects(self):
+    def test_sort_pics_url_should_resolve(self):
+        ph = Photographer.objects.create(
+            first_name='Deborah',
+            last_name='De Corral'
+        )
+        url = f'/phs/sortpics/{ph.pk}/'
+        view_func = sort_pic
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.resolver_match.func, view_func)
+
+    def test_should_create_pic_objects(self):
         ph = Photographer.objects.create(
             first_name='Jason',
             last_name='Statham'
@@ -292,3 +308,27 @@ class JSONViewsTestCase(TestCase):
         self.assertTrue(ph.pics.filter(pk=pics_created[0]).exists())
         self.assertTrue(ph.pics.filter(pk=pics_created[1]).exists())
         self.assertTrue(ph.pics.filter(pk=pics_created[2]).exists())
+
+    def test_should_sort_pic(self):
+        ph = Photographer.objects.create(
+            first_name='Wesley',
+            last_name='Snipes'
+        )
+        pic_1 = get_test_pic_from_file('portrait')
+        pic_2 = get_test_pic_from_file('big')
+        pic_3 = get_test_pic_from_file('landscape')
+        ph.add_pics((pic_1, pic_2, pic_3))
+
+        url = f'/phs/sortpics/{ph.pk}/'
+
+        response = self.client.post(
+            url,
+            {
+                'pic_pk': pic_1.pk,
+                'new_idx': 3,
+            }
+        )
+
+        self.assertTrue(ph.pics.get(display_idx=1) == pic_2)
+        self.assertTrue(ph.pics.get(display_idx=2) == pic_3)
+        self.assertTrue(ph.pics.get(display_idx=3) == pic_1)
