@@ -9,4 +9,4 @@ RUN pipenv lock --keep-outdated --requirements > requirements.txt
 COPY .env /code/
 RUN pip install -r requirements.txt
 COPY . /code/
-ENTRYPOINT ["sh", "./entrypoint.sh"]
+ENTRYPOINT ["./wait-for-it.sh", "db:5432", "--", "sh", "./entrypoint.sh"]
