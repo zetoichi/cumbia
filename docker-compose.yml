@@ -13,7 +13,7 @@ services:
     build: .
     volumes: 
       - static_volume:/code/staticfiles
-      - ./media:/code/media
+      - /var/opt/app/media:/var/opt/app/media
     expose: 
       - 8000
     depends_on: 
@@ -22,20 +22,13 @@ services:
     image: jonasal/nginx-certbot:latest
     restart: unless-stopped
     environment: 
-      - CERTBOT_EMAIL
-      - STAGING
-      - DHPARAM_SIZE
-      - RSA_KEY_SIZE
-      - RENEWAL_INTERVAL
-      - DEBUG
-    env_file:
-      - ./nginx/nginx-certbot.env
+      - CERTBOT_EMAIL=zetoichi.dev@protonmail.com
     ports: 
       - 80:80
       - 443:443
     volumes: 
       - static_volume:/code/staticfiles
-      - ./media:/code/media
+      - /var/opt/app/media:/var/opt/app/media
       - nginx_secrets:/etc/letsencrypt
       - ./nginx/user_conf.d:/etc/nginx/user_conf.d
 
