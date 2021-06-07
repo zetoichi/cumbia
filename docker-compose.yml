@@ -4,9 +4,9 @@ services:
   db:
     image: postgres
     environment: 
-      - POSTGRES_DB=cumbia
-      - POSTGRES_USER=cumbia
-      - POSTGRES_PASSWORD=xDDncS9a6Gb4zU
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     volumes: 
       - pgdata:/var/lib/posgresql/data
   web:
