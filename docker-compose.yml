@@ -13,7 +13,7 @@ services:
     build: .
     volumes: 
       - static_volume:/code/staticfiles
-      - media_volume:/code/media
+      - ./media:/code/media
     expose: 
       - 8000
     depends_on: 
@@ -35,12 +35,11 @@ services:
       - 443:443
     volumes: 
       - static_volume:/code/staticfiles
-      - media_volume:/code/media
+      - ./media:/code/media
       - nginx_secrets:/etc/letsencrypt
       - ./nginx/user_conf.d:/etc/nginx/user_conf.d
 
 volumes: 
   pgdata:
   static_volume:
-  media_volume:
   nginx_secrets:
