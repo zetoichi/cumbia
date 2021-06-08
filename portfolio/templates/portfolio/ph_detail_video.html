@@ -20,7 +20,13 @@
 </div>
 
 {% endblock main %}
-{% block extra_actions %}
-<button class="action-btn extra-action">+ FOTOS</button>
-<button class="action-btn secondary-action">EDITAR</button>
-{% endblock extra_actions %}
+{% block section_actions %}
+<a href="#">
+    <button id="edit-ph-btn" class="action-btn secondary section">EDITAR</button>
+</a>
+    <button id="delete-pics-btn" class="action-btn secondary section">BORRAR</button>
+    <button id="choose-main-pic-btn" class="action-btn secondary section">MAIN</button>
+<a href="#">
+    <button id="add-pics-btn" class="action-btn accent section">+</button>
+</a>
+{% endblock section_actions %}

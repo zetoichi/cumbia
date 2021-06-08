@@ -7,9 +7,9 @@
 
 {% endblock center %}
 
-{% block extra_actions %}
+{% block section_actions %}
     <a href="{% url 'portfolio:ph_detail' ph.pk %}">
-        <button class="action-btn secondary-action">VOLVER</button>
+        <button class="action-btn section secondary">VOLVER</button>
     </a>
-    <button id="upload-imgs-btn" class="action-btn extra-action">SUBIR</button>
-{% endblock extra_actions %}
+    <button id="upload-imgs-btn" class="action-btn section accent">SUBIR</button>
+{% endblock section_actions %}

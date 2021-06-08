@@ -461,7 +461,8 @@ li.pic-cx img {
 li.pic-cx:hover {
     opacity: .8;
 }
-li.pic-cx .delete-pic-btn {
+li.pic-cx .o-is-main,
+li.pic-cx .x-is-delete {
 	color: white;
 	font-weight: bolder;
 	z-index: 1001;
@@ -471,7 +472,20 @@ li.pic-cx .delete-pic-btn {
 	font-size: 2rem;
 	opacity: 0.7;
 	cursor: pointer;
-	display: none;
+}
+li.pic-cx .o-is-main {
+    top: 10px;
+    height: 35px;
+    width: 35px;
+    background-color: white;
+    border-radius: 50%;
+}
+li.pic-cx .o-is-main.this-one {
+    background-color: black;
+}
+li.pic-cx .o-is-main.disabled,
+li.pic-cx .x-is-delete.disabled {
+    display: none;
 }
 
 #edit-ph-list-cx {
@@ -535,4 +549,3 @@ li.pic-cx .delete-pic-btn {
     background: none;
     border-bottom: 3px solid red;
 }
-

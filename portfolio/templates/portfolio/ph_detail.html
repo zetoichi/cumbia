@@ -16,7 +16,8 @@
             <a data-fslightbox="gallery" href="{{ pic.pic.url }}">
                 <img class="pic" src="{{ pic.pic.url }}" alt="{{ pic.caption }}">
             </a>
-            <span class="delete-pic-btn">X</span>
+            <span class="x-is-delete disabled">X</span>
+            <span class="o-is-main {% if pic.is_main %}this-one{% endif %} disabled"></span>
         </li>
     {% endfor %}
     </ul>
@@ -24,11 +25,13 @@
 
 {% endblock main %}
 
-{% block extra_actions %}
+{% block section_actions %}
 <a href="#">
-    <button class="action-btn secondary-action">EDITAR</button>
+    <button id="edit-ph-btn" class="action-btn section secondary">EDITAR</button>
 </a>
+    <button id="delete-pics-btn" class="action-btn section secondary">BORRAR</button>
+    <button id="choose-main-pic-btn" class="action-btn section secondary">MAIN</button>
 <a href="{% url 'portfolio:ph_add_pics' ph.pk %}">
-    <button class="action-btn extra-action">+ FOTOS</button>
+    <button id="add-pics-btn" class="action-btn section accent">+</button>
 </a>
-{% endblock extra_actions %}
+{% endblock section_actions %}
