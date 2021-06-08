@@ -286,20 +286,20 @@ header.center-header {
 .center-cx {
     grid-row: 2 / -2;
     grid-column: 1 / 4;
-    // @include centerCenter;
 }
 #brand-center-header img,
 .center-cx img,
-.main-img-cx img {
+.main-pic-cx img {
     max-width: 60vw;
-    max-height: auto;
+    max-height: 77vh;
+    object-fit: cover;
     transition: opacity $x-fade linear;
 }
 #brand-center-header img {
     max-width: 45vw;
     margin-bottom: 20px;
 }
-.main-img-cx {
+.main-pic-cx {
     grid-row: 1 / 4;
     grid-column: 1 / 4;
     @include centerCenter;

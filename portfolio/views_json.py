@@ -18,8 +18,8 @@ EXCEPTION_500_RESPONSE = JsonResponse(
     {'result': 'Something went horribly wrong'},
     status=500
 )
-EXCEPTION_415_RESPONSE = HttpResponse(status=415)
-SORT_SUCCESS_RESPONSE = JsonResponse({'result': 'Object sorted'}, status=200)
+EXCEPTION_415_RESPONSE = JsonResponse({'success': False}, status=415)
+SUCCESS_RESPONSE = JsonResponse({'success': True}, status=200)
 
 # path: 'phs/savepics/<str:pk>/'
 def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
@@ -28,9 +28,7 @@ def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
     if request.method == 'POST':
         try:
             ph = Photographer.objects.get(pk=pk)
-            files = [
-                request.FILES.get(f'pic[{i}]') for i in range(0, len(request.FILES))
-            ]
+            files = files_from_request(request)
             pics_created = ph.pics_from_files(files)
             response = JsonResponse(
                 data={'pics_created': pics_created},
@@ -39,6 +37,30 @@ def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
         except Exception as e:
             response = EXCEPTION_415_RESPONSE
 
+    return response
+
+# path: 'phs/delpic/'
+def delete_pic(request: HttpRequest) -> JsonResponse:
+    response = GET_METHOD_RESPONSE
+    try:
+        Pic.objects.get(pk=request.POST.get('obj_pk')).delete()
+        response = SUCCESS_RESPONSE
+    except Exception as e:
+        print(e)
+        response = EXCEPTION_415_RESPONSE
+    return response
+
+# path: 'phs/markmain/<str:pk>/'
+def mark_pic_as_main(request: HttpRequest, pk: str) -> JsonResponse:
+    response = GET_METHOD_RESPONSE
+    try:
+        ph = Photographer.objects.get(pk=pk)
+        pic = Pic.objects.get(pk=request.POST.get('obj_pk'))
+        ph.set_new_main_pic(pic)
+        response = SUCCESS_RESPONSE
+    except Exception as e:
+        print(e)
+        response = EXCEPTION_415_RESPONSE
     return response
 
 # path: 'phs/sort/'
@@ -55,7 +77,8 @@ def sort_pic(request: HttpRequest, pk: str) -> JsonResponse:
     return sort_object(obj_model, manager, request)
 
 
-def sort_object(obj_model: Type[models.Model], manager: Type[SortableManager],
+def sort_object(obj_model: Type[models.Model],
+                manager: Type[SortableManager],
                 request: HttpRequest) -> JsonResponse:
     response = GET_METHOD_RESPONSE
 
@@ -65,9 +88,13 @@ def sort_object(obj_model: Type[models.Model], manager: Type[SortableManager],
                 obj=obj_model.objects.get(pk=request.POST.get('obj_pk')),
                 new_idx=int(request.POST.get('new_idx'))
             )
-            response = SORT_SUCCESS_RESPONSE
+            response = SUCCESS_RESPONSE
         except Exception as e:
-            print(e)
             response = EXCEPTION_500_RESPONSE
 
     return response
+
+def files_from_request(request: HttpRequest) -> list:
+    return [
+        request.FILES.get(f'pic[{i}]') for i in range(0, len(request.FILES))
+    ]

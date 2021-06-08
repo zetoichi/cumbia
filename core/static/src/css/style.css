@@ -338,9 +338,11 @@ header.center-header {
 
 #brand-center-header img,
 .center-cx img,
-.main-img-cx img {
+.main-pic-cx img {
   max-width: 60vw;
-  max-height: auto;
+  max-height: 77vh;
+  -o-object-fit: cover;
+     object-fit: cover;
   -webkit-transition: opacity 0.3s linear;
   transition: opacity 0.3s linear;
 }
@@ -350,7 +352,7 @@ header.center-header {
   margin-bottom: 20px;
 }
 
-.main-img-cx {
+.main-pic-cx {
   -ms-grid-row: 1;
   -ms-grid-row-span: 3;
   grid-row: 1 / 4;

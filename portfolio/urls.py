@@ -73,14 +73,24 @@ urlpatterns += [
 # JSON
 urlpatterns += [
     path(
-        'phs/sort/',
-        views_json.sort_ph,
-        name='ph_sort'
+        'phs/delpic/',
+        views_json.delete_pic,
+        name='ph_delete_pic'
+    ),
+    path(
+        'phs/markmain/<str:pk>/',
+        views_json.mark_pic_as_main,
+        name='ph_mark_pic_as_main'
     ),
     path(
         'phs/savepics/<str:pk>/',
         views_json.save_new_pics,
         name='ph_save_pics'
+    ),
+    path(
+        'phs/sort/',
+        views_json.sort_ph,
+        name='ph_sort'
     ),
     path(
         'phs/sortpics/<str:pk>/',
