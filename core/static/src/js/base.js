@@ -9,32 +9,8 @@ if (document.readyState == 'loading') {document.addEventListener(
 
 
 function ready() {
-    const phLinks = document.querySelectorAll('.ph-link')
-    // const big = document.querySelector('.big')
-    // const fullScreenLogo = document.querySelector('#full-screen-logo')
-    // const fullScreenIso = document.querySelector('#full-screen-iso')
-    
-    // setTimeout(() => {
-    //     fullScreenIso.style.display = 'none'
-    //     fullScreenLogo.style.display = 'inline'
-    // }, 3000);
-    // setTimeout(() => {
-    //     big.style.opacity = 0
-    // }, 4500);
-    // setTimeout(() => {
-    //     big.remove()
-    // }, 5100);
-    // phLinks.forEach(link => {
-    //     link.addEventListener('mouseenter', (e) => {
-    //         togglePics(e)
-    //     })
-    // })
-    // phLinks.forEach(link => {
-    //     link.addEventListener('mouseleave', (e) => {
-    //         togglePics(e)
-    //     })
-    // })
     handleEditMode()
+    handleToggle()
 }
 
 function handleEditMode() {
@@ -45,5 +21,49 @@ function handleEditMode() {
                 element.classList.add('enabled')
             }
         )
+    } else if (!editMode) {
+        animateOpening()
     }
+}
+
+function handleToggle() {
+    const phLinks = document.querySelectorAll('.ph-link')
+    
+    phLinks.forEach(link => {
+        link.addEventListener('mouseenter', (e) => {
+            togglePics(e)
+        })
+    })
+    phLinks.forEach(link => {
+        link.addEventListener('mouseleave', (e) => {
+            togglePics(e)
+        })
+    })
+}
+
+function animateOpening() {
+    const big = document.querySelector('.big')
+    const fullScreenLogo = document.querySelector('#full-screen-logo')
+    
+    setTimeout(() => {
+        fullScreenLogo.style.display = 'none'
+    }, 1500);
+    setTimeout(() => {
+        fullScreenLogo.style.display = 'inline'
+    }, 1600);
+    setTimeout(() => {
+        fullScreenLogo.style.display = 'none'
+    }, 2000);
+    setTimeout(() => {
+        fullScreenLogo.style.display = 'inline'
+    }, 2100);
+    setTimeout(() => {
+        fullScreenLogo.style.display = 'none'
+    }, 3000);
+    setTimeout(() => {
+        big.style.opacity = 0
+    }, 3800);
+    setTimeout(() => {
+        big.remove()
+    }, 5100);
 }

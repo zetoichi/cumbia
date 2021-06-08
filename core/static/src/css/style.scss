@@ -183,8 +183,8 @@ main.main-grid {
 }
 
 header.main-header {
-    grid-row: 1 / 13;
-    grid-column: 1 / 4;
+    grid-row: 1 / -1;
+    grid-column: 1 / -1;
     @include centerCenter;
     background-color: white;
     z-index: 1000;
@@ -194,11 +194,6 @@ header.main-header {
 }
 #full-screen-logo {
     width: 100%;
-    display: none;
-}
-#full-screen-iso {
-    width: 40%;
-    // animation: 2.5s ease-in forwards shrink;
 }
 
 nav.gen-nav {
@@ -213,7 +208,11 @@ section.base-center {
 section.base-center.center {
     grid-row: 1 / 13;
 }
-
+.center-cx {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
 section.r-info {
 	grid-row: 1 / -1;
 	grid-column: -4 / -1;
@@ -287,17 +286,24 @@ header.center-header {
 .center-cx {
     grid-row: 2 / -2;
     grid-column: 1 / 4;
-    @include centerCenter;
+    // @include centerCenter;
 }
 #brand-center-header img,
-.center-cx img {
+.center-cx img,
+.main-img-cx img {
     max-width: 60vw;
     max-height: auto;
     transition: opacity $x-fade linear;
 }
 #brand-center-header img {
-    max-width: 35vw;
+    max-width: 45vw;
     margin-bottom: 20px;
+}
+.main-img-cx {
+    grid-row: 1 / 4;
+    grid-column: 1 / 4;
+    @include centerCenter;
+    padding: 2vw;
 }
 
 .air-cx,

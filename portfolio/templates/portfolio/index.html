@@ -2,12 +2,13 @@
 {% load static %}
 
 {% block bigheader %}
-{% comment %} 
+
+{% if not edit_mode %}
 <header class="main-header big"> 
-    <img id="full-screen-iso" src="/media/logos/cumbia-iso-negro.png" alt="">
     <img id="full-screen-logo" src="/media/logos/cumbia-logo-negro.png" alt="">
 </header>
-{% endcomment %}
+{% endif %}
+
 {% endblock bigheader %}
 
 {% block center %}
@@ -16,8 +17,10 @@
     <img id="brand-center-img" src="/media/logos/cumbia-logo-negro-medium.png" alt="">
 </header>
     
-{% comment %} {% for ph in photographers %}
+{% for ph in photographers %}
+<div class="main-img-cx">
     <img id="pic-{{ ph.pk }}" class="faded-out" src="{{ ph.main_pic.pic.url }}" alt="">
-{% endfor %} {% endcomment %}
+</div>
+{% endfor %}
 
 {% endblock center %}
