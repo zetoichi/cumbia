@@ -490,7 +490,8 @@ header.center-header {
           align-items: center;
   height: 100%;
   width: 100%;
-  padding: 0 1.4rem;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
 }
 
 .picgrid {
@@ -691,7 +692,9 @@ li.pic-cx .x-is-delete.disabled {
 }
 
 .form-center {
-  height: 100%;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  padding: 15% 20%;
 }
 
 .form-fields-cx {
