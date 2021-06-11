@@ -1,3 +1,4 @@
+import logging
 from typing import Type
 
 from django.db import models
@@ -9,6 +10,8 @@ from django.http import (
 
 from .managers import SortableManager
 from .models import Photographer, Pic
+
+logger = logging.getLogger('pics')
 
 GET_METHOD_RESPONSE = JsonResponse(
     {'result': 'This view does not handle get requests, sorry'},
@@ -35,6 +38,7 @@ def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
                 status=200
             )
         except Exception as e:
+            logger.error(e)
             response = EXCEPTION_415_RESPONSE
 
     return response
