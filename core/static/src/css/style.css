@@ -77,6 +77,7 @@ button.action-btn.accent {
   margin: 0;
   padding: 0;
   font-size: 16px;
+  overscroll-behavior: none;
 }
 
 body {
