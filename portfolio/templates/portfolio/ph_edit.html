@@ -1,0 +1,33 @@
+{% extends 'portfolio/layouts/base.html' %}
+{% load static %}
+
+{% block center %}
+    <form id="create-ph-form" class="form-center" action="" method="POST">
+        {% csrf_token %}
+        <div class="form-fields-cx">
+            <div class="form-field">
+                <label class="form-field-label" for="first_name">Nombre*</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="last_name">Apellido*</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="display_name">Seudónimo</label>
+                {{ form.display_name }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="show">Mostrar</label>
+                {{ form.show }}
+                <label id="show-hide-tgl" class="tgl-btn" for="show"></label>
+            </div>
+        </div>
+    </form>
+{% endblock center %}
+{% block section_actions %}
+    <a href="#">
+        <button id="delete-ph-btn" class="action-btn section secondary">ELIMINAR</button>
+    </a>
+    <button id="edit-ph-btn" class="action-btn section accent" type="submit" form="create-ph-form">CONFIRMAR</button>
+{% endblock section_actions %}

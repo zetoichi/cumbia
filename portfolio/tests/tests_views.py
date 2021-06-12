@@ -8,24 +8,10 @@ from django.test import (
     TestCase,
 )
 
-from portfolio.views_auth import (
-    CumbiaLoginView,
-    cumbia_logout,
-)
-from portfolio.views_main import (
-    IndexView,
-    AboutView,
-    ContactView,
-    PhCreateView,
-    PhCreateConfirmView,
-    PhDetailView,
-    PhAddPicsView,
-    PhAddFirstPicsView,
-)
-from portfolio.views_json import (
-    save_new_pics,
-    sort_ph,
-    sort_pic,
+from portfolio import (
+    views_auth,
+    views_main,
+    views_json,
 )
 from portfolio.models import Photographer, Pic
 from .helpers import (
@@ -44,7 +30,7 @@ class CBVTestCase(TestCase):
 
     def test_login_url_should_resolve(self):
         url = '/login/'
-        view_class = CumbiaLoginView
+        view_class = views_auth.CumbiaLoginView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -55,7 +41,7 @@ class CBVTestCase(TestCase):
 
     def test_logout_url_should_resolve(self):
         url = '/logout/'
-        view = cumbia_logout
+        view = views_auth.cumbia_logout
 
         response = self.client.get(url)
         actual = response.resolver_match.func
@@ -64,7 +50,7 @@ class CBVTestCase(TestCase):
 
     def test_index_url_should_resolve(self):
         url = '/'
-        view_class = IndexView
+        view_class = views_main.IndexView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -75,7 +61,7 @@ class CBVTestCase(TestCase):
 
     def test_about_url_should_resolve(self):
         url = '/about/'
-        view_class = AboutView
+        view_class = views_main.AboutView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -86,7 +72,7 @@ class CBVTestCase(TestCase):
 
     def test_contact_url_should_resolve(self):
         url = '/contact/'
-        view_class = ContactView
+        view_class = views_main.ContactView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -97,7 +83,7 @@ class CBVTestCase(TestCase):
 
     def test_ph_create_url_should_resolve(self):
         url = '/phs/new/'
-        view_class = PhCreateView
+        view_class = views_main.PhCreateView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -112,7 +98,22 @@ class CBVTestCase(TestCase):
             last_name='Johnson'
         )
         url = f'/phs/confirm/{ph.pk}/'
-        view_class = PhCreateConfirmView
+        view_class = views_main.PhCreateConfirmView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
+    def test_ph_edit_url_should_resolve(self):
+        ph = Photographer.objects.create(
+            first_name='Scott',
+            last_name='Adkins'
+        )
+        url = f'/phs/edit/{ph.pk}/'
+        view_class = views_main.PhEditView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -127,7 +128,7 @@ class CBVTestCase(TestCase):
             last_name='Stallone'
         )
         url = f'/phs/detail/{ph.pk}/'
-        view_class = PhDetailView
+        view_class = views_main.PhDetailView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -142,7 +143,7 @@ class CBVTestCase(TestCase):
             last_name='Norris'
         )
         url = f'/phs/add_pics/{ph.pk}/'
-        view_class = PhAddPicsView
+        view_class = views_main.PhAddPicsView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -157,7 +158,7 @@ class CBVTestCase(TestCase):
             last_name='Grillo'
         )
         url = f'/phs/add_first/{ph.pk}/'
-        view_class = PhAddFirstPicsView
+        view_class = views_main.PhAddFirstPicsView
 
         response = self.client.get(url)
         expected, actual = get_expected_and_actual(
@@ -198,6 +199,19 @@ class CBVTestCase(TestCase):
         url = '/phs/new/'
         expected_template = 'portfolio/ph_create.html'
         response = self.client.get(url)
+        self.assertTemplateUsed(response, expected_template)
+
+    def test_ph_edit_should_render_expected_template(self):
+        ph = Photographer.objects.create(
+            first_name='Tom',
+            last_name='Hardy'
+        )
+        url = f'/phs/edit/{ph.pk}/'
+
+        expected_template = 'portfolio/ph_edit.html'
+
+        response = self.client.get(url)
+
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_create_confirm_should_render_expected_template(self):
@@ -346,7 +360,7 @@ class JSONViewsTestCase(TestCase):
             last_name='Johnson'
         )
         url = f'/phs/savepics/{ph.pk}/'
-        view_func = save_new_pics
+        view_func = views_json.save_new_pics
 
         response = self.client.get(url)
 
@@ -354,7 +368,7 @@ class JSONViewsTestCase(TestCase):
 
     def test_sort_ph_url_should_resolve(self):
         url = '/phs/sort/'
-        view_func = sort_ph
+        view_func = views_json.sort_ph
 
         response = self.client.get(url)
 
@@ -366,7 +380,7 @@ class JSONViewsTestCase(TestCase):
             last_name='De Corral'
         )
         url = f'/phs/sortpics/{ph.pk}/'
-        view_func = sort_pic
+        view_func = views_json.sort_pic
 
         response = self.client.get(url)
 

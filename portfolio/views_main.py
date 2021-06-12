@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
@@ -41,6 +41,18 @@ class PhCreateView(GeneralContextMixin, CreateView):
                 args=[ph.pk]
                 )
             )
+
+class PhEditView(GeneralContextMixin, UpdateView):
+    template_name = 'portfolio/ph_edit.html'
+    model = Photographer
+    form_class = PhotographerForm
+    segment = 'detail'
+
+    def get_success_url(self):
+        return reverse_lazy(
+            'portfolio:ph_detail',
+            args=[self.get_object().pk]
+        )
 
 class PhDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'

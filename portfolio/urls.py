@@ -64,6 +64,11 @@ urlpatterns += [
         name='ph_create_confirm'
     ),
     path(
+        'phs/edit/<str:pk>/',
+        views_main.PhEditView.as_view(),
+        name='ph_edit'
+    ),
+    path(
         'phs/add_pics/<str:pk>/',
         views_main.PhAddPicsView.as_view(),
         name='ph_add_pics'
