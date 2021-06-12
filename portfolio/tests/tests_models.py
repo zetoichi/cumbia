@@ -182,6 +182,49 @@ class PhotographerModelsTest(TestCase):
 
         self.assertFalse(ph.show)
 
+    def test_should_only_be_red(self):
+        ph = Photographer.objects.create(
+            first_name='Jerry',
+            last_name='Lee Lewis',
+            show=True,
+        )
+
+        self.assertTrue(ph.red)
+        self.assertFalse(ph.yellow)
+        self.assertFalse(ph.green)
+
+    def test_should_only_be_yellow(self):
+        ph = Photographer.objects.create(
+            first_name='Jerry',
+            last_name='Lee Lewis',
+            show=True,
+        )
+        pic_1 = get_test_pic_from_file('portrait')
+        pic_2 = get_test_pic_from_file('big')
+        pic_3 = get_test_pic_from_file('landscape')
+        ph.add_pics((pic_1, pic_2, pic_3))
+
+        self.assertFalse(ph.red)
+        self.assertTrue(ph.yellow)
+        self.assertFalse(ph.green)
+
+    def test_should_only_be_green(self):
+        ph = Photographer.objects.create(
+            first_name='Jerry',
+            last_name='Lee Lewis',
+            show=True,
+        )
+        pic_1 = get_test_pic_from_file('portrait')
+        pic_2 = get_test_pic_from_file('big')
+        pic_3 = get_test_pic_from_file('landscape')
+        pic_4 = get_test_pic_from_file('big')
+        pic_5 = get_test_pic_from_file('landscape')
+        ph.add_pics((pic_1, pic_2, pic_3, pic_4, pic_5))
+
+        self.assertFalse(ph.red)
+        self.assertFalse(ph.yellow)
+        self.assertTrue(ph.green)
+
 class PicTestCase(TestCase):
 
     def tearDown(self):
