@@ -86,6 +86,10 @@ class Photographer(SortableModel):
     def green(self):
         return self._pics_over_min()
 
+    ##
+    # INTERFACE METHODS
+    ##
+
     def __str__(self):
         return self.display_name
 
@@ -97,6 +101,10 @@ class Photographer(SortableModel):
 
     def get_absolute_url(self):
         return f'/phs/detail/{self.pk}/'
+
+    ##
+    # EXTRA HANDLER METHODS
+    ##
 
     def control_showable(self) -> None:
         if self._has_no_pics():
@@ -134,6 +142,19 @@ class Photographer(SortableModel):
 
         return [pic.pk for pic in pics_created]
 
+    ##
+    # PRIVATE METHODS
+    ##
+
+    def _has_no_pics(self):
+        return self.pics.count() == 0
+
+    def _pics_under_min(self):
+        return 0 < self.pics.count() < self.min_pics
+
+    def _pics_over_min(self):
+        return self.pics.count() >= self.min_pics
+
     def _normalize_name(self):
         """Force title format on new objects"""
         self.first_name = self.first_name.title()
@@ -157,15 +178,6 @@ class Photographer(SortableModel):
                 """Photographer objects can only have main pic assigned at a time"""
             ))
         return main
-
-    def _has_no_pics(self):
-        return self.pics.count() == 0
-
-    def _pics_under_min(self):
-        return 0 < self.pics.count() < self.min_pics
-
-    def _pics_over_min(self):
-        return self.pics.count() >= self.min_pics
 
 class Pic(SortableModel):
     pic = models.ImageField(
