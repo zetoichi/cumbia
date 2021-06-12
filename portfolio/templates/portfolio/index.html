@@ -19,7 +19,9 @@
     
 {% for ph in photographers %}
 <div class="main-pic-cx">
+{% if ph.main_pic %}
     <img id="pic-{{ ph.pk }}" class="faded-out" src="{{ ph.main_pic.pic.url }}" alt="">
+{% endif %}
 </div>
 {% endfor %}
 

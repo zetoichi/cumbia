@@ -1,14 +1,14 @@
 from typing import Type, Sequence, Optional
 
 from django.db import models
+from django.db.models.query import QuerySet
 
 class SortableManager(models.Manager):
 
     def _sort(self, seq: Optional[Sequence[Type[models.Model]]] = None,
             start: int = 0) -> None:
         """
-        - Take a sequence of objects and
-        - Sort then upwards from start
+        Sort sequence of objects upwards from start
         """
         if seq is None:
             seq = self
@@ -47,8 +47,7 @@ class SortableManager(models.Manager):
 
     def sort_incoming(self, seq: Sequence[models.Model]) -> None:
         """
-        Assign display order to new pics,
-        starting from last element in self.pics
+        Assign display order to new pics, starting from last
         """
         start = self.count()
         self._sort(seq, start)
@@ -58,7 +57,8 @@ class SortableManager(models.Manager):
         return super().create(*args, **kwargs)
 
 class PhotographerManager(SortableManager):
-    pass
+    def visible_for(self, user_is_auth: bool = False) -> QuerySet:
+        return self.all() if user_is_auth else self.filter(show=True)
 
 class PicManager(SortableManager):
     pass

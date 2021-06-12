@@ -75,13 +75,16 @@ class PhotographerModelsTest(TestCase):
 
         self.assertRaises(ImproperlyConfigured, lambda: ph.set_new_main_pic(pic))
 
-    def test_get_new_main_pic_should_raise_improperly_configured(self):
+    def test_get_new_main_pic_should_return_none(self):
         ph = Photographer.objects.create(
             first_name='Gloria',
             last_name='Gaynor'
         )
 
-        self.assertRaises(ImproperlyConfigured, lambda: ph.get_main_pic())
+        expected = None
+        actual = ph.get_main_pic()
+
+        self.assertEqual(expected, actual)
 
     def test_should_set_new_main_pic(self):
         ph = Photographer.objects.create(

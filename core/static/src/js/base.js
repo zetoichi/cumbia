@@ -12,6 +12,7 @@ function ready() {
     handleEditMode()
     handleMainToggle()
     handlePicActions()
+    handleCheckboxes()
 }
 
 function handleEditMode() {
@@ -24,6 +25,28 @@ function handleEditMode() {
         )
     } else if (!editMode) {
         animateOpening()
+    }
+}
+
+function handleCheckboxes() {
+    const switches = document.querySelectorAll('.tgl-btn')
+    switches?.forEach(sw => {
+        sw.addEventListener('click', e => {
+            const checkbox = e.target.previousElementSibling
+            toggleCheckbox(checkbox)
+        })
+    })
+}
+
+function toggleCheckbox(checkbox) {
+    if (checkbox.checked) {
+        console.log(checkbox.checked)
+        checkbox.checked = false
+        console.log(checkbox.checked)
+    } else if (!checkbox.checked) {
+        console.log(checkbox.checked)
+        checkbox.checked = true
+        console.log(checkbox.checked)
     }
 }
 

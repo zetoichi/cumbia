@@ -1,0 +1,9 @@
+{% extends 'portfolio/layouts/base.html' %}
+{% load static %}
+
+{% block center %}
+    <h3>{{ ph.display_name }}</h3>
+{% endblock center %}
+{% block section_actions %}
+    <button id="confirm-ph-btn" class="action-btn section extra">CONFIRMAR</button>
+{% endblock section_actions %}

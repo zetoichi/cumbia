@@ -8,7 +8,7 @@
 {% endblock center %}
 
 {% block section_actions %}
-    <a href="{% url 'portfolio:ph_detail' ph.pk %}">
+    <a href={{ get_back }}>
         <button class="action-btn section secondary">VOLVER</button>
     </a>
     <button id="upload-imgs-btn" class="action-btn section accent">SUBIR</button>

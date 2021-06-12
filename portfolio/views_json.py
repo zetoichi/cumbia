@@ -34,7 +34,10 @@ def save_new_pics(request: HttpRequest, pk: str) -> JsonResponse:
             files = files_from_request(request)
             pics_created = ph.pics_from_files(files)
             response = JsonResponse(
-                data={'pics_created': pics_created},
+                data={
+                    'pics_created': pics_created,
+                    'phpk': pk,
+                },
                 status=200
             )
         except Exception as e:

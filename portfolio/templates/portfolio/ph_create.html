@@ -6,20 +6,21 @@
         {% csrf_token %}
         <div class="form-fields-cx">
             <div class="form-field">
-                <label class="form-field-label" for="username">Nombre*</label>
+                <label class="form-field-label" for="first_name">Nombre*</label>
                 {{ form.first_name }}
             </div>
             <div class="form-field">
-                <label class="form-field-label" for="password">Apellido*</label>
+                <label class="form-field-label" for="last_name">Apellido*</label>
                 {{ form.last_name }}
             </div>
             <div class="form-field">
-                <label class="form-field-label" for="password">Seudónimo</label>
+                <label class="form-field-label" for="display_name">Seudónimo</label>
                 {{ form.display_name }}
             </div>
             <div class="form-field">
-                <label class="form-field-label" for="password">Bio</label>
-                {{ form.bio }}
+                <label class="form-field-label" for="show">Mostrar</label>
+                {{ form.show }}
+                <label id="show-hide-tgl" class="tgl-btn" for="show"></label>
             </div>
         </div>
     </form>

@@ -16,6 +16,7 @@ from portfolio.views_main import (
     AboutView,
     ContactView,
     PhCreateView,
+    PhCreateConfirmView,
     PhDetailView,
     PhEditPicsView,
     PhAddPicsView,
@@ -102,6 +103,21 @@ class CBVTestCase(TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_ph_create_confirm_url_should_resolve(self):
+        ph = Photographer.objects.create(
+            first_name='Don',
+            last_name='Johnson'
+        )
+        url = f'/phs/confirm/{ph.pk}/'
+        view_class = PhCreateConfirmView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
     def test_ph_detail_url_should_resolve(self):
         ph = Photographer.objects.create(
             first_name='Silvester',
@@ -179,6 +195,19 @@ class CBVTestCase(TestCase):
         response = self.client.get(url)
         self.assertTemplateUsed(response, expected_template)
 
+    def test_ph_create_confirm_should_render_expected_template(self):
+        ph = Photographer.objects.create(
+            first_name='Mark',
+            last_name='Whalberg'
+        )
+        url = f'/phs/confirm/{ph.pk}/'
+
+        expected_template = 'portfolio/ph_create_confirm.html'
+
+        response = self.client.get(url)
+
+        self.assertTemplateUsed(response, expected_template)
+
     def test_ph_detail_should_render_expected_template(self):
         ph = Photographer.objects.create(
             first_name='Jean Claude',
@@ -228,12 +257,14 @@ class CBVTestCase(TestCase):
     def test_l_col_should_display_photographers(self):
         ph_1 = Photographer.objects.create(
             first_name='Steven',
-            last_name='Seagal'
+            last_name='Seagal',
+            show=True,
         )
         ph_2 = Photographer.objects.create(
             first_name='Arnold',
             last_name='Schwarzenegger',
-            display_name='Arnie'
+            display_name='Arnie',
+            show=True,
         )
         url = '/'
 
@@ -247,11 +278,13 @@ class CBVTestCase(TestCase):
     def test_l_col_should_contain_photographer_urls(self):
         ph_1 = Photographer.objects.create(
             first_name='Adam',
-            last_name='Sandler'
+            last_name='Sandler',
+            show=True,
         )
         ph_2 = Photographer.objects.create(
             first_name='Seth',
             last_name='Rogen',
+            show=True,
         )
         url = '/'
 

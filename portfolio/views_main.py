@@ -10,6 +10,7 @@ from .models import (
     Photographer,
     Pic,
 )
+from .forms import PhotographerForm
 
 class IndexView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/index.html'
@@ -26,13 +27,8 @@ class ContactView(GeneralContextMixin, TemplateView):
 class PhCreateView(GeneralContextMixin, CreateView):
     template_name = 'portfolio/ph_create.html'
     model = Photographer
+    form_class = PhotographerForm
     segment = 'detail'
-    fields = (
-        'first_name',
-        'last_name',
-        'display_name',
-        'bio'
-    )
 
     def post(self, request):
         form = self.get_form()
@@ -41,10 +37,16 @@ class PhCreateView(GeneralContextMixin, CreateView):
             data = form.cleaned_data
             ph = self.model.objects.create(**data)
             return redirect(
-                reverse_lazy('portfolio:ph_detail',
+                reverse_lazy('portfolio:ph_add_pics',
                 args=[ph.pk]
                 )
             )
+
+class PhCreateConfirmView(GeneralContextMixin, DetailView):
+    template_name = 'portfolio/ph_create_confirm.html'
+    model = Photographer
+    context_object_name = 'ph'
+    segment = 'detail'
 
 class PhDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'

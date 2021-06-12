@@ -48,6 +48,10 @@ class Photographer(SortableModel):
         blank=True,
         default=''
     )
+    show = models.BooleanField(
+        default=False,
+        verbose_name=_('Mostrar')
+    )
     pics = models.ManyToManyField(
         'Pic',
         blank=True,
@@ -59,9 +63,17 @@ class Photographer(SortableModel):
 
     objects = managers.PhotographerManager()
 
+    class Meta:
+        verbose_name = _('Photographer')
+        verbose_name_plural = _('Photographers')
+        ordering = ['display_idx']
+
     @property
     def main_pic(self):
         return self.get_main_pic()
+
+    def __str__(self):
+        return self.display_name
 
     def save(self, *args, **kwargs):
         self._normalize_name()
@@ -81,18 +93,20 @@ class Photographer(SortableModel):
         if self.pics.filter(pk=pic.pk).exists():
             return True
         raise ImproperlyConfigured(
-            """The provided Pic instance does not
-            belong to this photographer"""
+            """The provided Pic instance does not belong to this Photographer"""
         )
 
     def _unique_main_pic(self):
         main = self.pics.filter(main=True)
-        if main.count() != 1:
+        if main.count() == 1:
+            main = main.first()
+        elif main.count() == 0:
+            main = None
+        elif main.count() > 1:
             raise ImproperlyConfigured((
-                """Photographer objects should have one and
-                only main pic assigned at a time"""
+                """Photographer objects can only have main pic assigned at a time"""
             ))
-        return main.first()
+        return main
 
     def _has_no_pics(self):
         return self.pics.count() == 0
@@ -128,14 +142,6 @@ class Photographer(SortableModel):
         self.add_pics(pics_created)
 
         return [pic.pk for pic in pics_created]
-
-    def __str__(self):
-        return self.display_name
-
-    class Meta:
-        verbose_name = _('Photographer')
-        verbose_name_plural = _('Photographers')
-        ordering = ['display_idx']
 
 
 class Pic(SortableModel):

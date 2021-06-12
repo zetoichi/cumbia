@@ -11,9 +11,11 @@ class GeneralContextMixin:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['photographers'] = Photographer.objects.all()
+        user_is_auth = self.request.user.is_authenticated
+        context['edit_mode'] = user_is_auth
+        context['photographers'] = Photographer.objects.visible_for(user_is_auth)
         context['segment'] = self.get_segment()
-        context['edit_mode'] = self.get_edit_mode()
+        context['get_back'] = self.request.META.get('HTTP_REFERER')
         return context
 
     def get_segment(self):
@@ -23,6 +25,3 @@ class GeneralContextMixin:
             raise ImproperlyConfigured(
                 'GeneralContextMixin requires a value for the "segment" attribute'
             )
-
-    def get_edit_mode(self):
-        return self.request.user.is_authenticated
