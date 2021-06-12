@@ -56,9 +56,6 @@ class PhCreateConfirmView(PhDetailView):
         ph.control_showable()
         return super().dispatch(request, pk, *args, **kwargs)
 
-class PhEditPicsView(PhDetailView):
-    template_name = 'portfolio/ph_edit_pics.html'
-
 class PhAddPicsView(PhDetailView):
     template_name = 'portfolio/ph_add_pics.html'
 
