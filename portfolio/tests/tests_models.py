@@ -157,8 +157,8 @@ class PhotographerModelsTest(TestCase):
 
     def test_should_insort_pic_left(self):
         ph = Photographer.objects.create(
-            first_name='Anne',
-            last_name='Dudley',
+            first_name='Ritchie',
+            last_name='Sambora',
         )
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
@@ -170,6 +170,17 @@ class PhotographerModelsTest(TestCase):
         self.assertTrue(ph.pics.get(display_idx=1) == pic_2)
         self.assertTrue(ph.pics.get(display_idx=2) == pic_3)
         self.assertTrue(ph.pics.get(display_idx=3) == pic_1)
+
+    def test_should_not_be_showable(self):
+        ph = Photographer.objects.create(
+            first_name='Jerry',
+            last_name='Lee Lewis',
+            show=True,
+        )
+
+        ph.control_showable()
+
+        self.assertFalse(ph.show)
 
 class PicTestCase(TestCase):
 

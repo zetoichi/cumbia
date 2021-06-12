@@ -557,3 +557,12 @@ li.pic-cx .x-is-delete.disabled {
     background: none;
     border-bottom: 3px solid red;
 }
+
+.confirm-center {
+    grid-column: 1 / -1;
+    grid-row: 2 / -2;
+    text-align: center;
+}
+.confirm-center p {
+    font-size: 1.2rem;
+}

@@ -63,6 +63,8 @@ class Photographer(SortableModel):
 
     objects = managers.PhotographerManager()
 
+    min_pics = 5
+
     class Meta:
         verbose_name = _('Photographer')
         verbose_name_plural = _('Photographers')
@@ -71,6 +73,18 @@ class Photographer(SortableModel):
     @property
     def main_pic(self):
         return self.get_main_pic()
+
+    @property
+    def red(self):
+        return self._has_no_pics()
+
+    @property
+    def yellow(self):
+        return self._pics_under_min()
+
+    @property
+    def green(self):
+        return self._pics_over_min()
 
     def __str__(self):
         return self.display_name
@@ -83,6 +97,42 @@ class Photographer(SortableModel):
 
     def get_absolute_url(self):
         return f'/phs/detail/{self.pk}/'
+
+    def control_showable(self) -> None:
+        if self._has_no_pics():
+            self.show = False
+            self.save()
+
+    def add_pics(self, new_pics: Sequence[Type['Pic']]) -> None:
+        """Wraps m2m add() method"""
+        first = self._has_no_pics()
+
+        self.pics.sort_incoming(new_pics)
+        self.pics.add(*new_pics)  # perform actual adding
+        if first:
+            new_pics[0].set_as_main()
+
+    def set_new_main_pic(self, pic: Type['Pic']) -> None:
+        if self._main_pic_belongs_here(pic):
+            self.pics.update(main=False)
+            pic.main = True
+            pic.save()
+
+    def get_main_pic(self) -> Type['Pic']:
+        return self._unique_main_pic()
+
+    def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
+        """Return created objects pk for JSON response."""
+        pics_created = []
+
+        for f in files:
+            new_pic = Pic.objects.create(
+                pic=f,
+            )
+            pics_created.append(new_pic)
+        self.add_pics(pics_created)
+
+        return [pic.pk for pic in pics_created]
 
     def _normalize_name(self):
         """Force title format on new objects"""
@@ -111,38 +161,11 @@ class Photographer(SortableModel):
     def _has_no_pics(self):
         return self.pics.count() == 0
 
-    def add_pics(self, new_pics: Sequence[Type['Pic']]) -> None:
-        """Wraps m2m add() method"""
-        first = self._has_no_pics()
+    def _pics_under_min(self):
+        return 0 < self.pics.count() < self.min_pics
 
-        self.pics.sort_incoming(new_pics)
-        self.pics.add(*new_pics)  # perform actual adding
-        if first:
-            new_pics[0].set_as_main()
-
-    def set_new_main_pic(self, pic: Type['Pic']) -> None:
-        if self._main_pic_belongs_here(pic):
-            self.pics.update(main=False)
-            pic.main = True
-            pic.save()
-
-    def get_main_pic(self) -> Type['Pic']:
-        return self._unique_main_pic()
-
-    def pics_from_files(self, files: Sequence[IO]) -> List[Type['Pic']]:
-        """Return created objects pk for JSON response."""
-        pics_created = []
-
-        for f in files:
-            new_pic = Pic.objects.create(
-                pic=f,
-                caption=lorem.words(6)  # TEMPORARY LOREM FOR CAPTION, DELETE
-            )
-            pics_created.append(new_pic)
-        self.add_pics(pics_created)
-
-        return [pic.pk for pic in pics_created]
-
+    def _pics_over_min(self):
+        return self.pics.count() >= self.min_pics
 
 class Pic(SortableModel):
     pic = models.ImageField(

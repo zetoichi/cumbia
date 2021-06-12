@@ -2,8 +2,32 @@
 {% load static %}
 
 {% block center %}
-    <h3>{{ ph.display_name }}</h3>
+    <div class="confirm-center">
+    {% if ph.green %}
+        <div>
+            <p>Usted está creando el PH <strong>{{ ph }}</strong>,</p>
+            <p>con un total de <strong>{{ ph.pics.count }} fotos</strong>,</p>
+            <p>en estado: <strong>{% if ph.show %}visible{% else %}oculto{% endif %}</strong>.</p>
+        </div>
+    {% elif ph.yellow %}
+        <div>
+            <p>Usted está creando el PH <strong>{{ ph }}</strong>,</p>
+            <p>con un total de <strong>{{ ph.pics.count }} fotos</strong>,</p>
+            <p>en estado: <strong>visible</strong>.</p>
+            <br>
+            <p>Para la correcta visualización, se recomienda un mínimo de 5 fotos por PH.</p>
+        </div>
+    {% elif ph.red %}
+        <div>
+            <p>Usted está creando el PH <strong>{{ ph }}</strong>,</p>
+            <p>sin fotos asignadas.</p>
+            <p>El fotógrafo permanecerá oculto hasta que se le asignen fotos a su portfolio.</p>
+        </div>
+    {% endif %}
+    </div>
 {% endblock center %}
 {% block section_actions %}
-    <button id="confirm-ph-btn" class="action-btn section extra">CONFIRMAR</button>
+    <button id="edit-ph-btn" class="action-btn section secondary">EDITAR</button>
+    <button id="add-pics-btn" class="action-btn section secondary">+ FOTOS</button>
+    <button id="confirm-ph-btn" class="action-btn section accent">CONFIRMAR</button>
 {% endblock section_actions %}
