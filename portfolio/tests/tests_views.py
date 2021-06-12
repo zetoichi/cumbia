@@ -1,6 +1,7 @@
 import os
 import json
 import inspect
+from unittest.mock import Mock, patch
 
 from django.urls import resolve, reverse
 from django.test import (
@@ -20,6 +21,7 @@ from portfolio.views_main import (
     PhDetailView,
     PhEditPicsView,
     PhAddPicsView,
+    PhAddFirstPicsView,
 )
 from portfolio.views_json import (
     save_new_pics,
@@ -37,7 +39,9 @@ from .helpers import (
 
 class CBVTestCase(TestCase):
 
+    ##
     # RESOLVE
+    ##
 
     def test_login_url_should_resolve(self):
         url = '/login/'
@@ -163,7 +167,24 @@ class CBVTestCase(TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_ph_add_first_pics_url_should_resolve(self):
+        ph = Photographer.objects.create(
+            first_name='Emiliano',
+            last_name='Grillo'
+        )
+        url = f'/phs/add_first/{ph.pk}/'
+        view_class = PhAddFirstPicsView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
+    ##
     # TEMPLATE
+    ##
 
     def test_login_should_render_expected_template(self):
         url = '/login/'
@@ -234,7 +255,22 @@ class CBVTestCase(TestCase):
 
         self.assertTemplateUsed(response, expected_template)
 
+    def test_ph_add_first_pics_should_render_expected_template(self):
+        ph = Photographer.objects.create(
+            first_name='Renè',
+            last_name='Russo'
+        )
+        url = f'/phs/add_first/{ph.pk}/'
+
+        expected_template = 'portfolio/ph_add_first_pics.html'
+
+        response = self.client.get(url)
+
+        self.assertTemplateUsed(response, expected_template)
+
+    ##
     # CONTENT
+    ##
 
     def test_login_should_not_display_photographers(self):
         ph_1 = Photographer.objects.create(
@@ -295,6 +331,23 @@ class CBVTestCase(TestCase):
 
         self.assertContains(response, f'<a href="{link_url_1}">')
         self.assertContains(response, f'<a href="{link_url_2}">')
+
+    ##
+    # FUNCTION CALLS
+    ##
+
+    @patch('portfolio.models.Photographer.control_showable')
+    def test_create_confirm_should_call_control_showable(self, mock_control_showable):
+        ph = Photographer.objects.create(
+            first_name='Adam',
+            last_name='Sandler',
+            show=True,
+        )
+        url = f'/phs/confirm/{ph.pk}/'
+
+        response = self.client.get(url)
+
+        self.assertTrue(mock_control_showable.call_count == 1)
 
 class JSONViewsTestCase(TestCase):
 

@@ -1,0 +1,15 @@
+{% extends 'portfolio/layouts/base.html' %}
+{% load static %}
+
+{% block center %}
+
+    {% include 'portfolio/components/dropzone.html' %}
+
+{% endblock center %}
+
+{% block section_actions %}
+    <button id="upload-imgs-btn" class="action-btn section accent">SUBIR</button>
+    <a href="{% url 'portfolio:ph_create_confirm' ph.pk %}">
+        <button id="go-on-btn" class="action-btn section secondary">SEGUIR</button>
+    </a>
+{% endblock section_actions %}

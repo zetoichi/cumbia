@@ -15,19 +15,25 @@
             <p>con un total de <strong>{{ ph.pics.count }} fotos</strong>,</p>
             <p>en estado: <strong>visible</strong>.</p>
             <br>
-            <p>Para la correcta visualización, se recomienda un mínimo de 5 fotos por PH.</p>
+            <small>*Para la correcta visualización, se recomienda un mínimo de 5 fotos por PH.</small>
         </div>
     {% elif ph.red %}
         <div>
             <p>Usted está creando el PH <strong>{{ ph }}</strong>,</p>
             <p>sin fotos asignadas.</p>
-            <p>El fotógrafo permanecerá oculto hasta que se le asignen fotos a su portfolio.</p>
+            <p>El fotógrafo permanecerá <strong>no visible</strong> hasta que se le asignen fotos a su portfolio.</p>
         </div>
     {% endif %}
     </div>
 {% endblock center %}
 {% block section_actions %}
-    <button id="edit-ph-btn" class="action-btn section secondary">EDITAR</button>
-    <button id="add-pics-btn" class="action-btn section secondary">+ FOTOS</button>
-    <button id="confirm-ph-btn" class="action-btn section accent">CONFIRMAR</button>
+    <a href="#">
+        <button id="edit-ph-btn" class="action-btn section secondary">EDITAR</button>
+    </a>
+    <a href="{% url 'portfolio:ph_add_first' ph.pk %}">
+        <button id="add-pics-btn" class="action-btn section secondary">+ FOTOS</button>
+    </a>
+    <a href="{% url 'portfolio:ph_detail' ph.pk %}">
+        <button id="confirm-ph-btn" class="action-btn section accent">CONFIRMAR</button>
+    </a>
 {% endblock section_actions %}

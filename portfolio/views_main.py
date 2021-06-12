@@ -37,16 +37,10 @@ class PhCreateView(GeneralContextMixin, CreateView):
             data = form.cleaned_data
             ph = self.model.objects.create(**data)
             return redirect(
-                reverse_lazy('portfolio:ph_add_pics',
+                reverse_lazy('portfolio:ph_add_first',
                 args=[ph.pk]
                 )
             )
-
-class PhCreateConfirmView(GeneralContextMixin, DetailView):
-    template_name = 'portfolio/ph_create_confirm.html'
-    model = Photographer
-    context_object_name = 'ph'
-    segment = 'detail'
 
 class PhDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'
@@ -54,11 +48,22 @@ class PhDetailView(GeneralContextMixin, DetailView):
     context_object_name = 'ph'
     segment = 'detail'
 
+class PhCreateConfirmView(PhDetailView):
+    template_name = 'portfolio/ph_create_confirm.html'
+
+    def dispatch(self, request, pk, *args, **kwargs):
+        ph = self.get_object()
+        ph.control_showable()
+        return super().dispatch(request, pk, *args, **kwargs)
+
 class PhEditPicsView(PhDetailView):
     template_name = 'portfolio/ph_edit_pics.html'
 
 class PhAddPicsView(PhDetailView):
     template_name = 'portfolio/ph_add_pics.html'
+
+class PhAddFirstPicsView(PhDetailView):
+    template_name = 'portfolio/ph_add_first_pics.html'
 
 class PhDetailAltView(PhDetailView):
     template_name = 'portfolio/ph_detail_alt.html'  # TEMP VIEW: DELETE!!!
