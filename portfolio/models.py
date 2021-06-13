@@ -99,6 +99,10 @@ class Photographer(SortableModel):
             self.display_name = f'{self.first_name} {self.last_name}'
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        self.pics.all().delete()
+        super().delete(*args, **kwargs)
+
     def get_absolute_url(self):
         return f'/phs/detail/{self.pk}/'
 

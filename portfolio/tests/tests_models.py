@@ -66,7 +66,19 @@ class PhotographerModelsTest(TestCase):
 
     # INSTANCE METHODS THAT HANDLE PICS SET
 
-    def test_set_new_main_pic_should_raise_improperly_configured(self):
+    def test_should_delete_pics_as_well(self):
+        ph = Photographer.objects.create(
+            first_name='Tom',
+            last_name='Berenger'
+        )
+        pic = get_test_pic_from_file('portrait')
+        ph.add_pics((pic,))
+
+        ph.delete()
+
+        self.assertFalse(Pic.objects.filter(pk=pic.pk).exists())
+
+    def test_set_new_main_pic_not_in_pics_should_raise_improperly_configured(self):
         ph = Photographer.objects.create(
             first_name='Gloria',
             last_name='Gaynor'
