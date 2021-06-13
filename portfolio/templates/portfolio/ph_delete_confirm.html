@@ -1,0 +1,18 @@
+{% extends 'portfolio/layouts/base.html' %}
+{% load static %}
+
+{% block center %}
+    <form id="delete-ph-form" class="confirm-center" action="" method="POST">
+        {% csrf_token %}
+        <div>
+            <p>Está seguro de que quiere borrar a <strong>{{ ph }}</strong>?</p>
+            <p>Esta acción eliminará un total de <strong>{{ ph.pics.count }} fotos</strong>.</p>
+        </div>
+    </form>
+{% endblock center %}
+{% block section_actions %}
+    <a href="{{ get_back }}">
+        <button id="get-back-btn" class="action-btn section secondary">VOLVER</button>
+    </a>
+        <button id="delete-ph-btn" class="action-btn section accent" type="submit" form="delete-ph-form">ELIMINAR</button>
+{% endblock section_actions %}

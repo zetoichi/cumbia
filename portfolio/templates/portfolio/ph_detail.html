@@ -26,7 +26,7 @@
 {% endblock main %}
 
 {% block section_actions %}
-<a href="#">
+<a href="{% url 'portfolio:ph_edit' ph.pk %}">
     <button id="edit-ph-btn" class="action-btn section secondary">EDITAR PH</button>
 </a>
     <button id="delete-pics-btn" class="action-btn section secondary">BORRAR</button>

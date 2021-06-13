@@ -122,6 +122,21 @@ class CBVTestCase(TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_ph_delete_url_should_resolve(self):
+        ph = Photographer.objects.create(
+            first_name='Armie',
+            last_name='Hammer'
+        )
+        url = f'/phs/del/{ph.pk}/'
+        view_class = views_main.PhDeleteView
+
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+
+        self.assertEqual(expected, actual)
+
     def test_ph_detail_url_should_resolve(self):
         ph = Photographer.objects.create(
             first_name='Silvester',
@@ -214,6 +229,19 @@ class CBVTestCase(TestCase):
 
         self.assertTemplateUsed(response, expected_template)
 
+    def test_ph_delete_should_render_expected_template(self):
+        ph = Photographer.objects.create(
+            first_name='Hulk',
+            last_name='Hogan'
+        )
+        url = f'/phs/del/{ph.pk}/'
+
+        expected_template = 'portfolio/ph_delete_confirm.html'
+
+        response = self.client.get(url)
+
+        self.assertTemplateUsed(response, expected_template)
+
     def test_ph_create_confirm_should_render_expected_template(self):
         ph = Photographer.objects.create(
             first_name='Mark',
@@ -223,6 +251,9 @@ class CBVTestCase(TestCase):
 
         expected_template = 'portfolio/ph_create_confirm.html'
 
+        session = self.client.session
+        session['creating'] = True
+        session.save()
         response = self.client.get(url)
 
         self.assertTemplateUsed(response, expected_template)
@@ -343,6 +374,9 @@ class CBVTestCase(TestCase):
         )
         url = f'/phs/confirm/{ph.pk}/'
 
+        session = self.client.session
+        session['creating'] = True
+        session.save()
         response = self.client.get(url)
 
         self.assertTrue(mock_control_showable.call_count == 1)

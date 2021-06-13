@@ -69,6 +69,11 @@ urlpatterns += [
         name='ph_edit'
     ),
     path(
+        'phs/del/<str:pk>/',
+        views_main.PhDeleteView.as_view(),
+        name='ph_delete'
+    ),
+    path(
         'phs/add_pics/<str:pk>/',
         views_main.PhAddPicsView.as_view(),
         name='ph_add_pics'

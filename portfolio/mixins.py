@@ -17,7 +17,6 @@ class GeneralContextMixin:
         context['photographers'] = Photographer.objects.visible_for(user_is_auth)
         context['segment'] = self.get_segment()
         context['creating'] = self.get_creating()
-        print('############### ', context['creating'])
         context['get_back'] = self.request.META.get('HTTP_REFERER')
         return context
 

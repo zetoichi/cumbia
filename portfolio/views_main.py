@@ -1,6 +1,10 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import (
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
@@ -49,6 +53,7 @@ class PhCreateView(GeneralContextMixin, CreateView):
 class PhEditView(GeneralContextMixin, UpdateView):
     template_name = 'portfolio/ph_edit.html'
     model = Photographer
+    context_object_name = 'ph'
     form_class = PhotographerForm
     segment = 'edit'
     creating = False
@@ -64,6 +69,15 @@ class PhEditView(GeneralContextMixin, UpdateView):
         if self.request.session['creating']:
             url = 'portfolio:ph_create_confirm'
         return reverse_lazy(url, args=args)
+
+class PhDeleteView(GeneralContextMixin, DeleteView):
+    template_name = 'portfolio/ph_delete_confirm.html'
+    model = Photographer
+    form_class = PhotographerForm
+    context_object_name = 'ph'
+    segment = 'edit'
+    creating = False
+    success_url = reverse_lazy('portfolio:index')
 
 class PhDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'
