@@ -7,7 +7,8 @@ from .models import (
 
 class GeneralContextMixin:
 
-    segment = None
+    segment: str = None
+    creating: bool = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -15,6 +16,8 @@ class GeneralContextMixin:
         context['edit_mode'] = user_is_auth
         context['photographers'] = Photographer.objects.visible_for(user_is_auth)
         context['segment'] = self.get_segment()
+        context['creating'] = self.get_creating()
+        print('############### ', context['creating'])
         context['get_back'] = self.request.META.get('HTTP_REFERER')
         return context
 
@@ -24,4 +27,13 @@ class GeneralContextMixin:
         else:
             raise ImproperlyConfigured(
                 'GeneralContextMixin requires a value for the "segment" attribute'
+            )
+
+    def get_creating(self):
+        if self.creating is not None:
+            self.request.session['creating'] = self.creating
+            return self.creating
+        else:
+            raise ImproperlyConfigured(
+                'GeneralContextMixin requires a value for the "creating" attribute'
             )

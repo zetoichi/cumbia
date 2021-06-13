@@ -548,6 +548,8 @@ li.ph-link.highlight {
   margin: 8px 0;
 }
 
+li.ph-link.unshowable.dim,
+li.ph-link.unshowable.highlight,
 li.ph-link.unshowable {
   color: coral;
 }
@@ -569,7 +571,7 @@ li.ph-link.dim h5 {
   letter-spacing: 1px;
 }
 
-li.ph-link.highlight h5 {
+li.ph-link.highlight:not(.unshowable) h5 {
   font-weight: bold;
   font-size: 2rem;
 }

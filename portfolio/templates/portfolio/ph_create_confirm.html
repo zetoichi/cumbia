@@ -27,7 +27,7 @@
     </div>
 {% endblock center %}
 {% block section_actions %}
-    <a href="#">
+    <a href="{% url 'portfolio:ph_edit' ph.pk %}">
         <button id="edit-ph-btn" class="action-btn section secondary">EDITAR</button>
     </a>
     <a href="{% url 'portfolio:ph_add_first' ph.pk %}">

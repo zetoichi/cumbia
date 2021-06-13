@@ -1,7 +1,7 @@
 <nav id="main-nav" class="gen-nav">
     <ul class="ph-links drag-container">
     {% for photographer in photographers %}
-        <li class="ph-link {% if not photographer.show %}unshowable{% endif %}{% if ph and ph.pk == photographer.pk %}highlight{% elif ph and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">
+        <li class="ph-link {% if not photographer.show or photographer.red %}unshowable{% endif %} {% if segment == 'detail' and ph.pk == photographer.pk %}highlight{% elif segment == 'detail' and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">
             <a href="{% url 'portfolio:ph_detail' photographer.pk %}">
                 <h5>{{ photographer.display_name }}</h5>
             </a>
