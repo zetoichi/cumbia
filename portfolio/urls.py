@@ -44,11 +44,6 @@ urlpatterns += [
         views_main.PhDetailView.as_view(),
         name='ph_detail'
     ),
-    path(
-        'phs_alt/detail/<str:pk>/',
-        views_main.PhDetailAltView.as_view(),
-        name='ph_detail_alt'
-    ),
 ]
 
 # PRIVATE

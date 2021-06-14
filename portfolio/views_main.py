@@ -113,6 +113,3 @@ class PhAddFirstPicsView(PhDetailView):
     template_name = 'portfolio/ph_add_first_pics.html'
     segment = 'edit'
     creating = True
-
-class PhDetailAltView(PhDetailView):
-    template_name = 'portfolio/ph_detail_alt.html'  # TEMP VIEW: DELETE!!!
