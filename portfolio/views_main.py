@@ -9,7 +9,11 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from .signals import see_this
-from .mixins import GeneralContextMixin
+from .mixins import (
+    GeneralContextMixin,
+    PhDetailMixin,
+    GalleryMixin,
+)
 from .models import (
     Photographer,
     Pic,
@@ -31,10 +35,25 @@ class ContactView(GeneralContextMixin, TemplateView):
     segment = 'info'
     creating = False
 
-class PhCreateView(GeneralContextMixin, CreateView):
+class PhDetailView(GeneralContextMixin, PhDetailMixin,
+        DetailView):
+    template_name = 'portfolio/ph_detail.html'
+    creating = False
+    segment = 'detail'
+
+class PhPicsDetailView(GalleryMixin, PhDetailView):
+    gallery = 'portfolio/components/galleries/pics.html'
+
+class PhVideoDetailView(GalleryMixin, PhDetailView):
+    gallery = 'portfolio/components/galleries/videos.html'
+
+##
+# CRUD
+##
+
+class PhCreateView(GeneralContextMixin, PhDetailMixin,
+        CreateView):
     template_name = 'portfolio/ph_create.html'
-    model = Photographer
-    form_class = PhotographerForm
     segment = 'edit'
     creating = True
 
@@ -50,11 +69,9 @@ class PhCreateView(GeneralContextMixin, CreateView):
                 )
             )
 
-class PhEditView(GeneralContextMixin, UpdateView):
+class PhEditView(GeneralContextMixin, PhDetailMixin,
+        UpdateView):
     template_name = 'portfolio/ph_edit.html'
-    model = Photographer
-    context_object_name = 'ph'
-    form_class = PhotographerForm
     segment = 'edit'
     creating = False
 
@@ -65,28 +82,13 @@ class PhEditView(GeneralContextMixin, UpdateView):
 
     def get_success_url(self):
         args = [self.get_object().pk]
-        url = 'portfolio:ph_detail'
+        url = 'portfolio:ph_detail_pics'
         if self.request.session['creating']:
             url = 'portfolio:ph_create_confirm'
         return reverse_lazy(url, args=args)
 
-class PhDeleteView(GeneralContextMixin, DeleteView):
-    template_name = 'portfolio/ph_delete_confirm.html'
-    model = Photographer
-    form_class = PhotographerForm
-    context_object_name = 'ph'
-    segment = 'edit'
-    creating = False
-    success_url = reverse_lazy('portfolio:index')
-
-class PhPicsDetailView(GeneralContextMixin, DetailView):
-    template_name = 'portfolio/ph_detail.html'
-    model = Photographer
-    context_object_name = 'ph'
-    segment = 'detail'
-    creating = False
-
-class PhCreateConfirmView(PhPicsDetailView):
+class PhCreateConfirmView(GeneralContextMixin, PhDetailMixin,
+        DetailView):
     template_name = 'portfolio/ph_create_confirm.html'
     segment = 'edit'
     creating = True
@@ -100,16 +102,25 @@ class PhCreateConfirmView(PhPicsDetailView):
         else:
             return redirect(
                 reverse_lazy(
-                    'portfolio:ph_detail', args=[pk]
+                    'portfolio:ph_detail_pics', args=[pk]
                 )
             )
 
-class PhAddPicsView(PhPicsDetailView):
+class PhDeleteView(GeneralContextMixin, PhDetailMixin,
+        DeleteView):
+    template_name = 'portfolio/ph_delete_confirm.html'
+    segment = 'edit'
+    creating = False
+    success_url = reverse_lazy('portfolio:index')
+
+class PhAddPicsView(GeneralContextMixin, PhDetailMixin,
+        DetailView):
     template_name = 'portfolio/ph_add_pics.html'
     segment = 'edit'
     creating = False
 
-class PhAddFirstPicsView(PhPicsDetailView):
+class PhAddFirstPicsView(GeneralContextMixin, PhDetailMixin,
+        DetailView):
     template_name = 'portfolio/ph_add_first_pics.html'
     segment = 'edit'
     creating = True

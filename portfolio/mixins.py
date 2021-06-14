@@ -4,6 +4,7 @@ from .models import (
     Photographer,
     Pic,
 )
+from .forms import PhotographerForm
 
 class GeneralContextMixin:
 
@@ -35,4 +36,25 @@ class GeneralContextMixin:
         else:
             raise ImproperlyConfigured(
                 'GeneralContextMixin requires a value for the "creating" attribute'
+            )
+
+class PhDetailMixin:
+    model = Photographer
+    form_class = PhotographerForm
+    context_object_name = 'ph'
+
+class GalleryMixin:
+    gallery = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gallery'] = self.get_gallery()
+        return context
+
+    def get_gallery(self):
+        if self.gallery is not None:
+            return self.gallery
+        else:
+            raise ImproperlyConfigured(
+                'GalleryMixin requires a value for the "gallery" attribute'
             )

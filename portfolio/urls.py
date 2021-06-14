@@ -42,7 +42,12 @@ urlpatterns += [
     path(
         'phs/pics/<str:pk>/',
         views_main.PhPicsDetailView.as_view(),
-        name='ph_detail'
+        name='ph_detail_pics'
+    ),
+    path(
+        'phs/videos/<str:pk>/',
+        views_main.PhVideoDetailView.as_view(),
+        name='ph_detail_video'
     ),
 ]
 

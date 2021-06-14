@@ -110,6 +110,12 @@ class CBVTestCase(TestCase):
 
         self.assertTrue(self.cbv_resolves(url, view_class))
 
+    def test_ph_video_detail_url_should_resolve(self):
+        url = f'/phs/videos/{self.ph_1.pk}/'
+        view_class = views_main.PhVideoDetailView
+
+        self.assertTrue(self.cbv_resolves(url, view_class))
+
     def test_ph_add_pics_url_should_resolve(self):
         url = f'/phs/add_pics/{self.ph_1.pk}/'
         view_class = views_main.PhAddPicsView
@@ -193,7 +199,7 @@ class CBVTestCase(TestCase):
 
         self.assertTemplateUsed(response, expected_template)
 
-    def test_ph_detail_should_render_expected_template(self):
+    def test_ph_pics_detail_should_render_expected_template(self):
         url = f'/phs/pics/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_detail.html'
 
@@ -275,8 +281,8 @@ class CBVTestCase(TestCase):
 
         response = self.client.get(url)
 
-        link_url_1 = reverse('portfolio:ph_detail', args=[ph_1.pk])
-        link_url_2 = reverse('portfolio:ph_detail', args=[ph_2.pk])
+        link_url_1 = reverse('portfolio:ph_detail_pics', args=[ph_1.pk])
+        link_url_2 = reverse('portfolio:ph_detail_pics', args=[ph_2.pk])
 
         self.assertContains(response, f'<a href="{link_url_1}">')
         self.assertContains(response, f'<a href="{link_url_2}">')
