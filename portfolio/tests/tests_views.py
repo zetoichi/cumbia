@@ -24,20 +24,34 @@ from .helpers import (
 
 class CBVTestCase(TestCase):
 
+    @classmethod
+    def setUpTestData(cls):
+        cls.ph_1 = Photographer.objects.create(
+            first_name='Chuck',
+            last_name='Norris',
+            display_name='Chucky',
+        )
+        cls.ph_2 = Photographer.objects.create(
+            first_name='Don',
+            last_name='Johnson'
+        )
+
     ##
     # RESOLVE
     ##
+
+    def cbv_resolves(self, url, view_class):
+        response = self.client.get(url)
+        expected, actual = get_expected_and_actual(
+            view_class, response
+        )
+        return expected == actual
 
     def test_login_url_should_resolve(self):
         url = '/login/'
         view_class = views_auth.CumbiaLoginView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_logout_url_should_resolve(self):
         url = '/logout/'
@@ -52,135 +66,61 @@ class CBVTestCase(TestCase):
         url = '/'
         view_class = views_main.IndexView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_about_url_should_resolve(self):
         url = '/about/'
         view_class = views_main.AboutView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_contact_url_should_resolve(self):
         url = '/contact/'
         view_class = views_main.ContactView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_ph_create_url_should_resolve(self):
         url = '/phs/new/'
         view_class = views_main.PhCreateView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_ph_create_confirm_url_should_resolve(self):
-        ph = Photographer.objects.create(
-            first_name='Don',
-            last_name='Johnson'
-        )
-        url = f'/phs/confirm/{ph.pk}/'
+        url = f'/phs/confirm/{self.ph_1.pk}/'
         view_class = views_main.PhCreateConfirmView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_ph_edit_url_should_resolve(self):
-        ph = Photographer.objects.create(
-            first_name='Scott',
-            last_name='Adkins'
-        )
-        url = f'/phs/edit/{ph.pk}/'
+        url = f'/phs/edit/{self.ph_1.pk}/'
         view_class = views_main.PhEditView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_ph_delete_url_should_resolve(self):
-        ph = Photographer.objects.create(
-            first_name='Armie',
-            last_name='Hammer'
-        )
-        url = f'/phs/del/{ph.pk}/'
+        url = f'/phs/del/{self.ph_1.pk}/'
         view_class = views_main.PhDeleteView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_ph_detail_url_should_resolve(self):
-        ph = Photographer.objects.create(
-            first_name='Silvester',
-            last_name='Stallone'
-        )
-        url = f'/phs/detail/{ph.pk}/'
+        url = f'/phs/detail/{self.ph_1.pk}/'
         view_class = views_main.PhDetailView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_ph_add_pics_url_should_resolve(self):
-        ph = Photographer.objects.create(
-            first_name='Chuck',
-            last_name='Norris'
-        )
-        url = f'/phs/add_pics/{ph.pk}/'
+        url = f'/phs/add_pics/{self.ph_1.pk}/'
         view_class = views_main.PhAddPicsView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     def test_ph_add_first_pics_url_should_resolve(self):
-        ph = Photographer.objects.create(
-            first_name='Emiliano',
-            last_name='Grillo'
-        )
-        url = f'/phs/add_first/{ph.pk}/'
+        url = f'/phs/add_first/{self.ph_1.pk}/'
         view_class = views_main.PhAddFirstPicsView
 
-        response = self.client.get(url)
-        expected, actual = get_expected_and_actual(
-            view_class, response
-        )
-
-        self.assertEqual(expected, actual)
+        self.assertTrue(self.cbv_resolves(url, view_class))
 
     ##
     # TEMPLATE
@@ -189,40 +129,45 @@ class CBVTestCase(TestCase):
     def test_login_should_render_expected_template(self):
         url = '/login/'
         expected_template = 'portfolio/login.html'
+
         response = self.client.get(url)
+
         self.assertTemplateUsed(response, expected_template)
 
     def test_index_should_render_expected_template(self):
         url = '/'
         expected_template = 'portfolio/index.html'
+
         response = self.client.get(url)
+
         self.assertTemplateUsed(response, expected_template)
 
     def test_about_should_render_expected_template(self):
         url = '/about/'
         expected_template = 'portfolio/about.html'
+
         response = self.client.get(url)
+
         self.assertTemplateUsed(response, expected_template)
 
     def test_contact_should_render_expected_template(self):
         url = '/contact/'
         expected_template = 'portfolio/contact.html'
+
         response = self.client.get(url)
+
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_create_should_render_expected_template(self):
         url = '/phs/new/'
         expected_template = 'portfolio/ph_create.html'
+
         response = self.client.get(url)
+
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_edit_should_render_expected_template(self):
-        ph = Photographer.objects.create(
-            first_name='Tom',
-            last_name='Hardy'
-        )
-        url = f'/phs/edit/{ph.pk}/'
-
+        url = f'/phs/edit/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_edit.html'
 
         response = self.client.get(url)
@@ -230,12 +175,7 @@ class CBVTestCase(TestCase):
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_delete_should_render_expected_template(self):
-        ph = Photographer.objects.create(
-            first_name='Hulk',
-            last_name='Hogan'
-        )
-        url = f'/phs/del/{ph.pk}/'
-
+        url = f'/phs/del/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_delete_confirm.html'
 
         response = self.client.get(url)
@@ -243,12 +183,7 @@ class CBVTestCase(TestCase):
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_create_confirm_should_render_expected_template(self):
-        ph = Photographer.objects.create(
-            first_name='Mark',
-            last_name='Whalberg'
-        )
-        url = f'/phs/confirm/{ph.pk}/'
-
+        url = f'/phs/confirm/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_create_confirm.html'
 
         session = self.client.session
@@ -259,12 +194,7 @@ class CBVTestCase(TestCase):
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_detail_should_render_expected_template(self):
-        ph = Photographer.objects.create(
-            first_name='Jean Claude',
-            last_name='Van Damme'
-        )
-        url = f'/phs/detail/{ph.pk}/'
-
+        url = f'/phs/detail/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_detail.html'
 
         response = self.client.get(url)
@@ -272,12 +202,7 @@ class CBVTestCase(TestCase):
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_add_pics_should_render_expected_template(self):
-        ph = Photographer.objects.create(
-            first_name='Gene',
-            last_name='Hackman'
-        )
-        url = f'/phs/add_pics/{ph.pk}/'
-
+        url = f'/phs/add_pics/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_add_pics.html'
 
         response = self.client.get(url)
@@ -285,12 +210,7 @@ class CBVTestCase(TestCase):
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_add_first_pics_should_render_expected_template(self):
-        ph = Photographer.objects.create(
-            first_name='Renè',
-            last_name='Russo'
-        )
-        url = f'/phs/add_first/{ph.pk}/'
-
+        url = f'/phs/add_first/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_add_first_pics.html'
 
         response = self.client.get(url)
@@ -367,12 +287,7 @@ class CBVTestCase(TestCase):
 
     @patch('portfolio.models.Photographer.control_showable')
     def test_create_confirm_should_call_control_showable(self, mock_control_showable):
-        ph = Photographer.objects.create(
-            first_name='Adam',
-            last_name='Sandler',
-            show=True,
-        )
-        url = f'/phs/confirm/{ph.pk}/'
+        url = f'/phs/confirm/{self.ph_2.pk}/'
 
         session = self.client.session
         session['creating'] = True

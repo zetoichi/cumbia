@@ -21,27 +21,30 @@ from .helpers import (
 
 class PhotographerModelsTest(TestCase):
 
+    @classmethod
+    def setUpTestData(cls):
+        cls.ph_1 = Photographer.objects.create(
+            first_name='Dolph',
+            last_name='Lundgren',
+            display_name='Dolphie'
+        )
+        cls.ph_2 = Photographer.objects.create(
+            first_name='Jet',
+            last_name='Li',
+        )
+
     def tearDown(self):
         files_cleanup()
 
     # INSTANCE METHODS
 
-    def test_should_build_display_name(self):
-        ph = Photographer.objects.create(
-            first_name='First',
-            last_name='Fake Ph'
-        )
-        get_ph = Photographer.objects.get(pk=ph.pk)
-        self.assertEqual(get_ph.display_name, 'First Fake Ph')
-
     def test_should_use_given_display_name(self):
-        ph = Photographer.objects.create(
-            first_name='Second',
-            last_name='Fake Ph',
-            display_name='Display'
-        )
-        get_ph = Photographer.objects.get(pk=ph.pk)
-        self.assertEqual(ph.display_name, 'Display')
+        get_ph = Photographer.objects.get(pk=self.ph_1.pk)
+        self.assertEqual(get_ph.display_name, 'Dolphie')
+
+    def test_should_build_display_name(self):
+        get_ph = Photographer.objects.get(pk=self.ph_2.pk)
+        self.assertEqual(get_ph.display_name, 'Jet Li')
 
     def test_should_normalize_name(self):
         ph = Photographer.objects.create(
@@ -79,163 +82,108 @@ class PhotographerModelsTest(TestCase):
         self.assertFalse(Pic.objects.filter(pk=pic.pk).exists())
 
     def test_set_new_main_pic_not_in_pics_should_raise_improperly_configured(self):
-        ph = Photographer.objects.create(
-            first_name='Gloria',
-            last_name='Gaynor'
-        )
         pic = get_test_pic_from_file('portrait')
 
-        self.assertRaises(ImproperlyConfigured, lambda: ph.set_new_main_pic(pic))
+        self.assertRaises(ImproperlyConfigured, lambda: self.ph_1.set_new_main_pic(pic))
 
     def test_get_new_main_pic_should_return_none(self):
-        ph = Photographer.objects.create(
-            first_name='Gloria',
-            last_name='Gaynor'
-        )
-
         expected = None
-        actual = ph.get_main_pic()
+        actual = self.ph_1.get_main_pic()
 
         self.assertEqual(expected, actual)
 
     def test_should_set_new_main_pic(self):
-        ph = Photographer.objects.create(
-            first_name='Ennio',
-            last_name='Morricone'
-        )
         pic = get_test_pic_from_file('portrait')
-        ph.add_pics((pic,))
+        self.ph_2.add_pics((pic,))
 
-        ph.set_new_main_pic(pic)
+        self.ph_2.set_new_main_pic(pic)
 
         self.assertTrue(pic.main)
 
     def test_set_new_main_pic_should_be_unique(self):
-        ph = Photographer.objects.create(
-            first_name='Ennio',
-            last_name='Morricone'
-        )
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
-        ph.add_pics((pic_1, pic_2))
+        self.ph_1.add_pics((pic_1, pic_2))
 
-        self.assertTrue(ph.main_pic == pic_1)
+        self.assertTrue(self.ph_1.main_pic == pic_1)
 
-        ph.set_new_main_pic(pic_2)
+        self.ph_1.set_new_main_pic(pic_2)
 
-        self.assertFalse(ph.main_pic == pic_1)
-        self.assertTrue(ph.main_pic == pic_2)
+        self.assertFalse(self.ph_1.main_pic == pic_1)
+        self.assertTrue(self.ph_1.main_pic == pic_2)
 
-    def test_first_pic_should_add_pics_and_mark_as_main(self):
-        ph = Photographer.objects.create(
-            first_name='Danny',
-            last_name='Elfman',
-        )
+    def test_first_pic_should_add_first_pic_and_mark_as_main(self):
         pic = get_test_pic_from_file('portrait')
-        ph.add_pics((pic,))
+        self.ph_1.add_pics((pic,))
 
         self.assertTrue(pic.is_main)
 
     def test_should_add_pics_and_sort(self):
-        ph = Photographer.objects.create(
-            first_name='John',
-            last_name='Williams',
-        )
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
         pic_3 = get_test_pic_from_file('landscape')
-        ph.add_pics((pic_1, pic_2, pic_3))
+        self.ph_2.add_pics((pic_1, pic_2, pic_3))
 
-        self.assertTrue(ph.pics.count() == 3)
+        self.assertTrue(self.ph_2.pics.count() == 3)
         self.assertTrue(pic_1.display_idx == 1)
         self.assertTrue(pic_2.display_idx == 2)
         self.assertTrue(pic_3.display_idx == 3)
 
     def test_should_insort_pic_right(self):
-        ph = Photographer.objects.create(
-            first_name='Anne',
-            last_name='Dudley',
-        )
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
         pic_3 = get_test_pic_from_file('landscape')
-        ph.add_pics((pic_1, pic_2, pic_3))
+        self.ph_2.add_pics((pic_1, pic_2, pic_3))
 
-        ph.pics.insort(pic_3, 1)
+        self.ph_2.pics.insort(pic_3, 1)
 
-        self.assertTrue(ph.pics.get(display_idx=1) == pic_3)
-        self.assertTrue(ph.pics.get(display_idx=2) == pic_1)
-        self.assertTrue(ph.pics.get(display_idx=3) == pic_2)
+        self.assertTrue(self.ph_2.pics.get(display_idx=1) == pic_3)
+        self.assertTrue(self.ph_2.pics.get(display_idx=2) == pic_1)
+        self.assertTrue(self.ph_2.pics.get(display_idx=3) == pic_2)
 
     def test_should_insort_pic_left(self):
-        ph = Photographer.objects.create(
-            first_name='Ritchie',
-            last_name='Sambora',
-        )
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
         pic_3 = get_test_pic_from_file('landscape')
-        ph.add_pics((pic_1, pic_2, pic_3))
+        self.ph_1.add_pics((pic_1, pic_2, pic_3))
 
-        ph.pics.insort(pic_1, 3)
+        self.ph_1.pics.insort(pic_1, 3)
 
-        self.assertTrue(ph.pics.get(display_idx=1) == pic_2)
-        self.assertTrue(ph.pics.get(display_idx=2) == pic_3)
-        self.assertTrue(ph.pics.get(display_idx=3) == pic_1)
+        self.assertTrue(self.ph_1.pics.get(display_idx=1) == pic_2)
+        self.assertTrue(self.ph_1.pics.get(display_idx=2) == pic_3)
+        self.assertTrue(self.ph_1.pics.get(display_idx=3) == pic_1)
 
     def test_should_not_be_showable(self):
-        ph = Photographer.objects.create(
-            first_name='Jerry',
-            last_name='Lee Lewis',
-            show=True,
-        )
+        self.ph_1.control_showable()
 
-        ph.control_showable()
+        self.assertFalse(self.ph_1.show)
 
-        self.assertFalse(ph.show)
+    def test_no_pics_should_only_be_red(self):
+        self.assertTrue(self.ph_1.red)
+        self.assertFalse(self.ph_1.yellow)
+        self.assertFalse(self.ph_1.green)
 
-    def test_should_only_be_red(self):
-        ph = Photographer.objects.create(
-            first_name='Jerry',
-            last_name='Lee Lewis',
-            show=True,
-        )
-
-        self.assertTrue(ph.red)
-        self.assertFalse(ph.yellow)
-        self.assertFalse(ph.green)
-
-    def test_should_only_be_yellow(self):
-        ph = Photographer.objects.create(
-            first_name='Jerry',
-            last_name='Lee Lewis',
-            show=True,
-        )
+    def test_too_few_pics_should_only_be_yellow(self):
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
         pic_3 = get_test_pic_from_file('landscape')
-        ph.add_pics((pic_1, pic_2, pic_3))
+        self.ph_2.add_pics((pic_1, pic_2, pic_3))
 
-        self.assertFalse(ph.red)
-        self.assertTrue(ph.yellow)
-        self.assertFalse(ph.green)
+        self.assertFalse(self.ph_2.red)
+        self.assertTrue(self.ph_2.yellow)
+        self.assertFalse(self.ph_2.green)
 
     def test_should_only_be_green(self):
-        ph = Photographer.objects.create(
-            first_name='Jerry',
-            last_name='Lee Lewis',
-            show=True,
-        )
         pic_1 = get_test_pic_from_file('portrait')
         pic_2 = get_test_pic_from_file('big')
         pic_3 = get_test_pic_from_file('landscape')
         pic_4 = get_test_pic_from_file('big')
         pic_5 = get_test_pic_from_file('landscape')
-        ph.add_pics((pic_1, pic_2, pic_3, pic_4, pic_5))
+        self.ph_1.add_pics((pic_1, pic_2, pic_3, pic_4, pic_5))
 
-        self.assertFalse(ph.red)
-        self.assertFalse(ph.yellow)
-        self.assertTrue(ph.green)
+        self.assertFalse(self.ph_1.red)
+        self.assertFalse(self.ph_1.yellow)
+        self.assertTrue(self.ph_1.green)
 
 class PicTestCase(TestCase):
 
