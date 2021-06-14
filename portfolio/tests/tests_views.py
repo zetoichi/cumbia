@@ -104,9 +104,9 @@ class CBVTestCase(TestCase):
 
         self.assertTrue(self.cbv_resolves(url, view_class))
 
-    def test_ph_detail_url_should_resolve(self):
-        url = f'/phs/detail/{self.ph_1.pk}/'
-        view_class = views_main.PhDetailView
+    def test_ph_pics_detail_url_should_resolve(self):
+        url = f'/phs/pics/{self.ph_1.pk}/'
+        view_class = views_main.PhPicsDetailView
 
         self.assertTrue(self.cbv_resolves(url, view_class))
 
@@ -194,7 +194,7 @@ class CBVTestCase(TestCase):
         self.assertTemplateUsed(response, expected_template)
 
     def test_ph_detail_should_render_expected_template(self):
-        url = f'/phs/detail/{self.ph_2.pk}/'
+        url = f'/phs/pics/{self.ph_2.pk}/'
         expected_template = 'portfolio/ph_detail.html'
 
         response = self.client.get(url)

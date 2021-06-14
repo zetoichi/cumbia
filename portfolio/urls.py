@@ -40,8 +40,8 @@ urlpatterns += [
         name='contact'
     ),
     path(
-        'phs/detail/<str:pk>/',
-        views_main.PhDetailView.as_view(),
+        'phs/pics/<str:pk>/',
+        views_main.PhPicsDetailView.as_view(),
         name='ph_detail'
     ),
 ]

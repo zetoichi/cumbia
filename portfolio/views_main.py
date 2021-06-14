@@ -79,14 +79,14 @@ class PhDeleteView(GeneralContextMixin, DeleteView):
     creating = False
     success_url = reverse_lazy('portfolio:index')
 
-class PhDetailView(GeneralContextMixin, DetailView):
+class PhPicsDetailView(GeneralContextMixin, DetailView):
     template_name = 'portfolio/ph_detail.html'
     model = Photographer
     context_object_name = 'ph'
     segment = 'detail'
     creating = False
 
-class PhCreateConfirmView(PhDetailView):
+class PhCreateConfirmView(PhPicsDetailView):
     template_name = 'portfolio/ph_create_confirm.html'
     segment = 'edit'
     creating = True
@@ -104,12 +104,12 @@ class PhCreateConfirmView(PhDetailView):
                 )
             )
 
-class PhAddPicsView(PhDetailView):
+class PhAddPicsView(PhPicsDetailView):
     template_name = 'portfolio/ph_add_pics.html'
     segment = 'edit'
     creating = False
 
-class PhAddFirstPicsView(PhDetailView):
+class PhAddFirstPicsView(PhPicsDetailView):
     template_name = 'portfolio/ph_add_first_pics.html'
     segment = 'edit'
     creating = True
