@@ -125,3 +125,7 @@ FILE_UPLOAD_PERMISSIONS = config(
 MAX_IMAGE_SIZE = (1920, 1920)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+VIMEO_ID = config('VIMEO_ID')
+VIMEO_TOKEN = config('VIMEO_TOKEN')
+VIMEO_SECRET = config('VIMEO_SECRET')

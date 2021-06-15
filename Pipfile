@@ -15,6 +15,7 @@ selenium = "*"
 pillow = "*"
 lorem-text = "*"
 gunicorn = "*"
+pyvimeo = "*"
 
 [dev-packages]
 ipython = "*"

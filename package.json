@@ -26,6 +26,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@splidejs/splide": "^2.4.21",
+    "@vimeo/player": "^2.15.3",
     "dragula": "^3.7.3",
     "fslightbox": "^3.2.3"
   }
