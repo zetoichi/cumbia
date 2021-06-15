@@ -2,8 +2,7 @@
 </div>
 
 <div class="hscroll-cx">
-    <ul class="pic-row drag-container" data-targetpk="{{ ph.pk }}">
-    {% comment %} <ul class="pic-row {% if edit_mode %}drag-container{% endif %}" data-targetpk="{{ ph.pk }}"> {% endcomment %}
+    <ul class="pic-row {% if edit_mode %}drag-container{% endif %}" data-targetpk="{{ ph.pk }}">
     {% for pic in ph.pics.all %}
         <li id="pic-cx-{{ pic.pk }}" class="pic-cx" data-elpk="{{ pic.pk }}">
             <a data-fslightbox="gallery" href="{{ pic.pic.url }}">
