@@ -10,13 +10,13 @@
     {% if segment == 'detail' %}
         <ul class="top-links-cx">
             <li class="generic-link">
-                <a href="#">
+                <a href="{% url 'portfolio:ph_detail_pics' ph.pk %}">
                     <h5>foto</h5>
                 </a>
             </li>
             <li class="generic-link dim">
-                <a href="#">
-                    <h5>video</h5>
+                <a href="{% url 'portfolio:ph_detail_all' ph.pk %}">
+                    <h5>all</h5>
                 </a>
             </li>
         </ul>

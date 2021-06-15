@@ -42,10 +42,22 @@ class PhDetailView(GeneralContextMixin, PhDetailMixin,
     segment = 'detail'
 
 class PhPicsDetailView(GalleryMixin, PhDetailView):
-    gallery = 'portfolio/components/galleries/pics.html'
+    gallery = {
+        'type': 'horizontal',
+        'path': 'portfolio/components/galleries/pics.html'
+    }
 
 class PhVideoDetailView(GalleryMixin, PhDetailView):
-    gallery = 'portfolio/components/galleries/videos.html'
+    gallery = {
+        'type': 'horizontal',
+        'path': 'portfolio/components/galleries/videos.html'
+    }
+
+class PhAllDetailView(GalleryMixin, PhDetailView):
+    gallery = {
+        'type': 'center',
+        'path': 'portfolio/components/galleries/all.html'
+    }
 
 ##
 # CRUD

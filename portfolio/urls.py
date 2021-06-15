@@ -49,6 +49,11 @@ urlpatterns += [
         views_main.PhVideoDetailView.as_view(),
         name='ph_detail_video'
     ),
+    path(
+        'phs/all/<str:pk>/',
+        views_main.PhAllDetailView.as_view(),
+        name='ph_detail_all'
+    ),
 ]
 
 # PRIVATE

@@ -1,14 +1,20 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
 
+{% block center %}
+{% if gallery.type == 'center' %}
+    {% include gallery.path %}
+{% endif %}
+{% endblock center %}
 
 {% block main %}
-
-{% include gallery %}
-
+{% if gallery.type == 'horizontal' %}
+    {% include gallery.path %}
+{% endif %}
 {% endblock main %}
 
 {% block section_actions %}
+{% if gallery.type == 'horizontal' %}
 <a href="{% url 'portfolio:ph_edit' ph.pk %}">
     <button id="edit-ph-btn" class="action-btn section secondary">EDITAR PH</button>
 </a>
@@ -17,4 +23,5 @@
 <a href="{% url 'portfolio:ph_add_pics' ph.pk %}">
     <button id="add-pics-btn" class="action-btn section accent">+</button>
 </a>
+{% endif %}
 {% endblock section_actions %}
