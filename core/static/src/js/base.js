@@ -40,13 +40,9 @@ function handleCheckboxes() {
 
 function toggleCheckbox(checkbox) {
     if (checkbox.checked) {
-        console.log(checkbox.checked)
         checkbox.checked = false
-        console.log(checkbox.checked)
     } else if (!checkbox.checked) {
-        console.log(checkbox.checked)
         checkbox.checked = true
-        console.log(checkbox.checked)
     }
 }
 
