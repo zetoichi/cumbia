@@ -9,10 +9,10 @@ button.action-btn {
   background: none;
   border-width: 2px;
   border-style: solid;
-  padding: 0.6rem;
+  padding: .6rem .2rem;
   font-weight: bold;
   cursor: pointer;
-  width: 120px;
+  width: 110px;
   margin: 10px;
 }
 
@@ -510,21 +510,43 @@ main.main-grid footer.main-footer {
           align-items: flex-end;
 }
 
-main.main-grid nav.action-bar,
-main.main-grid nav.action-bar.extra-actions {
+main.main-grid nav.action-bar .extra-actions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 40%;
+}
+
+main.main-grid nav.action-bar .l-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
-main.main-grid nav.action-bar.extra-actions {
-  width: 33%;
+main.main-grid nav.action-bar .r-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main.main-grid nav.action-bar .l-actions,
+main.main-grid nav.action-bar .r-actions {
+  width: 30%;
 }
 
 #full-screen-logo {

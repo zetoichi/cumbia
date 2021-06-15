@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load extra_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,17 +37,25 @@
     
 {% if segment != 'auth' %}
     {% block main %}{% endblock main %}
+    
     {% include 'portfolio/components/r-col.html' %}
 
     {% if edit_mode %}
-    <nav class="action-bar">    
-        {% include 'portfolio/components/buttons/create-ph-btn.html' %}
+    <nav class="action-bar">
+
+    <div class="l-actions">
+        {% action_btn '+ PH' 'create-ph' 'main' url='portfolio:ph_create' %}
+        {% comment %} {% action_btn '+ ADMIN' 'create-ph' 'secondary' url='portfolio:user_create' %} {% endcomment %}
+    </div>
 
         <div class="extra-actions">
             {% block section_actions %}{% endblock section_actions %}
         </div>
-        
-        {% include 'portfolio/components/buttons/logout-btn.html' %}
+    <div class="r-actions">
+        {% comment %} {% action_btn 'VER' 'logout' 'secondary' %} {% endcomment %}
+        {% action_btn 'LOGOUT' 'logout' 'main' url='portfolio:logout' %}
+    </div>        
+
     </nav>
     {% else %}
     {% include 'portfolio/components/footer.html' %}

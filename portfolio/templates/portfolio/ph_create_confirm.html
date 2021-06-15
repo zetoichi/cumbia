@@ -1,5 +1,6 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
+{% load extra_tags %}
 
 {% block center %}
     <div class="confirm-center">
@@ -27,13 +28,7 @@
     </div>
 {% endblock center %}
 {% block section_actions %}
-    <a href="{% url 'portfolio:ph_edit' ph.pk %}">
-        <button id="edit-ph-btn" class="action-btn section secondary">EDITAR</button>
-    </a>
-    <a href="{% url 'portfolio:ph_add_first' ph.pk %}">
-        <button id="add-pics-btn" class="action-btn section secondary">+ FOTOS</button>
-    </a>
-    <a href="{% url 'portfolio:ph_detail_pics' ph.pk %}">
-        <button id="confirm-ph-btn" class="action-btn section accent">CONFIRMAR</button>
-    </a>
+    {% action_btn 'EDITAR' 'edit-ph' 'secondary' section=True url='portfolio:ph_edit' pk=ph.pk %}
+    {% action_btn '+ FOTOS' 'add-pics' 'secondary' section=True url='portfolio:ph_add_first' pk=ph.pk %}
+    {% action_btn 'CONFIRMAR' 'confirm-ph' 'accent' section=True url='portfolio:ph_detail_pics' pk=ph.pk %}
 {% endblock section_actions %}

@@ -1,5 +1,6 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
+{% load extra_tags %}
 
 {% block center %}
 
@@ -11,5 +12,5 @@
     <a href={{ get_back }}>
         <button class="action-btn section secondary">VOLVER</button>
     </a>
-    <button id="upload-imgs-btn" class="action-btn section accent">SUBIR</button>
+    {% action_btn 'SUBIR' 'upload-imgs' 'accent' section=True %}
 {% endblock section_actions %}

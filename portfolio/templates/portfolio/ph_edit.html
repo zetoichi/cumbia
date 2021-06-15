@@ -1,5 +1,6 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
+{% load extra_tags %}
 
 {% block center %}
     <form id="create-ph-form" class="form-center" action="" method="POST">
@@ -26,8 +27,6 @@
     </form>
 {% endblock center %}
 {% block section_actions %}
-    <a href="{% url 'portfolio:ph_delete' ph.pk %}">
-        <button id="delete-ph-btn" class="action-btn section secondary">ELIMINAR</button>
-    </a>
-    <button id="edit-ph-btn" class="action-btn section accent" type="submit" form="create-ph-form">CONFIRMAR</button>
+    {% action_btn 'ELIMINAR' 'delete-ph' 'secondary' section=True url='portfolio:ph_delete' pk=ph.pk %}
+    {% action_btn 'CONFIRMAR' 'edit-ph' 'accent' section=True form="create-ph-form" %}
 {% endblock section_actions %}

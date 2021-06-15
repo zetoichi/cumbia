@@ -1,3 +1,5 @@
+{% load extra_tags %}
+
 <section class="r-info">
     <div class="r-info-cx">
     {% if segment != 'index' %}
@@ -6,6 +8,10 @@
                 <img class="brand-top-logo" src="/media/logos/cumbia-logo-negro-small.png" alt="">
             </a>
         </div>
+    {% comment %} {% else %}
+        <div class="brand-top-cx">
+            {% action_btn '+ ADMIN' 'create-user' 'secondary' url='portfolio:user_create' %}
+        </div> {% endcomment %}
     {% endif %}
     {% if segment == 'detail' %}
         <ul class="top-links-cx">

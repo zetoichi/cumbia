@@ -1,0 +1,43 @@
+{% extends 'portfolio/layouts/base.html' %}
+{% load static %}
+{% load extra_tags %}
+
+{% block center %}
+    <form id="create-user-form" class="form-center" action="" method="POST">
+        {% csrf_token %}
+        <div class="form-fields-cx">
+            <div class="form-field">
+                <label class="form-field-label" for="username">Usuario*</label>
+                {{ form.username }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="first_name">Nombre</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="last_name">Apellido</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="email">E-mail</label>
+                {{ form.email }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="password1">Contraseña*</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-field">
+                <label class="form-field-label" for="password2">Confirmar*</label>
+                {{ form.password2 }}
+            </div>
+            {% comment %} <div class="form-field">
+                <label class="form-field-label" for="show">Mostrar</label>
+                {{ form.show }}
+                <label id="show-hide-tgl" class="tgl-btn" for="show"></label>
+            </div> {% endcomment %}
+        </div>
+    </form>
+{% endblock center %}
+{% block section_actions %}
+    {% action_btn 'CREAR' 'create-user' 'accent' section=True form="create-user-form" %}
+{% endblock section_actions %}

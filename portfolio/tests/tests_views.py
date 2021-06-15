@@ -80,6 +80,12 @@ class CBVTestCase(TestCase):
 
         self.assertTrue(self.cbv_resolves(url, view_class))
 
+    def test_user_create_url_should_resolve(self):
+        url = '/users/new/'
+        view_class = views_main.UserCreateView
+
+        self.assertTrue(self.cbv_resolves(url, view_class))
+
     def test_ph_create_url_should_resolve(self):
         url = '/phs/new/'
         view_class = views_main.PhCreateView
@@ -165,6 +171,14 @@ class CBVTestCase(TestCase):
     def test_contact_should_render_expected_template(self):
         url = '/contact/'
         expected_template = 'portfolio/contact.html'
+
+        response = self.client.get(url)
+
+        self.assertTemplateUsed(response, expected_template)
+
+    def test_user_create_should_render_expected_template(self):
+        url = '/users/new/'
+        expected_template = 'portfolio/user_create.html'
 
         response = self.client.get(url)
 

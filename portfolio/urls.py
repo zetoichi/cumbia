@@ -59,6 +59,11 @@ urlpatterns += [
 # PRIVATE
 urlpatterns += [
     path(
+        'users/new/',
+        views_main.UserCreateView.as_view(),
+        name='user_create'
+    ),
+    path(
         'phs/new/',
         views_main.PhCreateView.as_view(),
         name='ph_create'

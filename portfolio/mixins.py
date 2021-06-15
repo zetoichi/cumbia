@@ -1,10 +1,11 @@
 from django.core.exceptions import ImproperlyConfigured
+from django.contrib.auth.models import User
 
 from .models import (
     Photographer,
     Pic,
 )
-from .forms import PhotographerForm
+from .forms import PhotographerForm, UserCreateForm
 
 class GeneralContextMixin:
 
@@ -37,6 +38,11 @@ class GeneralContextMixin:
             raise ImproperlyConfigured(
                 'GeneralContextMixin requires a value for the "creating" attribute'
             )
+
+class UserDetailMixin:
+    model = User
+    form_class = UserCreateForm
+    context_object_name = 'usr'
 
 class PhDetailMixin:
     model = Photographer

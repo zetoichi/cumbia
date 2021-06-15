@@ -1,5 +1,6 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
+{% load extra_tags %}
 
 {% block center %}
     <form id="create-ph-form" class="form-center" action="" method="POST">
@@ -26,5 +27,5 @@
     </form>
 {% endblock center %}
 {% block section_actions %}
-    <button id="create-ph-btn" class="action-btn section accent" type="submit" form="create-ph-form">CREAR</button>
+    {% action_btn 'CREAR' 'create-ph' 'accent' section=True form="create-ph-form" %}
 {% endblock section_actions %}

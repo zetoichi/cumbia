@@ -5,12 +5,13 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView
 )
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
 from .signals import see_this
 from .mixins import (
     GeneralContextMixin,
+    UserDetailMixin,
     PhDetailMixin,
     GalleryMixin,
 )
@@ -62,6 +63,27 @@ class PhAllDetailView(GalleryMixin, PhDetailView):
 ##
 # CRUD
 ##
+
+class UserCreateView(GeneralContextMixin, UserDetailMixin,
+        CreateView):
+    template_name = 'portfolio/user_create.html'
+    segment = 'edit'
+    creating = False
+
+    def post(self, request):
+        form = self.get_form()
+
+        if form.is_valid():
+            data = form.cleaned_data
+            data = self.check_password(data)
+            user = self.model.objects.create_superuser(**data)
+            return redirect(reverse_lazy('portfolio:index'))
+
+    def check_password(self, data):
+        pw = data['password1']
+        if data.pop('password1') == data.pop('password2'):
+            data['password'] = pw
+        return data
 
 class PhCreateView(GeneralContextMixin, PhDetailMixin,
         CreateView):

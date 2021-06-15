@@ -26,10 +26,19 @@
     display: flex;
     align-items: flex-end;
 }
+@mixin startCenter {
+    display: flex;
+    align-items: center;
+}
 @mixin endEnd {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+}
+@mixin endCenter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 @mixin endStart {
     display: flex;
@@ -225,12 +234,21 @@ main.main-grid {
         grid-column: 1 / -1;
         @include endEnd;
     }
-    nav.action-bar,
-    nav.action-bar.extra-actions {
-        @include betweenCenter;
-    }
-    nav.action-bar.extra-actions {
-        width: 33%;
+    nav.action-bar {
+        .extra-actions {
+            @include centerCenter;
+            width: 40%;
+        }
+        .l-actions {
+            @include startCenter;
+        }
+        .r-actions {
+            @include endCenter;
+        }
+        .l-actions,
+        .r-actions {
+            width: 30%;
+        }
     }
 }
 

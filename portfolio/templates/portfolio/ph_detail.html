@@ -1,5 +1,6 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
+{% load extra_tags %}
 
 {% block center %}
 {% if gallery.type == 'center' %}
@@ -15,13 +16,11 @@
 
 {% block section_actions %}
 {% if gallery.type == 'horizontal' %}
-<a href="{% url 'portfolio:ph_edit' ph.pk %}">
-    <button id="edit-ph-btn" class="action-btn section secondary">EDITAR PH</button>
-</a>
-    <button id="delete-pics-btn" class="action-btn section secondary">BORRAR</button>
-    <button id="choose-main-pic-btn" class="action-btn section secondary">MAIN</button>
-<a href="{% url 'portfolio:ph_add_pics' ph.pk %}">
-    <button id="add-pics-btn" class="action-btn section accent">+</button>
-</a>
+
+    {% action_btn 'EDITAR PH' 'edit-ph' 'secondary' section=True url='portfolio:ph_edit' pk=ph.pk %}
+    {% action_btn 'BORRAR' 'delete-pic' 'secondary' section=True %}
+    {% action_btn 'MAIN' 'choose-main-pic' 'secondary' section=True %}
+    {% action_btn '+' 'add-pics' 'accent' section=True url='portfolio:ph_add_pics' pk=ph.pk %}
+
 {% endif %}
 {% endblock section_actions %}
