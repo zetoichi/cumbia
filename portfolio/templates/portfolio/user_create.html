@@ -3,6 +3,15 @@
 {% load extra_tags %}
 
 {% block center %}
+    <div class="feedback-cx">
+    {% for errorlist in form.errors.values %}
+        {% for error in errorlist %}
+        <div class="feedback-card error">
+            <p>{{ error }}</p>
+        </div>
+        {% endfor %}
+    {% endfor %}
+    </div>
     <form id="create-user-form" class="form-center" action="" method="POST">
         {% csrf_token %}
         <div class="form-fields-cx">
@@ -39,5 +48,8 @@
     </form>
 {% endblock center %}
 {% block section_actions %}
+    <a href={{ get_back }}>
+        <button class="action-btn section secondary">CANCELAR</button>
+    </a>
     {% action_btn 'CREAR' 'create-user' 'accent' section=True form="create-user-form" %}
 {% endblock section_actions %}

@@ -17,8 +17,8 @@ button.action-btn {
 }
 
 button.action-btn.main {
-  color: black;
-  border-color: black;
+  color: #282828;
+  border-color: #282828;
 }
 
 button.action-btn.secondary {
@@ -952,7 +952,7 @@ li.pic-cx:hover {
   padding: 15% 20%;
 }
 
-.form-fields-cx {
+.form-center .form-fields-cx {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -968,7 +968,7 @@ li.pic-cx:hover {
           align-items: center;
 }
 
-.form-field {
+.form-center .form-fields-cx .form-field {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -983,40 +983,45 @@ li.pic-cx:hover {
   padding: .4rem;
 }
 
-.form-field textarea,
-.form-field input,
-.form-field-label {
+.form-center .form-fields-cx .form-field textarea,
+.form-center .form-fields-cx .form-field input,
+.form-center .form-fields-cx .form-field label {
   padding: 5px;
 }
 
-.form-field-label {
+.form-center .form-fields-cx .form-field label {
   line-height: 2rem;
 }
 
-.form-field textarea,
-.form-field input {
+.form-center .form-fields-cx .form-field textarea,
+.form-center .form-fields-cx .form-field input {
   width: 100%;
   border: none;
   border-bottom: 2px solid #999;
   margin-left: 1rem;
 }
 
-.form-field textarea {
+.form-center .form-fields-cx .form-field textarea {
   height: 5rem;
 }
 
-.form-field textarea:focus,
-.form-field input:focus {
+.form-center .form-fields-cx .form-field ul li {
+  font-size: .5rem;
+  color: red;
+}
+
+.form-center .form-fields-cx .form-field textarea:focus,
+.form-center .form-fields-cx .form-field input:focus {
   outline: none;
 }
 
-.form-field textarea:focus-visible,
-.form-field input:focus-visible {
+.form-center .form-fields-cx .form-field textarea:focus-visible,
+.form-center .form-fields-cx .form-field input:focus-visible {
   border-bottom: 3px solid #282828;
 }
 
-.form-field textarea:focus:invalid,
-.form-field input:focus:invalid {
+.form-center .form-fields-cx .form-field textarea:focus:invalid,
+.form-center .form-fields-cx .form-field input:focus:invalid {
   background: none;
   border-bottom: 3px solid red;
 }
@@ -1030,5 +1035,68 @@ li.pic-cx:hover {
 
 .confirm-center p {
   font-size: 1.2rem;
+}
+
+.feedback-cx {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  margin-left: -18vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.feedback-cx .feedback-card {
+  width: 36vw;
+  min-width: 400px;
+  margin-bottom: 10px;
+}
+
+.feedback-cx .feedback-card p {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 15px 10px;
+  -webkit-transition: opacity ease-out .5s;
+  transition: opacity ease-out .5s;
+  background: white;
+  z-index: 1100;
+  font-weight: 500;
+}
+
+.feedback-cx .feedback-card.error p {
+  border: 2px solid #ff2c2c;
+  color: #ff2c2c;
+}
+
+@media screen and (max-width: 1028px) {
+  .feedback-card p {
+    width: 44vw;
+    margin-left: -22vw;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .feedback-card p {
+    width: 60vw;
+    margin-left: -30vw;
+    min-width: 300px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .feedback-card p {
+    width: 86vw;
+    margin-left: -43vw;
+    min-width: unset;
+  }
 }
 /*# sourceMappingURL=style.css.map */

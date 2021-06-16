@@ -27,6 +27,7 @@
     </form>
 {% endblock center %}
 {% block section_actions %}
+    {% action_btn 'VOLVER' 'get-back' 'secondary' section=True url='portfolio:ph_detail_pics' pk=ph.pk %}
     {% action_btn 'ELIMINAR' 'delete-ph' 'secondary' section=True url='portfolio:ph_delete' pk=ph.pk %}
     {% action_btn 'CONFIRMAR' 'edit-ph' 'accent' section=True form="create-ph-form" %}
 {% endblock section_actions %}

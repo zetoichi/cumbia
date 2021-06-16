@@ -513,46 +513,53 @@ li.pic-cx {
     grid-column: 1 / -1;
     grid-row: 1 / -1;
     padding: 15% 20%;
-}
-.form-fields-cx {
-    @include colCenterCenter;
-}
-.form-field {
-    @include betweenStart;
-    width: 100%;
-    min-height: 3rem;
-    padding: .4rem;
-}
-.form-field textarea,
-.form-field input,
-.form-field-label {
-    padding: 5px;
-}
-.form-field-label {
-    line-height: 2rem;
-}
-.form-field textarea,
-.form-field input {
-    width: 100%;
-	border: none;
-	border-bottom: 2px solid $brand-gray;
-	margin-left: 1rem;
-}
-.form-field textarea {
-    height: 5rem;
-}
-.form-field textarea:focus,
-.form-field input:focus {
-    outline: none;
-}
-.form-field textarea:focus-visible,
-.form-field input:focus-visible {
-    border-bottom: 3px solid $brand-black;
-}
-.form-field textarea:focus:invalid,
-.form-field input:focus:invalid {
-    background: none;
-    border-bottom: 3px solid red;
+    
+    .form-fields-cx {
+        @include colCenterCenter;
+        
+        .form-field {
+            @include betweenStart;
+            width: 100%;
+            min-height: 3rem;
+            padding: .4rem;
+            
+            textarea,
+            input,
+            label {
+                padding: 5px;
+            }
+            label {
+                line-height: 2rem;
+            }
+            textarea,
+            input {
+                width: 100%;
+                border: none;
+                border-bottom: 2px solid $brand-gray;
+                margin-left: 1rem;
+            }
+            textarea {
+                height: 5rem;
+            }
+            ul li {
+                font-size: .5rem;
+                color: red;
+            }
+            textarea:focus,
+            input:focus {
+                outline: none;
+            }
+            textarea:focus-visible,
+            input:focus-visible {
+                border-bottom: 3px solid $brand-black;
+            }
+            textarea:focus:invalid,
+            input:focus:invalid {
+                background: none;
+                border-bottom: 3px solid red;
+            }
+        }
+    }
 }
 
 .confirm-center {
@@ -563,5 +570,58 @@ li.pic-cx {
     
     p {
         font-size: 1.2rem;
+    }
+}
+
+.feedback-cx {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin-left: -18vw;
+    @include colCenterStart;
+    
+    .feedback-card {
+        width: 36vw;
+        min-width: 400px;
+        margin-bottom: 10px;
+
+        p {
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 15px 10px;
+            transition: opacity ease-out .5s;
+            background: white;
+            z-index: 1100;
+            font-weight: 500;
+        }
+        &.error p {
+            border: 2px solid $error;
+            color: $error;
+        }
+    }
+
+}
+
+@media screen and (max-width: 1028px) {
+    .feedback-card p {
+        width: 44vw;
+        margin-left: -22vw;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .feedback-card p {
+        width: 60vw;
+        margin-left: -30vw;
+        min-width: 300px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .feedback-card p {
+        width: 86vw;
+        margin-left: -43vw;
+        min-width: unset;
     }
 }

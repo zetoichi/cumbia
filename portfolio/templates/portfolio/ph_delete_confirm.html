@@ -1,5 +1,6 @@
 {% extends 'portfolio/layouts/base.html' %}
 {% load static %}
+{% load extra_tags %}
 
 {% block center %}
     <form id="delete-ph-form" class="confirm-center" action="" method="POST">
@@ -14,6 +15,5 @@
     <a href="{{ get_back }}">
         <button id="get-back-btn" class="action-btn section secondary">VOLVER</button>
     </a>
-        <button id="delete-ph-btn" class="action-btn section accent" type="submit" form="delete-ph-form">ELIMINAR</button>
-        {% action_btn 'ELIMINAR' 'delete-ph' 'accent' section=True form="delete-ph-form" %}
+    {% action_btn 'ELIMINAR' 'delete-ph' 'accent' section=True form="delete-ph-form" %}
 {% endblock section_actions %}

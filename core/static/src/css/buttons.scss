@@ -1,3 +1,5 @@
+@import './variables';
+
 button.action-btn {
 	border-radius: 0;
 	background: none;
@@ -11,15 +13,15 @@ button.action-btn {
 }
 
 button.action-btn.main {
-    color: black;
-    border-color: black;
+    color: $brand-black;
+    border-color: $brand-black;
 }
 button.action-btn.secondary {
-    color: #999;
-    border-color: #999;
+    color: $brand-gray;
+    border-color: $brand-gray;
 }
 button.action-btn.accent {
-    color: #799f6e;
-    border-color: #799f6e;
+    color: $accent;
+    border-color: $accent;
 }
 

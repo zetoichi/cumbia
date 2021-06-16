@@ -11,8 +11,8 @@ button.action-btn {
 }
 
 button.action-btn.main {
-  color: black;
-  border-color: black;
+  color: #282828;
+  border-color: #282828;
 }
 
 button.action-btn.secondary {

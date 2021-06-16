@@ -69,17 +69,14 @@ class UserCreateView(GeneralContextMixin, UserDetailMixin,
     template_name = 'portfolio/user_create.html'
     segment = 'edit'
     creating = False
+    success_url = reverse_lazy('portfolio:index')
 
-    def post(self, request):
-        form = self.get_form()
+    def form_valid(self, form):
+        data = self.clean_password(form.cleaned_data)
+        user = self.model.objects.create_superuser(**data)
+        return redirect(self.success_url)
 
-        if form.is_valid():
-            data = form.cleaned_data
-            data = self.check_password(data)
-            user = self.model.objects.create_superuser(**data)
-            return redirect(reverse_lazy('portfolio:index'))
-
-    def check_password(self, data):
+    def clean_password(self, data):
         pw = data['password1']
         if data.pop('password1') == data.pop('password2'):
             data['password'] = pw
