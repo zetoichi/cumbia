@@ -9,9 +9,11 @@
             </a>
         </div>
     {% else %}
+    {% if edit_mode %}
         <div class="brand-top-cx">
             {% action_btn '+ ADMIN' 'create-user' 'secondary' url='portfolio:user_create' %}
         </div>
+    {% endif %}
     {% endif %}
     {% if segment == 'detail' %}
         <ul class="top-links-cx">
