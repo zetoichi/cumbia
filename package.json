@@ -28,6 +28,7 @@
     "@splidejs/splide": "^2.4.21",
     "@vimeo/player": "^2.15.3",
     "dragula": "^3.7.3",
-    "fslightbox": "^3.2.3"
+    "fslightbox": "^3.2.3",
+    "hamburgers": "^1.1.3"
   }
 }

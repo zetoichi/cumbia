@@ -1,4 +1,14 @@
-<nav id="main-nav" class="gen-nav">
+<div class="hamburger-cx">
+    <button class="hamburger hamburger--collapse" type="button">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+</div>
+<div class="highlight-cx">
+    <h5>{{ ph }}</h5>
+</div>
+<nav class="main-nav">
     <ul class="ph-links {% if edit_mode %}drag-container{% endif %}">
     {% for photographer in photographers %}
         <li class="ph-link {% if not photographer.show or photographer.red %}unshowable{% endif %} {% if segment == 'detail' and ph.pk == photographer.pk %}highlight{% elif segment == 'detail' and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">

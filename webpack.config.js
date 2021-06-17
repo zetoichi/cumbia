@@ -37,6 +37,11 @@ module.exports = [
         },
       ],
     },
+    resolve: {
+      alias: {
+        'hamburgers': path.resolve(__dirname, "node_modules/hamburgers/dist/hamburgers.css")
+      }  
+    },
     plugins: [
       new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
       new MiniCssExtractPlugin(),
