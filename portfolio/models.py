@@ -198,6 +198,10 @@ class Pic(SortableModel):
         default=False,
         verbose_name=_('Main'),
     )
+    landscape = models.BooleanField(
+        default=False,
+        verbose_name=_('Main'),
+    )
     uploaded_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -219,10 +223,15 @@ class Pic(SortableModel):
         self.main = True
         self.save()
 
+    def set_orientation(self):
+        if self.pic.width > self.pic.height:
+            self.landscape = True
+
     def save(self, *args, **kwargs):
+        self.handle_no_ph()
+        self.set_orientation()
         super().save(*args, **kwargs)
         resize_img(self.pic.path)
-        self.handle_no_ph()
 
     def delete(self, *args, **kwargs):
         self.pic.delete(save=False)

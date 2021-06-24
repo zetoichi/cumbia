@@ -293,7 +293,7 @@ li.generic-link.dim:hover {
     color: coral;
 }
 li.ph-link.dim h5 {
-    line-height: 1.6rem;
+    line-height: 1.4rem;
     letter-spacing: 1px;
 }
 li.ph-link.highlight:not(.unshowable) h5 {
@@ -311,8 +311,8 @@ header.center-header {
     @include centerCenter;
 }
 #brand-center-header img,
-.center-cx img,
-.main-pic-cx img {
+.center-cx img.index-pic,
+.main-pic-cx img.index-pic {
     max-width: 60vw;
     max-height: 77vh;
     object-fit: cover;
@@ -364,8 +364,10 @@ header.center-header {
     width: 80%;
 }
 .top-links-cx {
-    grid-row: 2 / 3;
-    grid-column: 1 / 2;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    z-index: 9999;
 }
 
 .r-info-cx,
@@ -373,7 +375,7 @@ header.center-header {
 .generic-links-cx {
     text-align: right;
 }
-.top-links-cx,
+
 .generic-links-cx {
     padding: 30px 10px 10px 10px;
 }
@@ -426,6 +428,8 @@ header.center-header {
 .info-section-wrapper {
     padding: 2vh 2vw;
     height: 100%;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
 }
 .info-section-header {
     width: 100%;
@@ -610,7 +614,22 @@ li.pic-cx {
             color: $error;
         }
     }
+}
 
+.all-picgrid-cx {
+    // width: 850px;
+    @include fullSize;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    overflow-y: scroll;
+}
+.all-grid-item {
+    float: left;
+}
+.all-grid-item img {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 7px;
 }
 
 @media (min-width: 1201px) {
@@ -633,6 +652,14 @@ li.pic-cx {
     ul.pic-row {
         width: 81vw;
     }
+
+    .grid-sizer,
+    .all-grid-item {
+        width: calc(25% - 7px);
+    }
+    .all-grid-item--width2 {
+        width: calc(50% - 7px);
+    }
 }
 
 @media (max-width: 1200px) {
@@ -641,6 +668,11 @@ li.pic-cx {
 
         .brand-top-logo {
             width: 100%;
+        }
+    }
+    section.base-center.center {
+        .center-cx {
+            padding-top: 35px;
         }
     }
     nav.main-nav,
@@ -666,26 +698,44 @@ li.pic-cx {
         transform: translateX(100%);
     }
     .highlight-cx  {
-        @include startEnd;
         z-index: 7999;
-        padding: 10px;
         
         h5 {
             font-weight: bold;
             font-size: 2.2rem;
+            position: absolute;
+            top: 60px;
+            left: 8px;
         }
     }
     section.r-nav {
         grid-column: -4 / -1;
     }
+    .grid-sizer,
+    .all-grid-item {
+        width: calc(25% - 7px);
+    }
+    .all-grid-item--width2 {
+        width: calc(50% - 7px);
+    }
 }
 
 
 @media (max-width: 1024px) {
+    main.main-grid section.base-center {
+        grid-column: 3 / -3;
+        padding-left: 7px;
+    }
+    
     nav.main-nav,
     .highlight-cx,
     .hamburger-cx {
         grid-column: 1 / 9;
+    }
+    section.base-center.center {
+        .center-cx {
+            padding-top: 35px;
+        }
     }
     section.r-nav {
         grid-column: -5 / -1;
@@ -706,12 +756,24 @@ li.pic-cx {
         width: 44vw;
         margin-left: -22vw;
     }
+    .grid-sizer,
+    .all-grid-item {
+        width: calc(33.33% - 7px);
+    }
+    .all-grid-item--width2 {
+        width: calc(66.66% - 7px);
+    }
 }
 .highlight-cx,
 section.r-nav {
     min-height: 100px;
 }
 @media (max-width: 768px) {
+    main.main-grid section.base-center {
+        grid-column: 3 / -3;
+        padding-left: 7px;
+    }
+
     nav.main-nav,
     .highlight-cx,
     .hamburger-cx {
@@ -723,6 +785,11 @@ section.r-nav {
     }
     section.r-nav {
         grid-column: -6 / -1;
+    }
+    section.base-center.center {
+        .center-cx {
+            padding-top: 50px;
+        }
     }
     .air-cx,
     .hscroll-cx {
@@ -741,9 +808,20 @@ section.r-nav {
         margin-left: -30vw;
         min-width: 300px;
     }
+    .grid-sizer,
+    .all-grid-item {
+        width: calc(50% - 7px);
+    }
+    .all-grid-item--width2 {
+        width: calc(100% - 7px);
+    }
 }
 
 @media (max-width: 576px) {
+    main.main-grid section.base-center {
+        grid-column: 2 / -2;
+    }
+    
     nav.main-nav,
     .highlight-cx,
     .hamburger-cx {
@@ -758,6 +836,11 @@ section.r-nav {
     }
     section.r-nav {
         grid-column: -7 / -1;
+    }
+    section.base-center.center {
+        .center-cx {
+            padding-top: 60px;
+        }
     }
     .pic-row {
         .pic-cx {
@@ -774,5 +857,16 @@ section.r-nav {
         margin-left: -43vw;
         min-width: unset;
     }
+    .grid-sizer,
+    .all-grid-item,
+    .all-grid-item--width2 {
+        width: calc(100% - 7px);
+    }
 }
 
+@media (max-width: 440px) {
+    main.main-grid section.base-center {
+        grid-column: 1 / -1;
+        padding-left: 7px;
+    }
+}

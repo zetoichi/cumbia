@@ -14,13 +14,13 @@
 {% block center %}
 
 <header id="brand-center-header" class="center-header">
-    <img id="brand-center-img" src="/media/logos/cumbia-logo-negro-medium.png" alt="">
+    <img id="brand-center-img" class="index-pic" src="/media/logos/cumbia-logo-negro-medium.png" alt="">
 </header>
     
 {% for ph in photographers %}
 <div class="main-pic-cx">
 {% if ph.main_pic %}
-    <img id="pic-{{ ph.pk }}" class="faded-out" src="{{ ph.main_pic.pic.url }}" alt="">
+    <img id="pic-{{ ph.pk }}" class="index-pic faded-out" src="{{ ph.main_pic.pic.url }}" alt="">
 {% endif %}
 </div>
 {% endfor %}
