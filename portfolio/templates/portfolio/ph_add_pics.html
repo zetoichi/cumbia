@@ -12,5 +12,5 @@
     <a href={{ get_back }}>
         <button class="action-btn section secondary">VOLVER</button>
     </a>
-    {% action_btn 'SUBIR' 'upload-imgs' 'accent' section=True %}
+    {% action_btn '+' 'upload-imgs' 'accent' section=True url='portfolio:ph_add_pics' pk=ph.pk %}
 {% endblock section_actions %}
