@@ -10,6 +10,7 @@ from .forms import PhotographerForm, UserCreateForm
 class GeneralContextMixin:
 
     segment: str = None
+    sub_segment: str = None
     creating: bool = None
 
     def get_context_data(self, **kwargs):
@@ -18,6 +19,7 @@ class GeneralContextMixin:
         context['edit_mode'] = user_is_auth
         context['photographers'] = Photographer.objects.visible_for(user_is_auth)
         context['segment'] = self.get_segment()
+        context['sub_segment'] = self.sub_segment if self.sub_segment is not None else None
         context['creating'] = self.get_creating()
         context['get_back'] = self.request.META.get('HTTP_REFERER')
         return context

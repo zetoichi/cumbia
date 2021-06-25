@@ -17,12 +17,12 @@
     {% endif %}
     {% if segment == 'detail' %}
         <ul class="top-links-cx">
-            <li class="generic-link">
+            <li class="generic-link {% if sub_segment != 'pics' %}dim{% else %}highlight{% endif %}">
                 <a href="{% url 'portfolio:ph_detail_pics' ph.pk %}">
                     <h5>foto</h5>
                 </a>
             </li>
-            <li class="generic-link dim">
+            <li class="generic-link {% if sub_segment != 'all' %}dim{% else %}highlight{% endif %}">
                 <a href="{% url 'portfolio:ph_detail_all' ph.pk %}">
                     <h5>all</h5>
                 </a>

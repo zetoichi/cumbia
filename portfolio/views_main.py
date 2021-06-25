@@ -43,18 +43,21 @@ class PhDetailView(GeneralContextMixin, PhDetailMixin,
     segment = 'detail'
 
 class PhPicsDetailView(GalleryMixin, PhDetailView):
+    sub_segment = 'pics'
     gallery = {
         'type': 'horizontal',
         'path': 'portfolio/components/galleries/pics.html'
     }
 
 class PhVideoDetailView(GalleryMixin, PhDetailView):
+    sub_segment = 'videos'
     gallery = {
         'type': 'horizontal',
         'path': 'portfolio/components/galleries/videos.html'
     }
 
 class PhAllDetailView(GalleryMixin, PhDetailView):
+    sub_segment = 'all'
     gallery = {
         'type': 'center',
         'path': 'portfolio/components/galleries/all.html'

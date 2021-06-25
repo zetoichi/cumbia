@@ -587,7 +587,7 @@ li.ph-link.highlight {
 li.ph-link.unshowable.dim,
 li.ph-link.unshowable.highlight,
 li.ph-link.unshowable {
-  color: coral;
+  color: #ffc71f;
 }
 
 li.ph-link:hover:not(.highlight) {
@@ -607,7 +607,11 @@ li.ph-link.dim h5 {
   letter-spacing: 1px;
 }
 
-li.ph-link.highlight:not(.unshowable) h5 {
+li.generic-link.highlight h5 {
+  font-weight: bold;
+}
+
+li.ph-link.highlight h5 {
   font-weight: bold;
   font-size: 2rem;
 }
