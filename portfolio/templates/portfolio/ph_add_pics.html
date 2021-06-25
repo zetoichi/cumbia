@@ -9,8 +9,9 @@
 {% endblock center %}
 
 {% block section_actions %}
-    <a href={{ get_back }}>
+    {% comment %} <a href={{ get_back }}>
         <button class="action-btn section secondary">VOLVER</button>
-    </a>
-    {% action_btn '+' 'upload-imgs' 'accent' section=True url='portfolio:ph_detail_pics' pk=ph.pk %}
+    </a> {% endcomment %}
+    {% action_btn 'VOLVER' 'get-back' 'secondary' section=True url='portfolio:ph_detail_pics' pk=ph.pk %}
+    {% action_btn '+' 'upload-imgs' 'accent' section=True url='portfolio:ph_add_pics' pk=ph.pk %}
 {% endblock section_actions %}
