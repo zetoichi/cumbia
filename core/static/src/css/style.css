@@ -1129,6 +1129,18 @@ li.pic-cx:hover {
   .hamburger-cx {
     display: none;
   }
+  .hamburger-cx.info {
+    display: block;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 7;
+    grid-column: 1 / 8;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    grid-row: 1 / 2;
+    z-index: 9998;
+    -webkit-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+  }
   section.base-center.center .center-cx {
     grid-row: 2 / -2;
   }
