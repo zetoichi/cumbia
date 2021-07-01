@@ -55,6 +55,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
 @mixin colCenterCenter {
     display: flex;
     flex-direction: column;
@@ -164,10 +165,10 @@ h4 {
 	line-height: 0.7rem;
 }
 h5 {
-    font-size: 1rem;
+    font-size: .8rem;
     font-weight: 400;
     letter-spacing: 0.1rem;
-    line-height: 1.6rem;
+    line-height: 1.1rem;
 }
 a {
     text-decoration: none;
@@ -201,7 +202,7 @@ main.main-grid {
         z-index: 9999;
         overflow-x: hidden;
         overflow-y: hidden;
-        transition: opacity .5s ease-out;
+        transition: opacity .8s ease-out;
     }
     nav.main-nav {
         grid-row: 1 / -2;
@@ -262,8 +263,9 @@ main.main-grid {
 }
 
 #full-screen-logo {
-    width: 100%;
+    width: 80%;
 }
+
 
 li.ph-link {
     transition: color .1s linear;
@@ -293,7 +295,7 @@ li.generic-link.dim:hover {
     color: coral;
 }
 li.ph-link.dim h5 {
-    line-height: 1.4rem;
+    line-height: 1.1rem;
     letter-spacing: 1px;
 }
 li.generic-link.highlight h5 {
@@ -301,7 +303,8 @@ li.generic-link.highlight h5 {
 }
 li.ph-link.highlight h5 {
     font-weight: bold;
-	font-size: 2rem;
+	font-size: 1.4rem;
+    line-height: 1rem;
 }
 
 header.center-header {
@@ -379,10 +382,11 @@ header.center-header {
 }
 
 .generic-links-cx {
-    padding: 30px 10px 10px 10px;
+    padding: 0 15px 15px 0;
 }
 
 .generic-link {
+    padding-left: 20px;
     transition: color .1s linear;
     
     h5 {
@@ -651,6 +655,10 @@ li.pic-cx {
     section.r-nav {
         grid-column: -4 / -1;
     }
+    .generic-links-cx {
+        @include endCenter;
+    }
+    
     ul.pic-row {
         width: 81vw;
     }
@@ -704,7 +712,7 @@ li.pic-cx {
         
         h5 {
             font-weight: bold;
-            font-size: 2.2rem;
+            font-size: 1.4rem;
             position: absolute;
             top: 60px;
             left: 8px;
@@ -714,6 +722,10 @@ li.pic-cx {
     section.r-nav {
         grid-column: -4 / -1;
     }
+    .generic-links-cx {
+        @include endCenter;
+    }
+
     .grid-sizer,
     .all-grid-item {
         width: calc(25% - 7px);
@@ -743,6 +755,10 @@ li.pic-cx {
     section.r-nav {
         grid-column: -5 / -1;
     }
+    .generic-links-cx {
+        @include endCenter;
+    }
+
     .air-cx,
     .hscroll-cx {
         grid-column: 3 / -1;
@@ -789,6 +805,10 @@ section.r-nav {
     section.r-nav {
         grid-column: -6 / -1;
     }
+    .generic-links-cx {
+        @include endCenter;
+    }
+
     section.base-center.center {
         .center-cx {
             padding-top: 50px;
@@ -840,6 +860,11 @@ section.r-nav {
     section.r-nav {
         grid-column: -7 / -1;
     }
+    .generic-links-cx {
+        @include colEndEnd;
+        padding: 0 15px 15px 0;
+    }
+
     section.base-center.center {
         .center-cx {
             padding-top: 60px;

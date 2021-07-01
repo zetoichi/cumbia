@@ -22,6 +22,7 @@ class GeneralContextMixin:
         context['sub_segment'] = self.sub_segment if self.sub_segment is not None else None
         context['creating'] = self.get_creating()
         context['get_back'] = self.request.META.get('HTTP_REFERER')
+        context['show_intro'] = self.get_show_intro()
         return context
 
     def get_segment(self):
@@ -40,6 +41,15 @@ class GeneralContextMixin:
             raise ImproperlyConfigured(
                 'GeneralContextMixin requires a value for the "creating" attribute'
             )
+
+    def get_show_intro(self):
+        show = True
+        if self.request.session.get('show_intro') == 0:
+            show = False
+        else:
+            self.request.session['show_intro'] = 0
+            self.request.session.set_expiry(1800)
+        return show
 
 class UserDetailMixin:
     model = User
