@@ -432,7 +432,7 @@ header.center-header {
 }
 
 .info-section-wrapper {
-    padding: 2vh 2vw;
+    padding: 2vh 6vw;
     height: 100%;
     grid-column: 1 / -1;
     grid-row: 1 / -1;
@@ -446,6 +446,20 @@ header.center-header {
 }
 .info-section-text p {
     margin: 2vh 0;
+}
+.partners-cx {
+    @include aroundCenter;
+    margin-top: 6rem;
+}
+
+.partner-cx {
+    width: 50%;
+}
+.info-section-header.partner {
+    font-size: 1.7rem;
+}
+.info-section-header.title {
+    color: $brand-gray;
 }
 
 .grid-wrapper {
