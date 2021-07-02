@@ -15,11 +15,16 @@
         </div>
     {% endif %}
     {% endif %}
-    {% if segment == 'detail' %}
+    {% if edit_mode and segment == 'detail' %}
         <ul class="top-links-cx">
             <li class="generic-link {% if sub_segment != 'pics' %}dim{% else %}highlight{% endif %}">
                 <a href="{% url 'portfolio:ph_detail_pics' ph.pk %}">
                     <h5>foto</h5>
+                </a>
+            </li>
+            <li class="generic-link {% if sub_segment != 'video' %}dim{% else %}highlight{% endif %}">
+                <a href="#">
+                    <h5>video</h5>
                 </a>
             </li>
             <li class="generic-link {% if sub_segment != 'all' %}dim{% else %}highlight{% endif %}">

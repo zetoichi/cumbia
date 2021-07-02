@@ -23,18 +23,20 @@ from .forms import PhotographerForm
 
 class IndexView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/index.html'
-    segment = 'index'
     creating = False
+    segment = 'index'
 
 class AboutView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/about.html'
-    segment = 'info'
     creating = False
+    segment = 'info'
+    sub_segment = 'about'
 
 class ContactView(GeneralContextMixin, TemplateView):
     template_name = 'portfolio/contact.html'
-    segment = 'info'
     creating = False
+    segment = 'info'
+    sub_segment = 'contact'
 
 class PhDetailView(GeneralContextMixin, PhDetailMixin,
         DetailView):

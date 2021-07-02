@@ -5,15 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <meta charset="utf-8" />
-    {% comment %}
-    <link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/static/assets/img/favicon.png">
-    {% endcomment %}
+
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{% static 'src/js/dropzone.js' %}"></script>
     <link href="{% static 'dist/app.css' %}" rel="stylesheet" >
-    {% comment %} <script src="https://kit.fontawesome.com/3e468f00c2.js" crossorigin="anonymous"></script> {% endcomment %}
+    
     <title>Cumbia</title>
 </head>
 <body>
@@ -45,14 +45,12 @@
 
     <div class="l-actions">
         {% action_btn '+ PH' 'create-ph' 'main' url='portfolio:ph_create' %}
-        {% comment %} {% action_btn '+ ADMIN' 'create-ph' 'secondary' url='portfolio:user_create' %} {% endcomment %}
     </div>
 
         <div class="extra-actions">
             {% block section_actions %}{% endblock section_actions %}
         </div>
     <div class="r-actions">
-        {% comment %} {% action_btn 'VER' 'logout' 'secondary' %} {% endcomment %}
         {% action_btn 'LOGOUT' 'logout' 'main' url='portfolio:logout' %}
     </div>        
 

@@ -1,16 +1,38 @@
-<footer class="main-footer">
+<footer {% if not edit_mode %}class="main-footer"{% else %}class="long-footer"{% endif %}>
+    {% if segment == 'detail' %}
+    <ul class="footer-links-cx">
+        <li class="detail-nav {% if sub_segment != 'pics' %}dim{% else %}highlight{% endif %}">
+            <a href="{% url 'portfolio:ph_detail_pics' ph.pk %}">
+                <h5>foto</h5>
+            </a>
+        </li>
+        <li class="detail-nav {% if sub_segment != 'video' %}dim{% else %}highlight{% endif %}">
+            <a href="#">
+                <h5>video</h5>
+            </a>
+        </li>
+        <li class="detail-nav {% if sub_segment != 'all' %}dim{% else %}highlight{% endif %}">
+            <a href="{% url 'portfolio:ph_detail_all' ph.pk %}">
+                <h5>all</h5>
+            </a>
+        </li>
+    </ul>
+    {% else %}
+    <div></div>
+    {% endif %}
+
     <ul class="generic-links-cx">
-        <li class="generic-link">
+        <li class="generic-link {% if segment == 'info' and sub_segment == 'about' %}highlight{% elif segment == 'info' and not sub_segment == 'about' %}dim{% endif %} ">
             <a href="{% url 'portfolio:about' %}">
                 <h5>nosotros</h5>
             </a>
         </li>
-        <li class="generic-link">
+        <li class="generic-link {% if segment == 'info' and sub_segment == 'contact' %}highlight{% elif segment == 'info' and not sub_segment == 'contact' %}dim{% endif %} ">
             <a href="{% url 'portfolio:contact' %}">
                 <h5>contacto</h5>
             </a>
         </li>
-        <li class="generic-link">
+        <li class="generic-link {% if segment == 'info'%}dim{% endif %} ">
             <a href="https://www.instagram.com/cumbia.vs/" target="_blank">
                 <h5>instagram</h5>
             </a>
@@ -23,4 +45,5 @@
         </li>
     {% endif %}
     </ul>
+
 </footer>
