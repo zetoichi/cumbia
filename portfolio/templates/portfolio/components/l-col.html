@@ -9,7 +9,7 @@
     <h5>{{ ph }}</h5>
 </div>
 <nav class="main-nav">
-
+{% if segment != 'info' %}
     <ul class="ph-links {% if edit_mode %}drag-container{% endif %}">
     {% for photographer in photographers %}
         <li class="ph-link {% if not photographer.show or photographer.red %}unshowable{% endif %} {% if segment == 'detail' and ph.pk == photographer.pk %}highlight{% elif segment == 'detail' and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">
@@ -19,5 +19,6 @@
         </li>
     {% endfor %}
     </ul>
+{% endif %}
 
 </nav>

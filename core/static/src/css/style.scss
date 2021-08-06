@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url("https://use.typekit.net/frh1wpm.css");
+// @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+// @import url("https://use.typekit.net/frh1wpm.css");
 @import './variables';
 @import './buttons';
 @import './toggle';
@@ -21,6 +21,11 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+@mixin aroundStart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 @mixin startEnd {
     display: flex;
@@ -173,7 +178,15 @@ h5 {
 a {
     text-decoration: none;
     color: unset;
+
+    &.mail-link {
+        font-weight: 400;
+    }
+    &.mail-link:hover {
+        color: coral;
+    }
 }
+
 li {
     list-style: none;
 }
@@ -360,7 +373,7 @@ header.center-header {
 .brand-top-cx {
     @include endStart;
     height: 10vh;
-    padding: 4px 4px 0 0;
+    padding: 13px 15px 0 0;
 
     a {
         text-align: right;
@@ -462,23 +475,56 @@ header.center-header {
 .info-section-header {
     width: 100%;
     text-align: center;
+    line-height: 2rem;
 }
 .info-section-text {
-    text-align: center;
+	text-align: center;
 }
-.info-section-text p {
-    margin: 2vh 0;
-}
-.partners-cx {
-    @include aroundCenter;
-    margin-top: 6rem;
+.info-section-text.about {
+    padding: 0 3rem;
+    margin-top: 2rem;
 }
 
-.partner-cx {
-    width: 50%;
+.info-section-text p {
+	line-height: 1.2rem;
+}
+.main-contact-cx {
+    margin-top: 1.5rem;
+    
+    &:first-of-type {
+        margin-top: 0;
+    }
+
+    &.fat {
+        font-weight: 600;
+        color: #555;
+        
+        a {
+            font-weight: 600;
+            color: #555;
+        }
+
+        a:hover {
+            color: coral;
+        }
+    }
+
+    p {
+        font-size: 15px;
+    }
+}
+.partners-cx {
+    @include aroundStart;
+    margin-top: 2.5rem;
+}
+
+
+.info-section-header.secondary {
+    font-size: 2.2rem;
 }
 .info-section-header.partner {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
 }
 .info-section-header.title {
     color: $brand-gray;
