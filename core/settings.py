@@ -29,7 +29,7 @@ LOGGING = LOGGING_CONF
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
     cast=lambda v: [s.strip() for s in v.split(',')],
-    default='localhost, 127.0.0.0'
+    default='*'
 )
 
 INSTALLED_APPS = [
