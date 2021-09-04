@@ -14,6 +14,15 @@ import json
 
 from decouple import config
 from pathlib import Path
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://7fa4180e007f4db2b6d3bb8c80e9a2b0@o988870.ingest.sentry.io/5945760",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True
+)
 
 with open('logging.json') as f:
     LOGGING_CONF = json.load(f)
