@@ -12,16 +12,19 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 import json
 
+from django.core.exceptions import DisallowedHost
+
 from decouple import config
 from pathlib import Path
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
-    dsn="https://7fa4180e007f4db2b6d3bb8c80e9a2b0@o988870.ingest.sentry.io/5945760",
+    dsn=config('SENTRY_DSN'),
     integrations=[DjangoIntegration()],
     traces_sample_rate=1.0,
-    send_default_pii=True
+    send_default_pii=True,
+    ignore_errors=[DisallowedHost, ]
 )
 
 with open('logging.json') as f:
