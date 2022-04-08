@@ -23,10 +23,12 @@ class PhotographerForm(forms.ModelForm):
             'first_name',
             'last_name',
             'display_name',
+            'country',
             'show',
         )
         widgets = {
             'show': forms.CheckboxInput(attrs={
                 'class': 'tgl-flat'
-            })
+            }),
+            'country': forms.Select()
         }
