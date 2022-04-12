@@ -24,7 +24,7 @@
         </ul>
     </div>
     <div>
-        <h3 class="country">Chile</h3>
+        {% if from_chile %}<h3 class="country">Chile</h3>{% endif %}
         <ul class="ph-links {% if edit_mode %}drag-container{% endif %}">
         {% for photographer in from_chile %}
             <li class="ph-link {% if not photographer.show or photographer.red %}unshowable{% endif %} {% if segment == 'detail' and ph.pk == photographer.pk %}highlight{% elif segment == 'detail' and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">
