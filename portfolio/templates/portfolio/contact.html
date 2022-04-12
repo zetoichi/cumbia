@@ -4,65 +4,93 @@
 {% block center %}
 
 <div class="info-section-wrapper">
-    <div class="main-contact-cx fat">
-        <div class="info-section-text">
-            <p>
-                Argentina
-            </p>
-            <p>
-                Buenos Aires
-            </p>
-            <p>
-                Libertad 2162
-            </p>
-            <p>
-                Martinez - 1640
-            </p>
+    <div class="default-order-list {% if user_country == 'CL' %}reverse{% endif %}">
+        <div>
+            <div class="main-contact-cx fat {% if user_country == 'CL' %}mt-2{% endif %}">
+                <div class="info-section-text">
+                    <p>
+                        Argentina
+                    </p>
+                    <p>
+                        Buenos Aires
+                    </p>
+                    <p>
+                        Libertad 2162
+                    </p>
+                    <p>
+                        Martinez - 1640
+                    </p>
+                </div>
+            </div>
+            <div class="main-contact-cx">
+                <div class="info-section-text">
+                    <p>
+                        Monti
+                    </p>
+                    <p>
+                        Co-founder
+                    </p>
+                    <p>
+                        <a class="mail-link" href="mailto:info@cumbiavs.com">
+                            monti@cumbiavs.com
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="main-contact-cx">
+                <div class="info-section-text">
+                    <p>
+                        Tomás
+                    </p>
+                    <p>
+                        Co-founder
+                    </p>
+                    <p>
+                        <a class="mail-link" href="mailto:monti@cumbiavs.com">
+                            tomas@cumbiavs.com
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="main-contact-cx">
+                <div class="info-section-text">
+                    <p>
+                        Vicky
+                    </p>
+                    <p>
+                        Producción
+                    </p>
+                    <p>
+                        <a class="mail-link" href="mailto:monti@cumbiavs.com">
+                            vicky@cumbiavs.com
+                        </a>
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="main-contact-cx">
-        <div class="info-section-text">
-            <p>
-                Monti
-            </p>
-            <p>
-                Co-founder
-            </p>
-            <p>
-                <a class="mail-link" href="mailto:info@cumbiavs.com">
-                    monti@cumbiavs.com
-                </a>
-            </p>
-        </div>
-    </div>
-    <div class="main-contact-cx">
-        <div class="info-section-text">
-            <p>
-                Tomás
-            </p>
-            <p>
-                Co-founder
-            </p>
-            <p>
-                <a class="mail-link" href="mailto:monti@cumbiavs.com">
-                    tomas@cumbiavs.com
-                </a>
-            </p>
-        </div>
-    </div>
-    <div class="main-contact-cx">
-        <div class="info-section-text">
-            <p>
-                Vicky
-            </p>
-            <p>
-                Producción
-            </p>
-            <p>
-                <a class="mail-link" href="mailto:monti@cumbiavs.com">
-                    vicky@cumbiavs.com
-                </a>
-            </p>
+        <div>
+            <div class="main-contact-cx fat {% if user_country == 'AR' %}mt-2{% endif %}">
+                <div class="info-section-text">
+                    <p>
+                        Chile
+                    </p>
+                </div>
+            </div>
+            <div class="main-contact-cx">
+                <div class="info-section-text">
+                    <p>
+                        Ana Silvina Coda
+                    </p>
+                    <p>
+                        Productora Ejecutiva
+                    </p>
+                    <p>
+                        <a class="mail-link" href="mailto:monti@cumbiavs.com">
+                            silvina@tresbien.tv
+                        </a>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
     

@@ -123,8 +123,8 @@ USE_L10N = True
 USE_TZ = True
 
 COUNTRIES = [
-    (1, "Argentina"),
-    (2, "Chile"),
+    ("Argentina", "Argentina"),
+    ("Chile", "Chile"),
 ]
 
 STATIC_ROOT = config(

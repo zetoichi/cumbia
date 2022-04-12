@@ -3,10 +3,11 @@ from typing import Type, Sequence, Optional
 from django.db import models
 from django.db.models.query import QuerySet
 
-class SortableManager(models.Manager):
 
-    def _sort(self, seq: Optional[Sequence[Type[models.Model]]] = None,
-            start: int = 0) -> None:
+class SortableManager(models.Manager):
+    def _sort(
+        self, seq: Optional[Sequence[Type[models.Model]]] = None, start: int = 0
+    ) -> None:
         """
         Sort sequence of objects upwards from start
         """
@@ -53,12 +54,20 @@ class SortableManager(models.Manager):
         self._sort(seq, start)
 
     def create(self, *args, **kwargs):
-        kwargs['display_idx'] = self.count() + 1
+        kwargs["display_idx"] = self.count() + 1
         return super().create(*args, **kwargs)
+
 
 class PhotographerManager(SortableManager):
     def visible_for(self, user_is_auth: bool = False) -> QuerySet:
         return self.all() if user_is_auth else self.filter(show=True)
+
+    def from_chile(self, user_is_auth: bool = False) -> QuerySet:
+        return self.visible_for(user_is_auth).filter(country="Chile")
+
+    def from_arg(self, user_is_auth: bool = False) -> QuerySet:
+        return self.visible_for(user_is_auth).filter(country="Argentina")
+
 
 class PicManager(SortableManager):
     pass

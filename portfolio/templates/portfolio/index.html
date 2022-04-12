@@ -17,7 +17,14 @@
     <img id="brand-center-img" class="index-pic" src="/media/logos/cumbia-logo-negro-medium.png" alt="">
 </header>
     
-{% for ph in photographers %}
+{% for ph in from_arg %}
+<div class="main-pic-cx">
+{% if ph.main_pic %}
+    <img id="pic-{{ ph.pk }}" class="index-pic faded-out" src="{{ ph.main_pic.pic.url }}" alt="">
+{% endif %}
+</div>
+{% endfor %}
+{% for ph in from_chile %}
 <div class="main-pic-cx">
 {% if ph.main_pic %}
     <img id="pic-{{ ph.pk }}" class="index-pic faded-out" src="{{ ph.main_pic.pic.url }}" alt="">

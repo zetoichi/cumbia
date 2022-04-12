@@ -10,15 +10,32 @@
 </div>
 <nav class="main-nav">
 {% if segment != 'info' %}
-    <ul class="ph-links {% if edit_mode %}drag-container{% endif %}">
-    {% for photographer in photographers %}
-        <li class="ph-link {% if not photographer.show or photographer.red %}unshowable{% endif %} {% if segment == 'detail' and ph.pk == photographer.pk %}highlight{% elif segment == 'detail' and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">
-            <a href="{% url 'portfolio:ph_detail_pics' photographer.pk %}">
-                <h5>{{ photographer.display_name }}</h5>
-            </a>
-        </li>
-    {% endfor %}
-    </ul>
+<div class="default-order-list {% if user_country == 'CL' %}reverse{% endif %}">
+    <div>
+        <h3 class="country">Argentina</h3>
+        <ul class="ph-links {% if edit_mode %}drag-container{% endif %}">
+            {% for photographer in from_arg %}
+            <li class="ph-link {% if not photographer.show or photographer.red %}unshowable{% endif %} {% if segment == 'detail' and ph.pk == photographer.pk %}highlight{% elif segment == 'detail' and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">
+                <a href="{% url 'portfolio:ph_detail_pics' photographer.pk %}">
+                    <h5>{{ photographer.display_name }}</h5>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h3 class="country">Chile</h3>
+        <ul class="ph-links {% if edit_mode %}drag-container{% endif %}">
+        {% for photographer in from_chile %}
+            <li class="ph-link {% if not photographer.show or photographer.red %}unshowable{% endif %} {% if segment == 'detail' and ph.pk == photographer.pk %}highlight{% elif segment == 'detail' and ph.pk != photographer.pk %}dim{% endif %}" data-elpk="{{ photographer.pk }}">
+                <a href="{% url 'portfolio:ph_detail_pics' photographer.pk %}">
+                    <h5>{{ photographer.display_name }}</h5>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endif %}
 
 </nav>

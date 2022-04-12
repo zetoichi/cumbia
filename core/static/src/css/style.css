@@ -1,8 +1,8 @@
-@import url(/Users/Zeta/CODE/PROJECTS/WORK/cumbia/core/static/src/css/basic_dropzone.css);
-@import url(/Users/Zeta/CODE/PROJECTS/WORK/cumbia/core/static/src/css/dropzone.css);
-@import url(/Users/Zeta/CODE/PROJECTS/WORK/cumbia/core/static/src/css/splide-default.min.css);
-@import url(/Users/Zeta/CODE/PROJECTS/WORK/cumbia/core/static/src/css/dragula.css);
-@import url(/Users/Zeta/CODE/PROJECTS/WORK/cumbia/core/static/src/css/hamburgers.css);
+@import url(/Users/alejandrozapiola/code/work/cumbia/core/static/src/css/basic_dropzone.css);
+@import url(/Users/alejandrozapiola/code/work/cumbia/core/static/src/css/dropzone.css);
+@import url(/Users/alejandrozapiola/code/work/cumbia/core/static/src/css/splide-default.min.css);
+@import url(/Users/alejandrozapiola/code/work/cumbia/core/static/src/css/dragula.css);
+@import url(/Users/alejandrozapiola/code/work/cumbia/core/static/src/css/hamburgers.css);
 button.action-btn {
   border-radius: 0;
   background: none;
@@ -1165,6 +1165,17 @@ li.pic-cx:hover {
   border-bottom: 3px solid red;
 }
 
+.form-center .form-fields-cx .form-field textarea:focus:invalid select#id_country,
+.form-center .form-fields-cx .form-field input:focus:invalid select#id_country {
+  background: none;
+  width: 86%;
+  border: none;
+  border-bottom: 2px solid #999;
+  padding-top: 9px;
+  text-align: center;
+  font-family: termina, sans-serif;
+}
+
 .confirm-center {
   grid-column: 1 / -1;
   grid-row: 2 / -2;
@@ -1546,5 +1557,34 @@ section.r-nav {
     grid-column: 1 / -1;
     padding-left: 7px;
   }
+}
+
+.default-order-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.default-order-list.reverse {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+
+.default-order-list .fat.mt-2 {
+  margin-top: 1.5rem;
+}
+
+.default-order-list h3.country {
+  font-size: 1rem;
+  padding: 0 0 0 15px;
 }
 /*# sourceMappingURL=style.css.map */
