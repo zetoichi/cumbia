@@ -140,6 +140,7 @@ MEDIA_URL = config("MEDIA_URL", default="/media/")
 FILE_UPLOAD_PERMISSIONS = config(
     "FILE_UPLOAD_PERMISSIONS", default=0o644, cast=lambda n: int(n, 8)
 )
+CSRF_TRUSTED_ORIGINS = ["https://cumbiavs.com"]
 MAX_IMAGE_SIZE = (1920, 1920)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
